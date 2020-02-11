@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(Spaghetti
+project(PastaPi
   VERSION 18.05.21
-  DESCRIPTION "Graphical logic editor/simulator"
+  DESCRIPTION "Graphical openCV image processor"
   LANGUAGES C CXX
 )
 

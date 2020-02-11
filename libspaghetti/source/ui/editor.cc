@@ -54,13 +54,13 @@
 #include <vector>
 
 #include <spaghetti/elements/logic/all.h>
+#include "filesystem.h"
 #include "spaghetti/node.h"
 #include "spaghetti/package.h"
 #include "spaghetti/registry.h"
 #include "spaghetti/version.h"
 #include "ui/expander_widget.h"
 #include "ui/package_view.h"
-#include "filesystem.h"
 
 QString const PACKAGES_DIR{ "../packages" };
 
@@ -287,7 +287,7 @@ void Editor::showEvent(QShowEvent *a_event)
   if (s_firstTime) {
     s_firstTime = false;
     newPackage();
-  //  openPackage();
+    //  openPackage();
 
     auto const tab = m_ui->tabWidget;
     auto const index = tab->currentIndex();
@@ -492,8 +492,13 @@ void Editor::recentChanges()
 void Editor::about()
 {
   QMessageBox::about(
-      this, "About Spaghetti",
-      QString("<a href='https://github.com/aljen/spaghetti'>Spaghetti</a> version: %1<br>"
+      this, "About PastaPi",
+      QString("<b>PastaPi</b><br>"
+              "Graphical OpenCV image Processor<br>"
+              "Forked from Spaghetti<br>"
+              "<br>"
+              "<b>Oryginal project:</b><br>"
+              "<a href='https://github.com/aljen/spaghetti'>Spaghetti</a> version: %1<br>"
               "<br>"
               "Copyright © 2017-2018 <b>Artur Wyszyński</b><br>"
               "<br>"
