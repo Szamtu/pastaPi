@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,25 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_ELEMENTS_ALL_H
-#define SPAGHETTI_ELEMENTS_ALL_H
+#ifndef SPAGHETTI_ELEMENTS_OPENCV_CAP_H
+#define SPAGHETTI_ELEMENTS_OPENCV_CAP_H
 
-#include <spaghetti/elements/gates/all.h>
-#include <spaghetti/elements/logic/all.h>
-#include <spaghetti/elements/math/all.h>
-#include <spaghetti/elements/opencv/all.h>
-#include <spaghetti/elements/pneumatic/all.h>
-#include <spaghetti/elements/timers/all.h>
-#include <spaghetti/elements/ui/all.h>
-#include <spaghetti/elements/values/all.h>
-#include <spaghetti/package.h>
+#include <spaghetti/element.h>
 
-#endif // SPAGHETTI_ELEMENTS_ALL_H
+namespace spaghetti::elements::opencv {
+class Cap final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "opencv/and" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+
+  Cap();
+
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void calculate() override;
+};
+
+} // namespace spaghetti::elements::opencv
+
+#endif // SPAGHETTI_ELEMENTS_OPENCV_CAP_H

@@ -44,11 +44,13 @@
 #include <spaghetti/api.h>
 #include <spaghetti/strings.h>
 
+#include <opencv4/opencv2/core/mat.hpp>
+
 namespace spaghetti {
 
 class Package;
 
-enum class ValueType { eBool, eInt, eFloat, eString };
+enum class ValueType { eBool, eInt, eFloat, eString, eMatrix };
 
 struct EventNameChanged {
   std::string from;
@@ -91,7 +93,7 @@ class SPAGHETTI_API Element {
   using duration_t = std::chrono::duration<double, std::milli>;
 
   using Json = nlohmann::json;
-  using Value = std::variant<bool, int32_t, float, std::string>;
+  using Value = std::variant<bool, int32_t, float, std::string, cv::Mat>;
   template<typename T>
   struct Vec2 {
     T x{};
@@ -107,7 +109,8 @@ class SPAGHETTI_API Element {
       eCanHoldInt = 1 << 1,
       eCanHoldFloat = 1 << 2,
       eCanHoldString = 1 << 3,
-      eCanChangeName = 1 << 4,
+      eCanHoldMatrix = 1 << 4,
+      eCanChangeName = 1 << 5,
       eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString,
       eDefaultFlags = eCanHoldAllValues | eCanChangeName
     };

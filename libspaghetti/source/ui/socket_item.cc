@@ -369,6 +369,7 @@ void SocketItem::setValueType(ValueType const a_type)
     case ValueType::eFloat: setColors(get_color(Color::eFloatSignalOn), get_color(Color::eFloatSignalOff)); break;
     case ValueType::eInt: setColors(get_color(Color::eIntegerSignalOn), get_color(Color::eIntegerSignalOn)); break;
     case ValueType::eString: setColors(get_color(Color::eNameBackground), get_color(Color::eNameBackground)); break;
+    case ValueType::eMatrix: setColors(get_color(Color::eFontType), get_color(Color::eFontType)); break;
   }
 }
 

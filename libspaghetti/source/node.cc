@@ -57,6 +57,7 @@ bool value_type_allowed(uint8_t const a_flags, ValueType const a_type)
     case ValueType::eInt: return a_flags & Element::IOSocket::eCanHoldInt;
     case ValueType::eFloat: return a_flags & Element::IOSocket::eCanHoldFloat;
     case ValueType::eString: return a_flags & Element::IOSocket::eCanHoldString;
+    case ValueType::eMatrix: return a_flags & Element::IOSocket::eCanHoldMatrix;
   }
 
   assert(false);
@@ -68,6 +69,7 @@ ValueType first_available_type_for_flags(uint8_t const a_flags)
   if (a_flags & Element::IOSocket::eCanHoldInt) return ValueType::eInt;
   if (a_flags & Element::IOSocket::eCanHoldFloat) return ValueType::eFloat;
   if (a_flags & Element::IOSocket::eCanHoldString) return ValueType::eString;
+  if (a_flags & Element::IOSocket::eCanHoldMatrix) return ValueType::eMatrix;
 
   assert(false);
 }
@@ -500,6 +502,8 @@ void Node::showIOProperties(IOSocketsType const a_type)
       comboBox->addItem(ValueType_to_QString(ValueType::eFloat), static_cast<int>(ValueType::eFloat));
     if (IO.flags & Element::IOSocket::eCanHoldString)
       comboBox->addItem(ValueType_to_QString(ValueType::eString), static_cast<int>(ValueType::eString));
+    if (IO.flags & Element::IOSocket::eCanHoldMatrix)
+      comboBox->addItem(ValueType_to_QString(ValueType::eMatrix), static_cast<int>(ValueType::eMatrix));
     int const INDEX{ comboBox->findData(static_cast<int>(IO.type)) };
     comboBox->setCurrentIndex(INDEX);
     m_properties->setCellWidget(row, 1, comboBox);

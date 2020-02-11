@@ -25,6 +25,7 @@
 #include <cassert>
 #include <iostream>
 
+#include <opencv4/opencv2/core/mat.hpp>
 #include "spaghetti/package.h"
 
 namespace spaghetti {
@@ -48,6 +49,7 @@ void Element::serialize(Element::Json &a_json)
       case ValueType::eInt: return "int";
       case ValueType::eFloat: return "float";
       case ValueType::eString: return "string";
+      case ValueType::eMatrix: return "matrix";
     }
     assert(false && "Wrong socket type");
     return "unknown";
@@ -138,6 +140,8 @@ void Element::deserialize(Json const &a_json)
         return ValueType::eFloat;
       else if (a_type == "string")
         return ValueType::eString;
+      else if (a_type == "matrix")
+        return ValueType::eMatrix;
       assert(false && "Wrong socket type");
       return ValueType::eBool;
     }(SOCKET_STRING_TYPE);
@@ -270,6 +274,7 @@ void Element::resetIOSocketValue(IOSocket &a_io)
     case ValueType::eInt: a_io.value = 0; break;
     case ValueType::eFloat: a_io.value = 0.0f; break;
     case ValueType::eString: a_io.value = std::string("none"); break;
+    case ValueType::eMatrix: a_io.value = cv::Mat{}; break;
   }
 }
 

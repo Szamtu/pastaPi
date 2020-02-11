@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,9 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_ELEMENTS_ALL_H
-#define SPAGHETTI_ELEMENTS_ALL_H
+#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
 
-#include <spaghetti/elements/gates/all.h>
-#include <spaghetti/elements/logic/all.h>
-#include <spaghetti/elements/math/all.h>
-#include <spaghetti/elements/opencv/all.h>
-#include <spaghetti/elements/pneumatic/all.h>
-#include <spaghetti/elements/timers/all.h>
-#include <spaghetti/elements/ui/all.h>
-#include <spaghetti/elements/values/all.h>
-#include <spaghetti/package.h>
+#include <spaghetti/elements/opencv/cap.h>
 
-#endif // SPAGHETTI_ELEMENTS_ALL_H
+#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H

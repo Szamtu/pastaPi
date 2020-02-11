@@ -121,6 +121,10 @@ set(LIBSPAGHETTI_PUBLIC_VALUES_HEADERS
   include/spaghetti/elements/values/random_int.h
   include/spaghetti/elements/values/random_int_if.h
   )
+set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
+  include/spaghetti/elements/opencv/all.h
+  include/spaghetti/elements/opencv/cap.h
+  )
 set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
   include/spaghetti/elements/all.h
   )
@@ -144,6 +148,7 @@ set(LIBSPAGHETTI_PUBLIC_HEADERS
   ${LIBSPAGHETTI_PUBLIC_TIMERS_HEADERS}
   ${LIBSPAGHETTI_PUBLIC_UI_HEADERS}
   ${LIBSPAGHETTI_PUBLIC_VALUES_HEADERS}
+  ${LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS}
   ${LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS}
   ${LIBSPAGHETTI_PUBLIC_COMMON_HEADERS}
   )
@@ -239,6 +244,8 @@ set(LIBSPAGHETTI_SOURCES
   source/elements/values/random_float_if.cc
   source/elements/values/random_int.cc
   source/elements/values/random_int_if.cc
+
+  source/elements/opencv/cap.cc
 
   source/icons/icons.qrc
 
@@ -404,6 +411,9 @@ install(FILES ${LIBSPAGHETTI_PUBLIC_UI_HEADERS}
 install(FILES ${LIBSPAGHETTI_PUBLIC_VALUES_HEADERS}
   COMPONENT SDK
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/spaghetti/elements/values)
+install(FILES ${LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS}
+  COMPONENT SDK
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/spaghetti/elements/opencv)
 install(FILES ${LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS}
   COMPONENT SDK
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/spaghetti/elements)

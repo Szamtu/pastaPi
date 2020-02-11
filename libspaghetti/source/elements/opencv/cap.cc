@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,18 +20,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_ELEMENTS_ALL_H
-#define SPAGHETTI_ELEMENTS_ALL_H
+#include <spaghetti/elements/opencv/cap.h>
 
-#include <spaghetti/elements/gates/all.h>
-#include <spaghetti/elements/logic/all.h>
-#include <spaghetti/elements/math/all.h>
-#include <spaghetti/elements/opencv/all.h>
-#include <spaghetti/elements/pneumatic/all.h>
-#include <spaghetti/elements/timers/all.h>
-#include <spaghetti/elements/ui/all.h>
-#include <spaghetti/elements/values/all.h>
-#include <spaghetti/package.h>
+namespace spaghetti::elements::opencv {
+Cap::Cap()
+  : Element{}
+{
+  setMinInputs(1);
+  setMaxInputs(1);
+  setMinOutputs(2);
+  setMaxOutputs(2);
 
-#endif // SPAGHETTI_ELEMENTS_ALL_H
+  addInput(ValueType::eString, "Source", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
+
+  addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+  addOutput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+
+  setDefaultNewInputFlags(IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+}
+
+void Cap::calculate()
+{
+  /*bool allSets{ true };
+  for (auto &input : m_inputs) {
+    bool const VALUE{ std::get<bool>(input.value) };
+    if (!VALUE) {
+      allSets = false;
+      break;
+    }
+  }
+
+  m_outputs[0].value = allSets;*/
+}
+
+} // namespace spaghetti::elements::opencv
