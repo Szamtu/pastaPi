@@ -218,6 +218,7 @@ void Registry::registerInternalElements()
   registerElement<values::ConstBool, nodes::values::ConstBool>("Const value (Bool)", ":/values/const_bool.png");
   registerElement<values::ConstFloat, nodes::values::ConstFloat>("Const value (Float)", ":/values/const_float.png");
   registerElement<values::ConstInt, nodes::values::ConstInt>("Const value (Int)", ":/values/const_int.png");
+  registerElement<values::ConstString, nodes::values::ConstString>("Const value (String)", ":/unknown.png");
   registerElement<values::RandomBool>("Random value (Bool)", ":/values/random_value.png");
   registerElement<values::RandomFloat, nodes::values::RandomFloat>("Random value (Float)", ":/values/random_value.png");
   registerElement<values::RandomFloatIf, nodes::values::RandomFloatIf>("Random value If (Float)",
@@ -238,6 +239,8 @@ void Registry::registerInternalElements()
 
   registerElement<values::ClampFloat>("Clamp value (Float)", ":/unknown.png");
   registerElement<values::ClampInt>("Clamp value (Int)", ":/unknown.png");
+
+  registerElement<opencv::Cap>("Video cap", ":/unknown.png");
 
   // clang-format off
   registerElement<values::CharacteristicCurve

@@ -106,6 +106,7 @@ set(LIBSPAGHETTI_PUBLIC_VALUES_HEADERS
   include/spaghetti/elements/values/const_bool.h
   include/spaghetti/elements/values/const_float.h
   include/spaghetti/elements/values/const_int.h
+  include/spaghetti/elements/values/const_string.h
   include/spaghetti/elements/values/degree_to_radian.h
   include/spaghetti/elements/values/float_to_int.h
   include/spaghetti/elements/values/int_to_float.h
@@ -226,6 +227,7 @@ set(LIBSPAGHETTI_SOURCES
   source/elements/values/const_int.cc
   source/elements/values/degree_to_radian.cc
   source/elements/values/float_to_int.cc
+  source/elements/values/const_string.cc
   source/elements/values/int_to_float.cc
   source/elements/values/max_float.cc
   source/elements/values/max_int.cc
@@ -269,6 +271,8 @@ set(LIBSPAGHETTI_SOURCES
   source/nodes/values/const_float.h
   source/nodes/values/const_int.cc
   source/nodes/values/const_int.h
+  source/nodes/values/const_string.cc
+  source/nodes/values/const_string.h
   source/nodes/values/random_float.cc
   source/nodes/values/random_float.h
   source/nodes/values/random_float_if.cc

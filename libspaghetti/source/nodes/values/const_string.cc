@@ -20,22 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "nodes/values/const_float.h"
-#include <spaghetti/elements/values/const_float.h>
+#include "nodes/values/const_string.h"
+#include <spaghetti/elements/values/const_string.h>
 
 #include <QDebug>
-#include <QDoubleSpinBox>
 #include <QGraphicsSimpleTextItem>
+#include <QLineEdit>
 #include <QTableWidget>
 
 namespace spaghetti::nodes::values {
 
-ConstFloat::ConstFloat()
+ConstString::ConstString()
 {
   QFont font{};
   font.setFamily("Consolas");
   font.setPointSize(10);
-  auto widget = new QGraphicsSimpleTextItem(QString::number(0.0, 'f', 4));
+  auto widget = new QGraphicsSimpleTextItem("none");
   widget->setFont(font);
 
   auto brush = widget->brush();
@@ -47,22 +47,22 @@ ConstFloat::ConstFloat()
   m_info = widget;
 }
 
-void ConstFloat::refreshCentralWidget()
+void ConstString::refreshCentralWidget()
 {
   if (!m_element) return;
 
-  float const VALUE{ std::get<float>(m_element->outputs()[0].value) };
-  m_info->setText(QString::number(static_cast<qreal>(VALUE), 'f', 4));
+  std::string const VALUE{ std::get<std::string>(m_element->outputs()[0].value) };
+  m_info->setText(QString(VALUE.c_str()));
 
   calculateBoundingRect();
 }
 
-void ConstFloat::showProperties()
+void ConstString::showProperties()
 {
   showCommonProperties();
   showIOProperties(IOSocketsType::eOutputs);
 
-  propertiesInsertTitle("Const Float");
+  propertiesInsertTitle("Const String");
 
   int row = m_properties->rowCount();
   m_properties->insertRow(row);
@@ -73,17 +73,15 @@ void ConstFloat::showProperties()
   item->setFlags(item->flags() & ~Qt::ItemIsEditable);
   m_properties->setItem(row, 0, item);
 
-  auto const CONST_FLOAT = static_cast<elements::values::ConstFloat *>(m_element);
-  float const CURRENT = CONST_FLOAT->currentValue();
+  auto const CONST_STRING = static_cast<elements::values::ConstString *>(m_element);
+  std::string const CURRENT = CONST_STRING->currentValue();
 
-  QDoubleSpinBox *const value = new QDoubleSpinBox;
-  value->setRange(-9999999.0, 9999999.0);
-  value->setDecimals(6);
-  value->setValue(static_cast<qreal>(CURRENT));
+  QLineEdit *const value = new QLineEdit{};
+  value->setText("none");
   m_properties->setCellWidget(row, 1, value);
 
-  QObject::connect(value, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
-                   [CONST_FLOAT](double a_value) { CONST_FLOAT->set(static_cast<float>(a_value)); });
+  QObject::connect(value, static_cast<void (QLineEdit::*)(QString const &)>(&QLineEdit::textChanged),
+                   [CONST_STRING](QString a_value) { CONST_STRING->set(a_value.toStdString()); });
 }
 
 } // namespace spaghetti::nodes::values

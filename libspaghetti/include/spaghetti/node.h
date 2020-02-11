@@ -46,6 +46,7 @@ inline QString ValueType_to_QString(ValueType const a_type)
     case ValueType::eBool: return "Bool";
     case ValueType::eInt: return "Int";
     case ValueType::eFloat: return "Float";
+    case ValueType::eString: return "String";
   }
   return "Unknown";
 }

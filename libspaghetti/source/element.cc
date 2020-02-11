@@ -47,6 +47,7 @@ void Element::serialize(Element::Json &a_json)
       case ValueType::eBool: return "bool";
       case ValueType::eInt: return "int";
       case ValueType::eFloat: return "float";
+      case ValueType::eString: return "string";
     }
     assert(false && "Wrong socket type");
     return "unknown";
@@ -135,6 +136,8 @@ void Element::deserialize(Json const &a_json)
         return ValueType::eInt;
       else if (a_type == "float")
         return ValueType::eFloat;
+      else if (a_type == "string")
+        return ValueType::eString;
       assert(false && "Wrong socket type");
       return ValueType::eBool;
     }(SOCKET_STRING_TYPE);
@@ -266,6 +269,7 @@ void Element::resetIOSocketValue(IOSocket &a_io)
     case ValueType::eBool: a_io.value = false; break;
     case ValueType::eInt: a_io.value = 0; break;
     case ValueType::eFloat: a_io.value = 0.0f; break;
+    case ValueType::eString: a_io.value = std::string("none"); break;
   }
 }
 

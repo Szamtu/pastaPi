@@ -21,28 +21,25 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_ELEMENTS_VALUES_ALL_H
-#define SPAGHETTI_ELEMENTS_VALUES_ALL_H
+#ifndef NODES_VALUES_CONST_STRING_H
+#define NODES_VALUES_CONST_STRING_H
 
-#include <spaghetti/elements/values/characteristic_curve.h>
-#include <spaghetti/elements/values/clamp_float.h>
-#include <spaghetti/elements/values/clamp_int.h>
-#include <spaghetti/elements/values/const_bool.h>
-#include <spaghetti/elements/values/const_float.h>
-#include <spaghetti/elements/values/const_int.h>
-#include <spaghetti/elements/values/const_string.h>
-#include <spaghetti/elements/values/degree_to_radian.h>
-#include <spaghetti/elements/values/float_to_int.h>
-#include <spaghetti/elements/values/int_to_float.h>
-#include <spaghetti/elements/values/max_float.h>
-#include <spaghetti/elements/values/max_int.h>
-#include <spaghetti/elements/values/min_float.h>
-#include <spaghetti/elements/values/min_int.h>
-#include <spaghetti/elements/values/radian_to_degree.h>
-#include <spaghetti/elements/values/random_bool.h>
-#include <spaghetti/elements/values/random_float.h>
-#include <spaghetti/elements/values/random_float_if.h>
-#include <spaghetti/elements/values/random_int.h>
-#include <spaghetti/elements/values/random_int_if.h>
+#include "spaghetti/node.h"
 
-#endif // SPAGHETTI_ELEMENTS_VALUES_ALL_H
+namespace spaghetti::nodes::values {
+
+class ConstString : public Node {
+ public:
+  ConstString();
+
+ private:
+  void refreshCentralWidget() override;
+  void showProperties() override;
+
+ private:
+  QGraphicsSimpleTextItem *m_info{};
+};
+
+} // namespace spaghetti::nodes::values
+
+#endif // NODES_VALUES_CONST_STRING_H

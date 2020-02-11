@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,22 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef NODES_VALUES_ALL_H
-#define NODES_VALUES_ALL_H
+#include <spaghetti/elements/values/const_string.h>
 
-// clang-format off
-#ifdef SPAGHETTI_USE_CHARTS
-# include "nodes/values/characteristic_curve.h"
-#endif
-// clang-format on
-#include "nodes/values/const_bool.h"
-#include "nodes/values/const_float.h"
-#include "nodes/values/const_int.h"
-#include "nodes/values/const_string.h"
-#include "nodes/values/random_float.h"
-#include "nodes/values/random_float_if.h"
-#include "nodes/values/random_int.h"
-#include "nodes/values/random_int_if.h"
+namespace spaghetti::elements::values {
 
-#endif // NODES_VALUES_ALL_H
+ConstString::ConstString()
+{
+  setMinInputs(0);
+  setMaxInputs(0);
+  setMinOutputs(1);
+  setMaxOutputs(1);
+
+  addOutput(ValueType::eString, "Value", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
+}
+
+void ConstString::serialize(Json &a_json)
+{
+  Element::serialize(a_json);
+
+  auto &properties = a_json["properties"];
+  properties["value"] = m_currentValue;
+}
+
+void ConstString::deserialize(Json const &a_json)
+{
+  Element::deserialize(a_json);
+
+  auto const &PROPERTIES = a_json["properties"];
+  m_currentValue = PROPERTIES["value"].get<std::string>();
+
+  m_outputs[0].value = m_currentValue;
+}
+
+void ConstString::set(std::string const a_value)
+{
+  m_currentValue = a_value;
+  m_outputs[0].value = m_currentValue;
+}
+
+} // namespace spaghetti::elements::values
