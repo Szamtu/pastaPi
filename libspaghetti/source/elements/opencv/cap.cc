@@ -41,16 +41,19 @@ Cap::Cap()
 
 void Cap::calculate()
 {
-  /*bool allSets{ true };
-  for (auto &input : m_inputs) {
-    bool const VALUE{ std::get<bool>(input.value) };
-    if (!VALUE) {
-      allSets = false;
-      break;
-    }
+  if (!m_cap.isOpened()) {
+    auto const value{ std::get<std::string>(m_inputs[0].value) };
+
+    if (!value.empty()) m_cap.open(value);
   }
 
-  m_outputs[0].value = allSets;*/
+  if (m_cap.isOpened()) {
+    m_outputs[0].value = true;
+
+    cv::Mat image{};
+    m_cap.read(image);
+    m_outputs[1].value = image;
+  }
 }
 
 } // namespace spaghetti::elements::opencv

@@ -25,6 +25,7 @@
 #define SPAGHETTI_ELEMENTS_OPENCV_CAP_H
 
 #include <spaghetti/element.h>
+#include <opencv2/videoio/videoio.hpp>
 
 namespace spaghetti::elements::opencv {
 class Cap final : public Element {
@@ -38,6 +39,9 @@ class Cap final : public Element {
   string::hash_t hash() const noexcept override { return HASH; }
 
   void calculate() override;
+
+ private:
+  cv::VideoCapture m_cap{};
 };
 
 } // namespace spaghetti::elements::opencv
