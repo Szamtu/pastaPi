@@ -28,6 +28,7 @@
 #include <QDragMoveEvent>
 #include <QGraphicsScene>
 #include <QHeaderView>
+#include <QMessageBox>
 #include <QMimeData>
 #include <QSortFilterProxyModel>
 #include <QTableWidget>
@@ -123,7 +124,7 @@ PackageView::PackageView(Editor *const a_editor, Package *const a_package)
     m_package->setNode(m_packageNode);
   } else
     m_packageNode = m_package->node<nodes::Package>();
-  Q_ASSERT(m_package->node<Node*>());
+  Q_ASSERT(m_package->node<Node *>());
 #ifdef SPAGHETTI_USE_OPENGL
   QGLFormat format{ QGL::DoubleBuffer | QGL::SampleBuffers | QGL::DirectRendering };
   format.setProfile(QGLFormat::CoreProfile);
@@ -164,12 +165,14 @@ PackageView::PackageView(Editor *const a_editor, Package *const a_package)
   m_inputs->setIcon(":/logic/inputs.png");
   m_inputs->setPackageView(this);
   m_inputs->iconify();
+  m_inputs->setLocked(true);
   m_outputs->setType(NodeType::eOutputs);
   m_outputs->setPos(m_package->outputsPosition().x, m_package->outputsPosition().y);
   m_outputs->setElement(m_package);
   m_outputs->setIcon(":/logic/outputs.png");
   m_outputs->setPackageView(this);
   m_outputs->iconify();
+  m_outputs->setLocked(true);
 
   m_packageNode->setInputsNode(m_inputs);
   m_packageNode->setOutputsNode(m_outputs);
@@ -479,13 +482,18 @@ void PackageView::deleteElement()
     switch (item->type()) {
       case NODE_TYPE: {
         auto const node = reinterpret_cast<Node *>(item);
-        auto const ID = node->element()->id();
-        m_nodes.remove(ID);
-        m_nodesModel->remove(node);
-        m_nodesProxyModel->sort(0);
+        if (!node->isLocked()) {
+          auto const ID = node->element()->id();
+          m_nodes.remove(ID);
+          m_nodesModel->remove(node);
+          m_nodesProxyModel->sort(0);
 
-        if (node == m_selectedNode) setSelectedNode(nullptr);
-        delete node;
+          if (node == m_selectedNode) setSelectedNode(nullptr);
+          delete node;
+        } else {
+          QMessageBox::warning(this, "Node delete failed!", "Cannot remove selected item, becouse it's locked!");
+        }
+
         break;
       }
       case LINK_TYPE: {

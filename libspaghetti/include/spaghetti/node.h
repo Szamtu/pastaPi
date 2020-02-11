@@ -85,6 +85,9 @@ class SPAGHETTI_API Node : public QGraphicsItem {
   QPixmap icon() const { return m_icon; }
   QString iconPath() const { return m_iconPath; }
 
+  void setLocked(bool a_isLocked) { m_isLocked = a_isLocked; }
+  bool isLocked() const { return m_isLocked; }
+
   void showName();
   void hideName();
 
@@ -148,6 +151,7 @@ class SPAGHETTI_API Node : public QGraphicsItem {
   QString m_path{};
   QString m_iconPath{};
   QPixmap m_icon{};
+  bool m_isLocked{ false };
   QRectF m_boundingRect{};
   QPointF m_centralWidgetPosition{};
 
