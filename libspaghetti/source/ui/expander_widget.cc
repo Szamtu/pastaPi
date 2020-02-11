@@ -70,7 +70,7 @@ int ExpanderWidget::insertItem(int const a_index, QWidget *const a_widget, QIcon
   auto const view = new QTreeWidgetItem{ category };
 
   setItemWidget(view, 0, a_widget);
-  setItemExpanded(category, true);
+  setItemExpanded(category, false);
 
   int insertedIndex{};
 
