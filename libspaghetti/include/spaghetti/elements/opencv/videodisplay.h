@@ -21,10 +21,26 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+#ifndef SPAGHETTI_ELEMENTS_OPENCV_VIDEODISPLAY_H
+#define SPAGHETTI_ELEMENTS_OPENCV_VIDEODISPLAY_H
 
-#include <spaghetti/elements/opencv/cap.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
+#include <spaghetti/element.h>
+#include <opencv2/videoio/videoio.hpp>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+class VideoDisplay final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "opencv/videodisplay" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+
+  VideoDisplay();
+
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void calculate() override;
+};
+
+} // namespace spaghetti::elements::opencv
+
+#endif // SPAGHETTI_ELEMENTS_OPENCV_VIDEODISPLAY_H

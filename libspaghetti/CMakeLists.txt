@@ -124,6 +124,7 @@ set(LIBSPAGHETTI_PUBLIC_VALUES_HEADERS
 set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
   include/spaghetti/elements/opencv/all.h
   include/spaghetti/elements/opencv/cap.h
+  include/spaghetti/elements/opencv/videodisplay.h
   )
 set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
   include/spaghetti/elements/all.h
@@ -246,6 +247,7 @@ set(LIBSPAGHETTI_SOURCES
   source/elements/values/random_int_if.cc
 
   source/elements/opencv/cap.cc
+  source/elements/opencv/videodisplay.cc
 
   source/icons/icons.qrc
 

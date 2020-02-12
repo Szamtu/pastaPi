@@ -20,11 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-
-#include <spaghetti/elements/opencv/cap.h>
 #include <spaghetti/elements/opencv/videodisplay.h>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+VideoDisplay::VideoDisplay()
+  : Element{}
+{
+  setMinInputs(1);
+  setMaxInputs(1);
+  setMaxOutputs(0);
+
+  addInput(ValueType::eMatrix, "Source", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+  setDefaultNewInputFlags(IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+}
+
+void VideoDisplay::calculate()
+{
+  //
+}
+
+} // namespace spaghetti::elements::opencv

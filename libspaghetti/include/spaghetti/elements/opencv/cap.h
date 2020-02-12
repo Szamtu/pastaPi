@@ -30,7 +30,7 @@
 namespace spaghetti::elements::opencv {
 class Cap final : public Element {
  public:
-  static constexpr char const *const TYPE{ "opencv/and" };
+  static constexpr char const *const TYPE{ "opencv/cap" };
   static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
   Cap();
