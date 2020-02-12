@@ -243,6 +243,7 @@ void Registry::registerInternalElements()
   registerElement<opencv::Cap>("Video cap", ":/unknown.png");
   registerElement<opencv::VideoDisplay, nodes::opencv::VideoDisplay>("Video display", ":/unknown.png");
   registerElement<opencv::Mog2>("MOG2", ":/unknown.png");
+  registerElement<opencv::Color2Gray>("Color to Gray", ":/unknown.png");
 
   // clang-format off
   registerElement<values::CharacteristicCurve

@@ -21,12 +21,25 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+#ifndef SPAGHETTI_ELEMENTS_OPENCV_COLOR2GRAY_H
+#define SPAGHETTI_ELEMENTS_OPENCV_COLOR2GRAY_H
 
-#include <spaghetti/elements/opencv/cap.h>
-#include <spaghetti/elements/opencv/color2gray.h>
-#include <spaghetti/elements/opencv/mog2.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
+#include <spaghetti/element.h>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+class Color2Gray final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "opencv/color2gray" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+
+  Color2Gray();
+
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void calculate() override;
+};
+
+} // namespace spaghetti::elements::opencv
+
+#endif // SPAGHETTI_ELEMENTS_OPENCV_COLOR2GRAY_H

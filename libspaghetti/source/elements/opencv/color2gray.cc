@@ -20,13 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-
-#include <spaghetti/elements/opencv/cap.h>
 #include <spaghetti/elements/opencv/color2gray.h>
-#include <spaghetti/elements/opencv/mog2.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
+#include <opencv2/imgproc.hpp>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+Color2Gray::Color2Gray()
+  : Element{}
+{
+  setMinInputs(1);
+  setMaxInputs(1);
+  setMinOutputs(1);
+  setMaxOutputs(1);
+
+  addInput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+  addOutput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+}
+
+void Color2Gray::calculate()
+{
+  auto sourceImage{ std::get<cv::Mat>(m_inputs[0].value) };
+  cv::Mat convertedImage{};
+
+  if (!sourceImage.empty()) {
+    cv::cvtColor(sourceImage, convertedImage, cv::COLOR_BGR2GRAY);
+    m_outputs[0].value = convertedImage;
+  }
+}
+
+} // namespace spaghetti::elements::opencv
