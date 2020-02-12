@@ -20,14 +20,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-
-#include <spaghetti/elements/opencv/cap.h>
-#include <spaghetti/elements/opencv/color2gray.h>
 #include <spaghetti/elements/opencv/medianblur.h>
-#include <spaghetti/elements/opencv/mog2.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
+#include <opencv2/imgproc.hpp>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+MedianBlur::MedianBlur()
+  : Element{}
+{
+  setMinInputs(2);
+  setMaxInputs(2);
+  setMinOutputs(1);
+  setMaxOutputs(1);
+
+  addInput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+  addInput(ValueType::eInt, "kSize", IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
+  addOutput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+}
+
+void MedianBlur::calculate()
+{
+  auto sourceImage{ std::get<cv::Mat>(m_inputs[0].value) };
+  auto kSize{ std::get<int>(m_inputs[1].value) };
+  cv::Mat convertedImage{};
+
+  if (!sourceImage.empty()) {
+    if (kSize % 2 == 0) kSize--;
+    if (kSize < 3) kSize = 3;
+
+    cv::medianBlur(sourceImage, convertedImage, kSize);
+    m_outputs[0].value = convertedImage;
+  }
+}
+
+} // namespace spaghetti::elements::opencv
