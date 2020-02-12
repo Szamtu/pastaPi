@@ -48,6 +48,7 @@ inline QString ValueType_to_QString(ValueType const a_type)
     case ValueType::eFloat: return "Float";
     case ValueType::eString: return "String";
     case ValueType::eMatrix: return "Matrix";
+    case ValueType::eRectangle: return "Rectangle";
   }
   return "Unknown";
 }
