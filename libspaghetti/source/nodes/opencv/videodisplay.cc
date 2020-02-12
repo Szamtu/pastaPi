@@ -40,7 +40,7 @@ void VideoDisplay::refreshCentralWidget()
 {
   if (!m_element) return;
 
-  auto frame{ std::get<cv::Mat>(m_element->inputs()[0].value) };
+  auto frame = std::get<cv::Mat>(m_element->inputs()[0].value).clone();
   if (!frame.empty()) {
     cv::Mat convertedFrame{};
     cv::cvtColor(frame, convertedFrame, cv::COLOR_BGR2RGB);
