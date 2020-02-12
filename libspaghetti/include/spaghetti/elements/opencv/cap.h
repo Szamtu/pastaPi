@@ -42,6 +42,7 @@ class Cap final : public Element {
 
  private:
   cv::VideoCapture m_cap{};
+  std::string m_sourceStr{};
 };
 
 } // namespace spaghetti::elements::opencv

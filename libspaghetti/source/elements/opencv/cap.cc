@@ -41,10 +41,12 @@ Cap::Cap()
 
 void Cap::calculate()
 {
-  if (!m_cap.isOpened()) {
-    auto const value{ std::get<std::string>(m_inputs[0].value) };
+  auto source{ std::get<std::string>(m_inputs[0].value) };
+  if (source != m_sourceStr) {
+    m_cap.release();
+    m_sourceStr = source;
 
-    if (!value.empty()) m_cap.open(value);
+    if (!m_sourceStr.empty()) m_cap.open(m_sourceStr);
   }
 
   if (m_cap.isOpened()) {
@@ -53,6 +55,8 @@ void Cap::calculate()
     cv::Mat image{};
     m_cap.read(image);
     m_outputs[1].value = image;
+  } else {
+    m_outputs[0].value = false;
   }
 }
 
