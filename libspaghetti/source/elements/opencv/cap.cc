@@ -54,7 +54,7 @@ void Cap::calculate()
 
     cv::Mat image{};
     m_cap.read(image);
-    m_outputs[1].value = image;
+    m_outputs[1].value = image.clone();
   } else {
     m_outputs[0].value = false;
   }
