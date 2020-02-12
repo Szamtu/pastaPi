@@ -241,6 +241,7 @@ void Registry::registerInternalElements()
   registerElement<values::ClampInt>("Clamp value (Int)", ":/unknown.png");
 
   registerElement<opencv::Cap>("Video cap", ":/unknown.png");
+  registerElement<opencv::VideoDisplay, nodes::opencv::VideoDisplay>("Video display", ":/unknown.png");
 
   // clang-format off
   registerElement<values::CharacteristicCurve

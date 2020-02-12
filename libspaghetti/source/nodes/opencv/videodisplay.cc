@@ -20,25 +20,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_VIDEODISPLAY_H
-#define SPAGHETTI_ELEMENTS_OPENCV_VIDEODISPLAY_H
+#include "nodes/opencv/videodisplay.h"
+#include <spaghetti/elements/opencv/videodisplay.h>
 
-#include <spaghetti/element.h>
-#include <opencv2/videoio/videoio.hpp>
+#include <QGraphicsSimpleTextItem>
+#include <QTableWidget>
 
-namespace spaghetti::elements::opencv {
-class VideoDisplay final : public Element {
- public:
-  static constexpr char const *const TYPE{ "opencv/videodisplay" };
-  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+#include <opencv4/opencv2/imgproc.hpp>
 
-  VideoDisplay();
+namespace spaghetti::nodes::opencv {
 
-  char const *type() const noexcept override { return TYPE; }
-  string::hash_t hash() const noexcept override { return HASH; }
-};
+VideoDisplay::VideoDisplay()
+{
+  m_image = new QGraphicsPixmapItem{};
+  setCentralWidget(m_image);
+}
 
-} // namespace spaghetti::elements::opencv
+void VideoDisplay::refreshCentralWidget()
+{
+  if (!m_element) return;
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_VIDEODISPLAY_H
+  auto frame{ std::get<cv::Mat>(m_element->inputs()[0].value) };
+  if (!frame.empty()) {
+    cv::Mat convertedFrame{};
+    cv::cvtColor(frame, convertedFrame, cv::COLOR_BGR2RGB);
+
+    QImage image{ convertedFrame.data, convertedFrame.cols, convertedFrame.rows, static_cast<int>(convertedFrame.step),
+                  QImage::Format_RGB888 };
+    QPixmap pixmap = QPixmap::fromImage(image);
+
+    if (!image.isNull()) {
+      m_image->setPixmap(pixmap);
+    }
+  }
+
+  calculateBoundingRect();
+}
+
+void VideoDisplay::showProperties()
+{
+  showCommonProperties();
+  showIOProperties(IOSocketsType::eInputs);
+  showIOProperties(IOSocketsType::eOutputs);
+}
+
+} // namespace spaghetti::nodes::opencv

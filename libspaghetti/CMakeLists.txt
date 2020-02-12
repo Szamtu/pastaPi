@@ -291,6 +291,10 @@ set(LIBSPAGHETTI_SOURCES
   source/nodes/values/random_int_if.cc
   source/nodes/values/random_int_if.h
 
+  source/nodes/opencv/all.h
+  source/nodes/opencv/videodisplay.cc
+  source/nodes/opencv/videodisplay.h
+
   source/nodes/all.h
   source/nodes/package.cc
   source/nodes/package.h

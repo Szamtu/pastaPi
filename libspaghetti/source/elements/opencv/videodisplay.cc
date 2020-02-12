@@ -34,9 +34,4 @@ VideoDisplay::VideoDisplay()
   setDefaultNewInputFlags(IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
 }
 
-void VideoDisplay::calculate()
-{
-  //
-}
-
 } // namespace spaghetti::elements::opencv
