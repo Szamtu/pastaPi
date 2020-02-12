@@ -21,11 +21,33 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+#ifndef SPAGHETTI_ELEMENTS_OPENCV_MOG2_H
+#define SPAGHETTI_ELEMENTS_OPENCV_MOG2_H
 
-#include <spaghetti/elements/opencv/cap.h>
-#include <spaghetti/elements/opencv/mog2.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
+#include <spaghetti/element.h>
+#include <opencv2/video/background_segm.hpp>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+class Mog2 final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "opencv/mog2" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+
+  Mog2();
+
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void calculate() override;
+
+ private:
+  cv::Ptr<cv::BackgroundSubtractorMOG2> m_subtractor{};
+
+  int m_history{};
+  float m_threshold{};
+  bool m_detectShadows{};
+};
+
+} // namespace spaghetti::elements::opencv
+
+#endif // SPAGHETTI_ELEMENTS_OPENCV_MOG2_H

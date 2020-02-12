@@ -125,6 +125,7 @@ set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
   include/spaghetti/elements/opencv/all.h
   include/spaghetti/elements/opencv/cap.h
   include/spaghetti/elements/opencv/videodisplay.h
+  include/spaghetti/elements/opencv/mog2.h
   )
 set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
   include/spaghetti/elements/all.h
@@ -248,6 +249,7 @@ set(LIBSPAGHETTI_SOURCES
 
   source/elements/opencv/cap.cc
   source/elements/opencv/videodisplay.cc
+  source/elements/opencv/mog2.cc
 
   source/icons/icons.qrc
 
