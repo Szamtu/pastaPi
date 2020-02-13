@@ -27,6 +27,28 @@
 #include <spaghetti/element.h>
 #include <opencv2/videoio/videoio.hpp>
 
+class VideoAsync {
+ public:
+  VideoAsync();
+  ~VideoAsync();
+
+  void release();
+  bool open(std::string const a_name);
+  bool isOpened();
+  bool hasNewFrame();
+  cv::Mat grabFrame();
+
+ private:
+  std::thread m_captureThread{};
+  cv::VideoCapture m_cap{};
+  bool m_hasNewFrame{};
+  cv::Mat m_frame{};
+  bool m_isOpened{};
+  bool m_killThread{};
+
+  static void capture(VideoAsync *a_context);
+};
+
 namespace spaghetti::elements::opencv {
 class Cap final : public Element {
  public:
@@ -41,7 +63,7 @@ class Cap final : public Element {
   void calculate() override;
 
  private:
-  cv::VideoCapture m_cap{};
+  VideoAsync m_cap{};
   std::string m_sourceStr{};
 };
 
