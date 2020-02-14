@@ -38,6 +38,7 @@
 #include <thread>
 #include <variant>
 #include <vector>
+#include <mutex>
 
 #include <spaghetti/vendor/json.hpp>
 
@@ -95,12 +96,42 @@ struct Rectangle {
 
 using EventCallback = std::function<void(Event const &)>;
 
+class Matrix {
+ public:
+  Matrix() {}
+  Matrix(cv::Mat const a_mat) { m_mat = a_mat; }
+  Matrix(const Matrix &a_mat)
+  {
+    const std::lock_guard<std::mutex> lock(m_mutex);
+    m_mat = a_mat.m_mat;
+  }
+
+  Matrix operator=(const Matrix &a_mat)
+  {
+    const std::lock_guard<std::mutex> lock(m_mutex);
+    m_mat = a_mat.m_mat;
+    return *this;
+  }
+
+  ~Matrix() { const std::lock_guard<std::mutex> lock(m_mutex); }
+
+  cv::Mat cvMat()
+  {
+    const std::lock_guard<std::mutex> lock(m_mutex);
+    return m_mat;
+  }
+
+ private:
+  std::mutex m_mutex;
+  cv::Mat m_mat{};
+};
+
 class SPAGHETTI_API Element {
  public:
   using duration_t = std::chrono::duration<double, std::milli>;
 
   using Json = nlohmann::json;
-  using Value = std::variant<bool, int32_t, float, std::string, cv::Mat, Rectangle>;
+  using Value = std::variant<bool, int32_t, float, std::string, Matrix, Rectangle>;
   template<typename T>
   struct Vec2 {
     T x{};

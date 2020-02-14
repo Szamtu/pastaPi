@@ -65,7 +65,7 @@ void Mog2::calculate()
     m_subtractor->setDetectShadows(m_detectShadows);
   }
 
-  auto sourceImage{ std::get<cv::Mat>(m_inputs[0].value) };
+  auto sourceImage{ std::get<Matrix>(m_inputs[0].value).cvMat() };
   cv::Mat foregroundMask{};
 
   if (!sourceImage.empty()) {

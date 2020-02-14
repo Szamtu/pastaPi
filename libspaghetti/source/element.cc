@@ -277,7 +277,7 @@ void Element::resetIOSocketValue(IOSocket &a_io)
     case ValueType::eInt: a_io.value = 0; break;
     case ValueType::eFloat: a_io.value = 0.0f; break;
     case ValueType::eString: a_io.value = std::string("none"); break;
-    case ValueType::eMatrix: a_io.value = cv::Mat(); break;
+    case ValueType::eMatrix: a_io.value = Matrix(); break;
     case ValueType::eRectangle: a_io.value = Rectangle{}; break;
   }
 }

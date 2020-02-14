@@ -39,7 +39,7 @@ MedianBlur::MedianBlur()
 
 void MedianBlur::calculate()
 {
-  auto sourceImage{ std::get<cv::Mat>(m_inputs[0].value) };
+  auto sourceImage{ std::get<Matrix>(m_inputs[0].value).cvMat() };
   auto kSize{ std::get<int>(m_inputs[1].value) };
   cv::Mat convertedImage{};
 

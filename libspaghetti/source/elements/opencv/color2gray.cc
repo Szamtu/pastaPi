@@ -38,7 +38,7 @@ Color2Gray::Color2Gray()
 
 void Color2Gray::calculate()
 {
-  auto sourceImage{ std::get<cv::Mat>(m_inputs[0].value) };
+  auto sourceImage{ std::get<Matrix>(m_inputs[0].value).cvMat() };
   cv::Mat convertedImage{};
 
   if (!sourceImage.empty()) {
