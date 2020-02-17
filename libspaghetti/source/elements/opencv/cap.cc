@@ -62,14 +62,14 @@ void Cap::calculate()
 
 } // namespace spaghetti::elements::opencv
 
-VideoAsync::VideoAsync() {}
+CapAsync::CapAsync() {}
 
-VideoAsync::~VideoAsync()
+CapAsync::~CapAsync()
 {
   release();
 }
 
-void VideoAsync::release()
+void CapAsync::release()
 {
   if (m_isOpened) {
     m_killThread = true;
@@ -82,7 +82,7 @@ void VideoAsync::release()
   m_isOpened = false;
 }
 
-bool VideoAsync::open(std::string const a_name)
+bool CapAsync::open(std::string const a_name)
 {
   if (!m_isOpened) {
     m_cap.open(a_name);
@@ -97,23 +97,23 @@ bool VideoAsync::open(std::string const a_name)
   return false;
 }
 
-bool VideoAsync::isOpened()
+bool CapAsync::isOpened()
 {
   return m_isOpened && m_captureThread.joinable();
 }
 
-bool VideoAsync::hasNewFrame()
+bool CapAsync::hasNewFrame()
 {
   return m_hasNewFrame;
 }
 
-cv::Mat VideoAsync::grabFrame()
+cv::Mat CapAsync::grabFrame()
 {
   m_hasNewFrame = false;
   return m_frame.clone();
 }
 
-void VideoAsync::capture(VideoAsync *a_context)
+void CapAsync::capture(CapAsync *a_context)
 {
   while (!a_context->m_killThread) {
     cv::Mat image{};
