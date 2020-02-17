@@ -77,7 +77,7 @@ void ConstString::showProperties()
   std::string const CURRENT = CONST_STRING->currentValue();
 
   QLineEdit *const value = new QLineEdit{};
-  value->setText("");
+  value->setText(QString::fromStdString(CURRENT));
   m_properties->setCellWidget(row, 1, value);
 
   QObject::connect(value, static_cast<void (QLineEdit::*)(QString const &)>(&QLineEdit::textChanged),
