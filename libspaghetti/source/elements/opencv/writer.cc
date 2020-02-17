@@ -159,7 +159,7 @@ void WriterAsync::write(WriterAsync *a_context)
   while (!a_context->m_killThread && a_context->m_writer.isOpened()) {
     if (!a_context->m_frames.empty()) {
       a_context->m_mutex.lock();
-      auto frame = a_context->m_frames.front();
+      auto frame = a_context->m_frames.front().clone();
       a_context->m_frames.pop_front();
       a_context->m_mutex.unlock();
 

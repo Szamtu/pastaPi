@@ -40,7 +40,6 @@ class MedianBlur final : public Element {
   void calculate() override;
 
  private:
-  int m_lastKsize{};
   std::chrono::high_resolution_clock::time_point m_lastFrameTimeStamp{};
 };
 
