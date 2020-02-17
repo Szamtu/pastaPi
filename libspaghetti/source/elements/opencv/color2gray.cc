@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 #include <spaghetti/elements/opencv/color2gray.h>
+#include <QDebug>
 #include <opencv2/imgproc.hpp>
 
 namespace spaghetti::elements::opencv {
@@ -38,12 +39,14 @@ Color2Gray::Color2Gray()
 
 void Color2Gray::calculate()
 {
-  auto sourceImage{ std::get<Matrix>(m_inputs[0].value).cvMat() };
+  auto matrix = std::get<Matrix>(m_inputs[0].value);
+  auto sourceImage = matrix.cvMat();
   cv::Mat convertedImage{};
 
-  if (!sourceImage.empty()) {
+  if (!sourceImage.empty() && m_lastFrameTimeStamp != matrix.timeStamp()) {
     cv::cvtColor(sourceImage, convertedImage, cv::COLOR_BGR2GRAY);
     m_outputs[0].value = convertedImage;
+    m_lastFrameTimeStamp = matrix.timeStamp();
   }
 }
 

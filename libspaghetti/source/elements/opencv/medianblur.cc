@@ -39,16 +39,20 @@ MedianBlur::MedianBlur()
 
 void MedianBlur::calculate()
 {
-  auto sourceImage{ std::get<Matrix>(m_inputs[0].value).cvMat() };
-  auto kSize{ std::get<int>(m_inputs[1].value) };
+  auto matrix = std::get<Matrix>(m_inputs[0].value);
+  auto sourceImage = matrix.cvMat();
+  auto kSize = std::get<int>(m_inputs[1].value);
   cv::Mat convertedImage{};
 
-  if (!sourceImage.empty()) {
+  if (!sourceImage.empty() && (m_lastKsize != kSize || m_lastFrameTimeStamp != matrix.timeStamp())) {
     if (kSize % 2 == 0) kSize--;
     if (kSize < 3) kSize = 3;
 
     cv::medianBlur(sourceImage, convertedImage, kSize);
     m_outputs[0].value = convertedImage;
+
+    m_lastFrameTimeStamp = matrix.timeStamp();
+    m_lastKsize = kSize;
   }
 }
 

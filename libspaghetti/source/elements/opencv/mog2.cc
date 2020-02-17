@@ -47,28 +47,29 @@ Mog2::Mog2()
 
 void Mog2::calculate()
 {
-  auto const history{ std::get<int>(m_inputs[1].value) };
+  auto const history = std::get<int>(m_inputs[1].value);
   if (m_history != history) {
     m_history = history;
     m_subtractor->setHistory(m_history);
   }
 
-  auto const threshold{ std::get<float>(m_inputs[2].value) };
+  auto const threshold = std::get<float>(m_inputs[2].value);
   if (!spaghetti::nearly_equal(m_threshold, threshold)) {
     m_threshold = threshold;
     m_subtractor->setVarThreshold(static_cast<double>(m_threshold));
   }
 
-  auto const detectShadows{ std::get<bool>(m_inputs[3].value) };
+  auto const detectShadows = std::get<bool>(m_inputs[3].value);
   if (m_detectShadows != detectShadows) {
     m_detectShadows = detectShadows;
     m_subtractor->setDetectShadows(m_detectShadows);
   }
 
-  auto sourceImage{ std::get<Matrix>(m_inputs[0].value).cvMat() };
+  auto matrix = std::get<Matrix>(m_inputs[0].value);
+  auto sourceImage = matrix.cvMat();
   cv::Mat foregroundMask{};
 
-  if (!sourceImage.empty()) {
+  if (!sourceImage.empty() && m_lastFrameTimeStamp != matrix.timeStamp()) {
     m_subtractor->apply(sourceImage, foregroundMask);
 
     m_outputs[0].value = foregroundMask;
@@ -77,6 +78,8 @@ void Mog2::calculate()
       m_subtractor->getBackgroundImage(backgroundImage);
       m_outputs[1].value = backgroundImage;
     }
+
+    m_lastFrameTimeStamp = matrix.timeStamp();
   }
 }
 

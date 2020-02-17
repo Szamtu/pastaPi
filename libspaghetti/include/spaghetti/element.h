@@ -88,21 +88,27 @@ struct Event {
 };
 
 using EventCallback = std::function<void(Event const &)>;
-
+using MatrixTimeStamp = std::chrono::high_resolution_clock::time_point;
 class Matrix {
  public:
   Matrix() {}
-  Matrix(cv::Mat const a_mat) { m_mat = a_mat; }
+  Matrix(cv::Mat const a_mat)
+  {
+    m_mat = a_mat;
+    m_timeStamp = std::chrono::high_resolution_clock::now();
+  }
   Matrix(const Matrix &a_mat)
   {
     const std::lock_guard<std::mutex> lock(m_mutex);
     m_mat = a_mat.m_mat;
+    m_timeStamp = a_mat.m_timeStamp;
   }
 
   Matrix operator=(const Matrix &a_mat)
   {
     const std::lock_guard<std::mutex> lock(m_mutex);
     m_mat = a_mat.m_mat;
+    m_timeStamp = a_mat.m_timeStamp;
     return *this;
   }
 
@@ -114,9 +120,12 @@ class Matrix {
     return m_mat;
   }
 
+  MatrixTimeStamp timeStamp() const { return m_timeStamp; }
+
  private:
   std::mutex m_mutex;
   cv::Mat m_mat{};
+  MatrixTimeStamp m_timeStamp;
 };
 
 class SPAGHETTI_API Element {

@@ -41,7 +41,7 @@ Cap::Cap()
 
 void Cap::calculate()
 {
-  auto source{ std::get<std::string>(m_inputs[0].value) };
+  auto source = std::get<std::string>(m_inputs[0].value);
   if (source != m_sourceStr) {
     m_cap.release();
     m_sourceStr = source;
