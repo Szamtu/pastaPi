@@ -29,5 +29,6 @@
 #include <spaghetti/elements/opencv/medianblur.h>
 #include <spaghetti/elements/opencv/mog2.h>
 #include <spaghetti/elements/opencv/videodisplay.h>
+#include <spaghetti/elements/opencv/writer.h>
 
 #endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H

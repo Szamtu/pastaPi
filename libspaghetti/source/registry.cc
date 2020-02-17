@@ -245,6 +245,7 @@ void Registry::registerInternalElements()
   registerElement<opencv::Mog2>("MOG2", ":/unknown.png");
   registerElement<opencv::Color2Gray>("Color to Gray", ":/unknown.png");
   registerElement<opencv::MedianBlur>("Median Blur", ":/unknown.png");
+  registerElement<opencv::Writer>("Video writer", ":/unknown.png");
 
   // clang-format off
   registerElement<values::CharacteristicCurve

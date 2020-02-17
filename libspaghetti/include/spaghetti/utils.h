@@ -39,6 +39,12 @@ inline bool nearly_equal(float const &a_a, float const &a_b)
          std::nextafter(a_a, std::numeric_limits<float>::max()) >= a_b;
 }
 
+inline bool nearly_equal(double const &a_a, double const &a_b)
+{
+  return std::nextafter(a_a, std::numeric_limits<double>::lowest()) <= a_b &&
+         std::nextafter(a_a, std::numeric_limits<double>::max()) >= a_b;
+}
+
 template<typename T>
 inline T lerp(T a_v0, T a_v1, T a_t)
 {
