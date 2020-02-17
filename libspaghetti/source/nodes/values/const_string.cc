@@ -35,7 +35,7 @@ ConstString::ConstString()
   QFont font{};
   font.setFamily("Consolas");
   font.setPointSize(10);
-  auto widget = new QGraphicsSimpleTextItem("none");
+  auto widget = new QGraphicsSimpleTextItem();
   widget->setFont(font);
 
   auto brush = widget->brush();
@@ -77,7 +77,7 @@ void ConstString::showProperties()
   std::string const CURRENT = CONST_STRING->currentValue();
 
   QLineEdit *const value = new QLineEdit{};
-  value->setText("none");
+  value->setText("");
   m_properties->setCellWidget(row, 1, value);
 
   QObject::connect(value, static_cast<void (QLineEdit::*)(QString const &)>(&QLineEdit::textChanged),
