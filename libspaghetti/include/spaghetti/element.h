@@ -51,7 +51,7 @@ namespace spaghetti {
 
 class Package;
 
-enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, eRectangle };
+enum class ValueType { eBool, eInt, eFloat, eString, eMatrix };
 
 struct EventNameChanged {
   std::string from;
@@ -85,13 +85,6 @@ enum class EventType {
 struct Event {
   EventType type{};
   EventValue payload{};
-};
-
-struct Rectangle {
-  int x{};
-  int y{};
-  int width{};
-  int height{};
 };
 
 using EventCallback = std::function<void(Event const &)>;
@@ -131,7 +124,7 @@ class SPAGHETTI_API Element {
   using duration_t = std::chrono::duration<double, std::milli>;
 
   using Json = nlohmann::json;
-  using Value = std::variant<bool, int32_t, float, std::string, Matrix, Rectangle>;
+  using Value = std::variant<bool, int32_t, float, std::string, Matrix>;
   template<typename T>
   struct Vec2 {
     T x{};
@@ -148,8 +141,7 @@ class SPAGHETTI_API Element {
       eCanHoldFloat = 1 << 2,
       eCanHoldString = 1 << 3,
       eCanHoldMatrix = 1 << 4,
-      eCanHoldRectangle = 1 << 5,
-      eCanChangeName = 1 << 6,
+      eCanChangeName = 1 << 5,
       eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString,
       eDefaultFlags = eCanHoldAllValues | eCanChangeName
     };

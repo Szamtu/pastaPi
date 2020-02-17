@@ -50,7 +50,6 @@ void Element::serialize(Element::Json &a_json)
       case ValueType::eFloat: return "float";
       case ValueType::eString: return "string";
       case ValueType::eMatrix: return "matrix";
-      case ValueType::eRectangle: return "rectangle";
     }
     assert(false && "Wrong socket type");
     return "unknown";
@@ -143,8 +142,6 @@ void Element::deserialize(Json const &a_json)
         return ValueType::eString;
       else if (a_type == "matrix")
         return ValueType::eMatrix;
-      else if (a_type == "rectangle")
-        return ValueType::eRectangle;
       assert(false && "Wrong socket type");
       return ValueType::eBool;
     }(SOCKET_STRING_TYPE);
@@ -278,7 +275,6 @@ void Element::resetIOSocketValue(IOSocket &a_io)
     case ValueType::eFloat: a_io.value = 0.0f; break;
     case ValueType::eString: a_io.value = std::string("none"); break;
     case ValueType::eMatrix: a_io.value = Matrix(); break;
-    case ValueType::eRectangle: a_io.value = Rectangle{}; break;
   }
 }
 
