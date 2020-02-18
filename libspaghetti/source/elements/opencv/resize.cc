@@ -20,16 +20,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-
-#include <spaghetti/elements/opencv/cap.h>
-#include <spaghetti/elements/opencv/color2gray.h>
-#include <spaghetti/elements/opencv/medianblur.h>
-#include <spaghetti/elements/opencv/mog2.h>
 #include <spaghetti/elements/opencv/resize.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
-#include <spaghetti/elements/opencv/writer.h>
+#include <opencv2/imgproc.hpp>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+Resize::Resize()
+  : Element{}
+{
+  setMinInputs(3);
+  setMaxInputs(3);
+  setMinOutputs(1);
+  setMaxOutputs(1);
+
+  addInput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+  addInput(ValueType::eFloat, "fx", IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
+  addInput(ValueType::eFloat, "fy", IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
+
+  addOutput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+}
+
+void Resize::calculate()
+{
+  auto matrix = std::get<Matrix>(m_inputs[0].value);
+  if (m_lastFrameTimeStamp != matrix.timeStamp()) {
+    auto fx = static_cast<double>(std::get<float>(m_inputs[1].value));
+    auto fy = static_cast<double>(std::get<float>(m_inputs[2].value));
+    auto sourceImage = matrix.cvMat();
+    cv::Mat convertedImage{};
+
+    if (!sourceImage.empty() && fx >= 0.1 && fy >= 0.1) {
+      cv::resize(sourceImage, convertedImage, cv::Size(), fx, fy);
+
+      m_outputs[0].value = convertedImage;
+      m_lastFrameTimeStamp = matrix.timeStamp();
+    }
+  }
+}
+
+} // namespace spaghetti::elements::opencv

@@ -129,6 +129,7 @@ set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
   include/spaghetti/elements/opencv/color2gray.h
   include/spaghetti/elements/opencv/medianblur.h
   include/spaghetti/elements/opencv/writer.h
+  include/spaghetti/elements/opencv/resize.h
   )
 set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
   include/spaghetti/elements/all.h
@@ -256,6 +257,7 @@ set(LIBSPAGHETTI_SOURCES
   source/elements/opencv/color2gray.cc
   source/elements/opencv/medianblur.cc
   source/elements/opencv/writer.cc
+  source/elements/opencv/resize.cc
 
   source/icons/icons.qrc
 
