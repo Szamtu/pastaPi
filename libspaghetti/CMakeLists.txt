@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(libSpaghetti VERSION ${Spaghetti_VERSION} LANGUAGES C CXX)
+project(libSpaghetti
+    VERSION ${Spaghetti_VERSION}
+    LANGUAGES C CXX
+)
 
 find_package(Threads REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
@@ -146,6 +149,7 @@ set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
   include/spaghetti/strings.h
   include/spaghetti/utils.h
   )
+
 set(LIBSPAGHETTI_PUBLIC_HEADERS
   ${LIBSPAGHETTI_PUBLIC_GATES_HEADERS}
   ${LIBSPAGHETTI_PUBLIC_LOGIC_HEADERS}
