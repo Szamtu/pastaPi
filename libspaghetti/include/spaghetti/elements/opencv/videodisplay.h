@@ -25,7 +25,6 @@
 #define SPAGHETTI_ELEMENTS_OPENCV_VIDEODISPLAY_H
 
 #include <spaghetti/element.h>
-#include <opencv2/videoio/videoio.hpp>
 
 namespace spaghetti::elements::opencv {
 class VideoDisplay final : public Element {

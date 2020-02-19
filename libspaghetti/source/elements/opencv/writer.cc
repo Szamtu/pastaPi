@@ -22,7 +22,6 @@
 
 #include <spaghetti/elements/opencv/writer.h>
 #include <spaghetti/utils.h>
-#include <opencv2/imgproc.hpp>
 
 namespace spaghetti::elements::opencv {
 Writer::Writer()
