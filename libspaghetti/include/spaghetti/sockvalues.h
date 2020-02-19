@@ -1,8 +1,3 @@
-#pragma once
-#ifndef SPAGHETTI_SOCKVALUES_H
-#define SPAGHETTI_SOCKVALUES_H
-
-#include <chrono>
 // MIT License
 //
 // Copyright (c) 2020 Paweł Adamski
@@ -25,8 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#pragma once
+#ifndef SPAGHETTI_SOCKVALUES_H
+#define SPAGHETTI_SOCKVALUES_H
+
 #include <QColor>
 #include <QString>
+#include <chrono>
 #include <mutex>
 #include <opencv4/opencv2/core/mat.hpp>
 #include <variant>
