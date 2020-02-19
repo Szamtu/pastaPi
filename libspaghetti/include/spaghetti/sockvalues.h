@@ -57,6 +57,9 @@ const char *getSocketType(ValueType const a_type);
 bool value_type_allowed(uint8_t const a_flags, ValueType const a_type);
 ValueType first_available_type_for_flags(uint8_t const a_flags);
 std::pair<QColor, QColor> getTypeColor(ValueType const a_type);
+ValueType stringViewToType(std::string_view const a_type);
+std::vector<ValueType> getHoldedValues(IOSocketFlags::Flags const a_flags);
+Value getDefaultValue(ValueType const a_valueType);
 
 // custom types
 class Matrix {

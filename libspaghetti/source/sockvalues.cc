@@ -64,4 +64,48 @@ std::pair<QColor, QColor> getTypeColor(ValueType const a_type)
   assert(false);
 }
 
+ValueType stringViewToType(std::string_view const a_type)
+{
+  if (a_type == "bool")
+    return ValueType::eBool;
+  else if (a_type == "int")
+    return ValueType::eInt;
+  else if (a_type == "float")
+    return ValueType::eFloat;
+  else if (a_type == "string")
+    return ValueType::eString;
+  else if (a_type == "matrix")
+    return ValueType::eMatrix;
+  assert(false && "Wrong socket type");
+  return ValueType::eBool;
+}
+
+std::vector<ValueType> getHoldedValues(IOSocketFlags::Flags const a_flags)
+{
+  std::vector<ValueType> values{};
+
+  if (a_flags & IOSocketFlags::Flags::eCanHoldBool) values.push_back(ValueType::eBool);
+  if (a_flags & IOSocketFlags::Flags::eCanHoldInt) values.push_back(ValueType::eInt);
+  if (a_flags & IOSocketFlags::Flags::eCanHoldFloat) values.push_back(ValueType::eFloat);
+  if (a_flags & IOSocketFlags::Flags::eCanHoldString) values.push_back(ValueType::eString);
+  if (a_flags & IOSocketFlags::Flags::eCanHoldMatrix) values.push_back(ValueType::eMatrix);
+
+  assert(values.size());
+
+  return values;
+}
+
+Value getDefaultValue(ValueType const a_valueType)
+{
+  switch (a_valueType) {
+    case ValueType::eBool: return false;
+    case ValueType::eInt: return 0;
+    case ValueType::eFloat: return 0.0f;
+    case ValueType::eString: return std::string();
+    case ValueType::eMatrix: return Matrix();
+  }
+
+  assert(false);
+}
+
 } // namespace spaghetti

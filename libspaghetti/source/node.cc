@@ -460,16 +460,10 @@ void Node::showIOProperties(IOSocketsType const a_type)
     }
 
     auto const comboBox = new QComboBox;
-    if (IO.flags & Element::IOSocket::eCanHoldBool)
-      comboBox->addItem(ValueType_to_QString(ValueType::eBool), static_cast<int>(ValueType::eBool));
-    if (IO.flags & Element::IOSocket::eCanHoldInt)
-      comboBox->addItem(ValueType_to_QString(ValueType::eInt), static_cast<int>(ValueType::eInt));
-    if (IO.flags & Element::IOSocket::eCanHoldFloat)
-      comboBox->addItem(ValueType_to_QString(ValueType::eFloat), static_cast<int>(ValueType::eFloat));
-    if (IO.flags & Element::IOSocket::eCanHoldString)
-      comboBox->addItem(ValueType_to_QString(ValueType::eString), static_cast<int>(ValueType::eString));
-    if (IO.flags & Element::IOSocket::eCanHoldMatrix)
-      comboBox->addItem(ValueType_to_QString(ValueType::eMatrix), static_cast<int>(ValueType::eMatrix));
+    auto const holdedValues = getHoldedValues(static_cast<IOSocketFlags::Flags>(IO.flags));
+
+    for (auto const &value : holdedValues) comboBox->addItem(ValueType_to_QString(value), static_cast<int>(value));
+
     int const INDEX{ comboBox->findData(static_cast<int>(IO.type)) };
     comboBox->setCurrentIndex(INDEX);
     m_properties->setCellWidget(row, 1, comboBox);

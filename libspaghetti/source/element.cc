@@ -116,23 +116,9 @@ void Element::deserialize(Json const &a_json)
     auto const SOCKET_STRING_TYPE = a_socket["type"].get<std::string>();
     auto const SOCKET_NAME = a_socket["name"].get<std::string>();
     auto const SOCKET_FLAGS = a_socket["flags"].get<uint8_t>();
+    auto const SOCKET_TYPE = stringViewToType(SOCKET_STRING_TYPE);
 
     assert(a_socketCount == SOCKET_ID);
-
-    ValueType const SOCKET_TYPE = [](std::string_view const a_type) {
-      if (a_type == "bool")
-        return ValueType::eBool;
-      else if (a_type == "int")
-        return ValueType::eInt;
-      else if (a_type == "float")
-        return ValueType::eFloat;
-      else if (a_type == "string")
-        return ValueType::eString;
-      else if (a_type == "matrix")
-        return ValueType::eMatrix;
-      assert(false && "Wrong socket type");
-      return ValueType::eBool;
-    }(SOCKET_STRING_TYPE);
 
     a_input ? addInput(SOCKET_TYPE, SOCKET_NAME, SOCKET_FLAGS) : addOutput(SOCKET_TYPE, SOCKET_NAME, SOCKET_FLAGS);
     a_socketCount++;
@@ -257,13 +243,7 @@ bool Element::connect(size_t const a_sourceId, uint8_t const a_outputId, uint8_t
 
 void Element::resetIOSocketValue(IOSocket &a_io)
 {
-  switch (a_io.type) {
-    case ValueType::eBool: a_io.value = false; break;
-    case ValueType::eInt: a_io.value = 0; break;
-    case ValueType::eFloat: a_io.value = 0.0f; break;
-    case ValueType::eString: a_io.value = std::string(); break;
-    case ValueType::eMatrix: a_io.value = Matrix(); break;
-  }
+  a_io.value = getDefaultValue(a_io.type);
 }
 
 void Element::handleEvent(Event const &a_event)
