@@ -137,10 +137,15 @@ set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
 set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
   include/spaghetti/elements/all.h
   )
+set(LIBSPAGHETTI_CUSTOM_VALUE_TYPES
+  include/spaghetti/custom_value_types/all.h
+  include/spaghetti/custom_value_types/matrix.h
+  )
 set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
   include/spaghetti/api.h
   include/spaghetti/editor.h
   include/spaghetti/sockvalues.h
+  ${LIBSPAGHETTI_CUSTOM_VALUE_TYPES}
   include/spaghetti/element.h
   include/spaghetti/logger.h
   include/spaghetti/node.h

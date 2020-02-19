@@ -21,41 +21,57 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_SOCKVALUES_H
-#define SPAGHETTI_SOCKVALUES_H
+#ifndef SPAGHETTI_CUSTOM_VALUE_MATRIX
+#define SPAGHETTI_CUSTOM_VALUE_MATRIX
 
-#include <spaghetti/custom_value_types/all.h>
 #include <QColor>
 #include <QString>
+#include <chrono>
+#include <mutex>
+#include <opencv4/opencv2/core/mat.hpp>
 #include <variant>
 
 namespace spaghetti {
-enum class ValueType { eBool, eInt, eFloat, eString, eMatrix };
+using MatrixTimeStamp = std::chrono::high_resolution_clock::time_point;
 
-using Value = std::variant<bool, int32_t, float, std::string, Matrix>;
+class Matrix {
+ public:
+  Matrix() {}
+  Matrix(cv::Mat const a_mat)
+  {
+    m_mat = a_mat;
+    m_timeStamp = std::chrono::high_resolution_clock::now();
+  }
+  Matrix(const Matrix &a_mat)
+  {
+    const std::lock_guard<std::mutex> lock(m_mutex);
+    m_mat = a_mat.m_mat;
+    m_timeStamp = a_mat.m_timeStamp;
+  }
 
-struct IOSocketFlags {
-  enum Flags {
-    eCanHoldBool = 1 << 0,
-    eCanHoldInt = 1 << 1,
-    eCanHoldFloat = 1 << 2,
-    eCanHoldString = 1 << 3,
-    eCanHoldMatrix = 1 << 4,
-    eCanChangeName = 1 << 5,
-    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString,
-    eDefaultFlags = eCanHoldAllValues | eCanChangeName
-  };
+  Matrix operator=(const Matrix &a_mat)
+  {
+    const std::lock_guard<std::mutex> lock(m_mutex);
+    m_mat = a_mat.m_mat;
+    m_timeStamp = a_mat.m_timeStamp;
+    return *this;
+  }
+
+  ~Matrix() { const std::lock_guard<std::mutex> lock(m_mutex); }
+
+  cv::Mat cvMat()
+  {
+    const std::lock_guard<std::mutex> lock(m_mutex);
+    return m_mat;
+  }
+
+  MatrixTimeStamp timeStamp() const { return m_timeStamp; }
+
+ private:
+  std::mutex m_mutex;
+  cv::Mat m_mat{};
+  MatrixTimeStamp m_timeStamp;
 };
-
-QString ValueType_to_QString(ValueType const a_type);
-const char *getSocketType(ValueType const a_type);
-bool value_type_allowed(uint8_t const a_flags, ValueType const a_type);
-ValueType first_available_type_for_flags(uint8_t const a_flags);
-std::pair<QColor, QColor> getTypeColor(ValueType const a_type);
-ValueType stringViewToType(std::string_view const a_type);
-std::vector<ValueType> getHoldedValues(IOSocketFlags::Flags const a_flags);
-Value getDefaultValue(ValueType const a_valueType);
-
 } // namespace spaghetti
 
-#endif // SPAGHETTI_SOCKVALUES_H
+#endif // SPAGHETTI_CUSTOM_VALUE_MATRIX
