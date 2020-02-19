@@ -43,18 +43,6 @@ void Element::serialize(Element::Json &a_json)
   jsonElement["default_new_input_flags"] = m_defaultNewInputFlags;
   jsonElement["default_new_output_flags"] = m_defaultNewOutputFlags;
 
-  auto getSocketType = [](ValueType const a_type) {
-    switch (a_type) {
-      case ValueType::eBool: return "bool";
-      case ValueType::eInt: return "int";
-      case ValueType::eFloat: return "float";
-      case ValueType::eString: return "string";
-      case ValueType::eMatrix: return "matrix";
-    }
-    assert(false && "Wrong socket type");
-    return "unknown";
-  };
-
   auto jsonInputs = Json::array();
   size_t const INPUTS_COUNT{ m_inputs.size() };
   for (size_t i = 0; i < INPUTS_COUNT; ++i) {

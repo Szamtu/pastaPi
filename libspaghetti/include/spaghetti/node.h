@@ -40,18 +40,6 @@ constexpr int NODE_TYPE{ QGraphicsItem::UserType + 1 };
 
 class PackageView;
 
-inline QString ValueType_to_QString(ValueType const a_type)
-{
-  switch (a_type) {
-    case ValueType::eBool: return "Bool";
-    case ValueType::eInt: return "Int";
-    case ValueType::eFloat: return "Float";
-    case ValueType::eString: return "String";
-    case ValueType::eMatrix: return "Matrix";
-  }
-  return "Unknown";
-}
-
 class SPAGHETTI_API Node : public QGraphicsItem {
  public:
   using Sockets = QVector<SocketItem *>;

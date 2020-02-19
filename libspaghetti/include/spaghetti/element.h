@@ -44,14 +44,11 @@
 
 #include <spaghetti/api.h>
 #include <spaghetti/strings.h>
-
-#include <opencv4/opencv2/core/mat.hpp>
+#include <spaghetti/sockvalues.h>
 
 namespace spaghetti {
 
 class Package;
-
-enum class ValueType { eBool, eInt, eFloat, eString, eMatrix };
 
 struct EventNameChanged {
   std::string from;
@@ -88,52 +85,13 @@ struct Event {
 };
 
 using EventCallback = std::function<void(Event const &)>;
-using MatrixTimeStamp = std::chrono::high_resolution_clock::time_point;
-class Matrix {
- public:
-  Matrix() {}
-  Matrix(cv::Mat const a_mat)
-  {
-    m_mat = a_mat;
-    m_timeStamp = std::chrono::high_resolution_clock::now();
-  }
-  Matrix(const Matrix &a_mat)
-  {
-    const std::lock_guard<std::mutex> lock(m_mutex);
-    m_mat = a_mat.m_mat;
-    m_timeStamp = a_mat.m_timeStamp;
-  }
-
-  Matrix operator=(const Matrix &a_mat)
-  {
-    const std::lock_guard<std::mutex> lock(m_mutex);
-    m_mat = a_mat.m_mat;
-    m_timeStamp = a_mat.m_timeStamp;
-    return *this;
-  }
-
-  ~Matrix() { const std::lock_guard<std::mutex> lock(m_mutex); }
-
-  cv::Mat cvMat()
-  {
-    const std::lock_guard<std::mutex> lock(m_mutex);
-    return m_mat;
-  }
-
-  MatrixTimeStamp timeStamp() const { return m_timeStamp; }
-
- private:
-  std::mutex m_mutex;
-  cv::Mat m_mat{};
-  MatrixTimeStamp m_timeStamp;
-};
 
 class SPAGHETTI_API Element {
  public:
   using duration_t = std::chrono::duration<double, std::milli>;
 
   using Json = nlohmann::json;
-  using Value = std::variant<bool, int32_t, float, std::string, Matrix>;
+
   template<typename T>
   struct Vec2 {
     T x{};
@@ -143,20 +101,9 @@ class SPAGHETTI_API Element {
   using vec2f = Vec2<float>;
   using vec2d = Vec2<double>;
 
-  struct IOSocket {
-    enum Flags {
-      eCanHoldBool = 1 << 0,
-      eCanHoldInt = 1 << 1,
-      eCanHoldFloat = 1 << 2,
-      eCanHoldString = 1 << 3,
-      eCanHoldMatrix = 1 << 4,
-      eCanChangeName = 1 << 5,
-      eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString,
-      eDefaultFlags = eCanHoldAllValues | eCanChangeName
-    };
+  struct IOSocket : public IOSocketFlags {
     Value value{};
     ValueType type{};
-
     size_t id{};
     uint8_t slot{};
     uint8_t flags{};

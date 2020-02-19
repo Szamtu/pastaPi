@@ -140,6 +140,7 @@ set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
 set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
   include/spaghetti/api.h
   include/spaghetti/editor.h
+  include/spaghetti/sockvalues.h
   include/spaghetti/element.h
   include/spaghetti/logger.h
   include/spaghetti/node.h
@@ -327,6 +328,7 @@ set(LIBSPAGHETTI_SOURCES
   source/ui/package_view.h
   source/ui/socket_item.cc
 
+  source/sockvalues.cc
   source/element.cc
   source/logger.cc
   source/node.cc

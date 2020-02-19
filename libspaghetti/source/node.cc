@@ -45,40 +45,6 @@ constexpr int32_t const SOCKET_SIZE = SocketItem::SIZE;
 qreal const ROUNDED_SOCKET_SIZE = std::round(static_cast<qreal>(SOCKET_SIZE) / 10.0) * 10.0;
 qreal const ROUNDED_SOCKET_SIZE_2 = ROUNDED_SOCKET_SIZE / 2.0;
 
-// clang-format off
-#ifdef _MSC_VER
-# pragma warning(disable:4715)
-#endif
-// clang-format on
-bool value_type_allowed(uint8_t const a_flags, ValueType const a_type)
-{
-  switch (a_type) {
-    case ValueType::eBool: return a_flags & Element::IOSocket::eCanHoldBool;
-    case ValueType::eInt: return a_flags & Element::IOSocket::eCanHoldInt;
-    case ValueType::eFloat: return a_flags & Element::IOSocket::eCanHoldFloat;
-    case ValueType::eString: return a_flags & Element::IOSocket::eCanHoldString;
-    case ValueType::eMatrix: return a_flags & Element::IOSocket::eCanHoldMatrix;
-  }
-
-  assert(false);
-}
-
-ValueType first_available_type_for_flags(uint8_t const a_flags)
-{
-  if (a_flags & Element::IOSocket::eCanHoldBool) return ValueType::eBool;
-  if (a_flags & Element::IOSocket::eCanHoldInt) return ValueType::eInt;
-  if (a_flags & Element::IOSocket::eCanHoldFloat) return ValueType::eFloat;
-  if (a_flags & Element::IOSocket::eCanHoldString) return ValueType::eString;
-  if (a_flags & Element::IOSocket::eCanHoldMatrix) return ValueType::eMatrix;
-
-  assert(false);
-}
-// clang-format off
-#ifdef _MSC_VER
-# pragma warning(default:4715)
-#endif
-// clang-format on
-
 Node::Node(QGraphicsItem *const a_parent)
   : QGraphicsItem{ a_parent }
 {
