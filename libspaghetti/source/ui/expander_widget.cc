@@ -70,7 +70,7 @@ int ExpanderWidget::insertItem(int const a_index, QWidget *const a_widget, QIcon
   auto const view = new QTreeWidgetItem{ category };
 
   setItemWidget(view, 0, a_widget);
-  setItemExpanded(category, false);
+  category->setExpanded(false);
 
   int insertedIndex{};
 
@@ -141,5 +141,5 @@ void ExpanderWidget::onItemPressed(QTreeWidgetItem *const a_item, int const a_co
 {
   (void)a_column;
 
-  if (a_item && a_item->parent() == nullptr) setItemExpanded(a_item, !isItemExpanded(a_item));
+  if (a_item && a_item->parent() == nullptr) a_item->setExpanded(!a_item->isExpanded());
 }
