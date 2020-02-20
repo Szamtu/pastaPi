@@ -247,6 +247,7 @@ void Registry::registerInternalElements()
   registerElement<opencv::MedianBlur>("Median Blur", ":/unknown.png");
   registerElement<opencv::Writer>("Video writer", ":/unknown.png");
   registerElement<opencv::Resize>("Image resize", ":/unknown.png");
+  registerElement<opencv::FindConturs>("Find contours", ":/unknown.png");
 
   // clang-format off
   registerElement<values::CharacteristicCurve
