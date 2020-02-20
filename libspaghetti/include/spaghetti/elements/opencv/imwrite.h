@@ -21,18 +21,28 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+#ifndef SPAGHETTI_ELEMENTS_OPENCV_IMWRITE_H
+#define SPAGHETTI_ELEMENTS_OPENCV_IMWRITE_H
 
-#include <spaghetti/elements/opencv/cap.h>
-#include <spaghetti/elements/opencv/color2gray.h>
-#include <spaghetti/elements/opencv/drawcontours.h>
-#include <spaghetti/elements/opencv/findcontours.h>
-#include <spaghetti/elements/opencv/imwrite.h>
-#include <spaghetti/elements/opencv/medianblur.h>
-#include <spaghetti/elements/opencv/mog2.h>
-#include <spaghetti/elements/opencv/resize.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
-#include <spaghetti/elements/opencv/writer.h>
+#include <spaghetti/element.h>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+class ImWrite final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "opencv/imwrite" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+
+  ImWrite();
+
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void calculate() override;
+
+ private:
+  bool m_lastState{};
+};
+
+} // namespace spaghetti::elements::opencv
+
+#endif // SPAGHETTI_ELEMENTS_OPENCV_IMWRITE_H

@@ -20,19 +20,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-#define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
-
-#include <spaghetti/elements/opencv/cap.h>
-#include <spaghetti/elements/opencv/color2gray.h>
-#include <spaghetti/elements/opencv/drawcontours.h>
-#include <spaghetti/elements/opencv/findcontours.h>
 #include <spaghetti/elements/opencv/imwrite.h>
-#include <spaghetti/elements/opencv/medianblur.h>
-#include <spaghetti/elements/opencv/mog2.h>
-#include <spaghetti/elements/opencv/resize.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
-#include <spaghetti/elements/opencv/writer.h>
+#include <opencv2/imgcodecs.hpp>
 
-#endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H
+namespace spaghetti::elements::opencv {
+ImWrite::ImWrite()
+  : Element{}
+{
+  setMinInputs(3);
+  setMaxInputs(3);
+  setMinOutputs(0);
+  setMaxOutputs(0);
+
+  addInput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+  addInput(ValueType::eString, "Path", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
+  addInput(ValueType::eBool, "Trigger", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+}
+
+void ImWrite::calculate()
+{
+  auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
+  auto path = std::get<std::string>(m_inputs[1].value);
+  auto trigger = std::get<bool>(m_inputs[2].value);
+  auto sourceImage = matrix.data();
+
+  if (trigger && !m_lastState && !path.empty() && !sourceImage.empty()) {
+    cv::imwrite(path, sourceImage);
+  }
+  m_lastState = trigger;
+}
+
+} // namespace spaghetti::elements::opencv
