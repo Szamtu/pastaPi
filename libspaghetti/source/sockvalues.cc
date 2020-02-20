@@ -42,7 +42,7 @@ ValueTypeDescription{
     "matrix",
     "Matrix",
     { { 169, 169, 169, 255 }, { 169, 169, 169, 255 } },
-    Matrix{}
+    SafeValue<cv::Mat>()
 }
   // clang-format on
 };

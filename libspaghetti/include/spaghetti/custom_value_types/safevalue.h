@@ -21,8 +21,8 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_CUSTOM_VALUE_MATRIX
-#define SPAGHETTI_CUSTOM_VALUE_MATRIX
+#ifndef SPAGHETTI_CUSTOM_VALUE_SAFE_VALUE
+#define SPAGHETTI_CUSTOM_VALUE_SAFE_VALUE
 
 #include <QColor>
 #include <QString>
@@ -32,46 +32,44 @@
 #include <variant>
 
 namespace spaghetti {
-using MatrixTimeStamp = std::chrono::high_resolution_clock::time_point;
 
-class Matrix {
+using SafeValueTimeStamp = std::chrono::high_resolution_clock::time_point;
+template<class T>
+class SafeValue {
  public:
-  Matrix() {}
-  Matrix(cv::Mat const a_mat)
+  SafeValue() {}
+  SafeValue(T const a_data)
   {
-    m_mat = a_mat;
+    m_data = a_data;
     m_timeStamp = std::chrono::high_resolution_clock::now();
   }
-  Matrix(const Matrix &a_mat)
+
+  SafeValue(SafeValue const &a_value)
   {
     const std::lock_guard<std::mutex> lock(m_mutex);
-    m_mat = a_mat.m_mat;
-    m_timeStamp = a_mat.m_timeStamp;
+    m_data = a_value.m_data;
+    m_timeStamp = a_value.m_timeStamp;
   }
 
-  Matrix operator=(const Matrix &a_mat)
+  SafeValue operator=(SafeValue const &a_value)
   {
     const std::lock_guard<std::mutex> lock(m_mutex);
-    m_mat = a_mat.m_mat;
-    m_timeStamp = a_mat.m_timeStamp;
+    m_data = a_value.m_data;
+    m_timeStamp = a_value.m_timeStamp;
     return *this;
   }
 
-  ~Matrix() { const std::lock_guard<std::mutex> lock(m_mutex); }
+  ~SafeValue() { const std::lock_guard<std::mutex> lock(m_mutex); }
 
-  cv::Mat cvMat()
-  {
-    const std::lock_guard<std::mutex> lock(m_mutex);
-    return m_mat;
-  }
-
-  MatrixTimeStamp timeStamp() const { return m_timeStamp; }
+  T data() { return m_data; }
+  SafeValueTimeStamp timeStamp() { return m_timeStamp; }
 
  private:
   std::mutex m_mutex;
-  cv::Mat m_mat{};
-  MatrixTimeStamp m_timeStamp;
+  T m_data{};
+  SafeValueTimeStamp m_timeStamp;
 };
+
 } // namespace spaghetti
 
-#endif // SPAGHETTI_CUSTOM_VALUE_MATRIX
+#endif // SPAGHETTI_CUSTOM_VALUE_SAFE_VALUE

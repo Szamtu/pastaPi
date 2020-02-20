@@ -24,6 +24,6 @@
 #ifndef SPAGHETTI_CUSTOM_VALUE_TYPES
 #define SPAGHETTI_CUSTOM_VALUE_TYPES
 
-#include <spaghetti/custom_value_types/matrix.h>
+#include <spaghetti/custom_value_types/safevalue.h>
 
 #endif // SPAGHETTI_CUSTOM_VALUE_TYPES

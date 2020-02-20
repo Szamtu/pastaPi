@@ -40,8 +40,8 @@ void VideoDisplay::refreshCentralWidget()
 {
   if (!m_element) return;
 
-  auto matrix = std::get<Matrix>(m_element->inputs()[0].value);
-  auto frame = matrix.cvMat();
+  auto matrix = std::get<SafeValue<cv::Mat>>(m_element->inputs()[0].value);
+  auto frame = matrix.data();
 
   if (!frame.empty() && m_lastFrameTimeStamp != matrix.timeStamp()) {
     cv::Mat convertedFrame{};

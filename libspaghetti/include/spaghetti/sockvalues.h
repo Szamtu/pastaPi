@@ -32,7 +32,7 @@
 namespace spaghetti {
 enum class ValueType { eBool, eInt, eFloat, eString, eMatrix };
 
-using Value = std::variant<bool, int32_t, float, std::string, Matrix>;
+using Value = std::variant<bool, int32_t, float, std::string, SafeValue<cv::Mat>>;
 
 struct IOSocketFlags {
   enum Flags {

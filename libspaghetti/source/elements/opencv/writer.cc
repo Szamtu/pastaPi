@@ -94,10 +94,10 @@ void Writer::calculate()
     }
 
     if (m_writer.isOpened()) {
-      auto matrix = std::get<Matrix>(m_inputs[0].value);
+      auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
 
       if (matrix.timeStamp() != m_lastFrameTimeStamp) {
-        m_writer.saveFrame(matrix.cvMat());
+        m_writer.saveFrame(matrix.data());
         m_lastFrameTimeStamp = matrix.timeStamp();
       }
     }

@@ -139,7 +139,7 @@ set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
   )
 set(LIBSPAGHETTI_CUSTOM_VALUE_TYPES
   include/spaghetti/custom_value_types/all.h
-  include/spaghetti/custom_value_types/matrix.h
+  include/spaghetti/custom_value_types/safevalue.h
   )
 set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
   include/spaghetti/api.h
