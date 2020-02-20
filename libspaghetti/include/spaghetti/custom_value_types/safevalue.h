@@ -40,6 +40,7 @@ class SafeValue {
   SafeValue() {}
   SafeValue(T const a_data)
   {
+    const std::lock_guard<std::mutex> lock(m_mutex);
     m_data = a_data;
     m_timeStamp = std::chrono::high_resolution_clock::now();
   }
@@ -61,7 +62,11 @@ class SafeValue {
 
   ~SafeValue() { const std::lock_guard<std::mutex> lock(m_mutex); }
 
-  T data() { return m_data; }
+  T data()
+  {
+    const std::lock_guard<std::mutex> lock(m_mutex);
+    return m_data;
+  }
   SafeValueTimeStamp timeStamp() { return m_timeStamp; }
 
  private:
