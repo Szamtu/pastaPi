@@ -491,8 +491,9 @@ void Node::propertiesInsertTitle(QString const &a_title)
   QTableWidgetItem *const item{ new QTableWidgetItem{ a_title } };
   item->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-  item->setBackgroundColor(Qt::darkGray);
-  item->setTextColor(Qt::black);
+  item->setBackground(QBrush(Qt::darkGray));
+  item->setForeground(QBrush(Qt::black));
+
   m_properties->setItem(ROW, 0, item);
   m_properties->setSpan(ROW, 0, 1, 2);
 }

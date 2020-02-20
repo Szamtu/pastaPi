@@ -168,9 +168,9 @@ void Package::deserialize(Json const &a_json)
     auto const &FROM = CONNECTION["connect"];
     auto const &TO = CONNECTION["to"];
     auto const &FROM_ID = remappedIds[FROM["id"].get<size_t>()];
-    auto const &FROM_SOCKET = FROM["socket"].get<uint8_t>();
+    auto const &FROM_SOCKET = FROM["socket"].get<uint64_t>();
     auto const &TO_ID = remappedIds[TO["id"].get<size_t>()];
-    auto const &TO_SOCKET = TO["socket"].get<uint8_t>();
+    auto const &TO_SOCKET = TO["socket"].get<uint64_t>();
     connect(FROM_ID, FROM_SOCKET, TO_ID, TO_SOCKET);
   }
 }
@@ -252,8 +252,8 @@ Element *Package::get(size_t const a_id) const
   return m_elements[a_id];
 }
 
-bool Package::connect(size_t const a_sourceId, uint8_t const a_sourceSocket, size_t const a_targetId,
-                      uint8_t const a_targetSocket)
+bool Package::connect(size_t const a_sourceId, uint64_t const a_sourceSocket, size_t const a_targetId,
+                      uint64_t const a_targetSocket)
 {
   pauseDispatchThread();
 
@@ -288,8 +288,8 @@ bool Package::connect(size_t const a_sourceId, uint8_t const a_sourceSocket, siz
   return true;
 }
 
-bool Package::disconnect(size_t const a_sourceId, uint8_t const a_outputId, size_t const a_targetId,
-                         uint8_t const a_inputId)
+bool Package::disconnect(size_t const a_sourceId, uint64_t const a_outputId, size_t const a_targetId,
+                         uint64_t const a_inputId)
 {
   pauseDispatchThread();
 

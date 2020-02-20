@@ -56,9 +56,9 @@ class SPAGHETTI_API Package final : public Element {
   using Elements = std::vector<Element *>;
   struct Connection {
     size_t from_id{};
-    uint8_t from_socket{};
+    uint64_t from_socket{};
     size_t to_id{};
-    uint8_t to_socket{};
+    uint64_t to_socket{};
   };
 
   using Connections = std::vector<Connection>;
@@ -95,9 +95,10 @@ class SPAGHETTI_API Package final : public Element {
 
   Element *get(size_t const a_id) const;
 
-  bool connect(size_t const a_sourceId, uint8_t const a_sourceSocket, size_t const a_targetId,
-               uint8_t const a_targetSocket);
-  bool disconnect(size_t const a_sourceId, uint8_t const a_outputId, size_t const a_targetId, uint8_t const a_inputId);
+  bool connect(size_t const a_sourceId, uint64_t const a_sourceSocket, size_t const a_targetId,
+               uint64_t const a_targetSocket);
+  bool disconnect(size_t const a_sourceId, uint64_t const a_outputId, size_t const a_targetId,
+                  uint64_t const a_inputId);
 
   void dispatchThreadFunction();
 
