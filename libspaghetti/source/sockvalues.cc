@@ -104,7 +104,7 @@ bool ValueDescription::isTypeAlowed(ValueType const a_type, IOSocketFlags::Flags
   auto typeID = static_cast<size_t>(a_type);
   assert(typeID < g_valuesDescriptions.size());
 
-  return typeID & a_flags;
+  return (1 << typeID) & a_flags;
 }
 
 ValueType ValueDescription::firstAvailableTypeForFlags(IOSocketFlags::Flags const a_flags)
