@@ -30,9 +30,13 @@
 #include <variant>
 
 namespace spaghetti {
-enum class ValueType { eBool, eInt, eFloat, eString, eMatrix };
+enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, ePoint, eShape, eShapeVector };
 
-using Value = std::variant<bool, int32_t, float, std::string, SafeValue<cv::Mat>>;
+using Shape = std::vector<cv::Point>;
+using ShapeVector = std::vector<std::vector<cv::Point>>;
+
+using Value = std::variant<bool, int32_t, float, std::string, SafeValue<cv::Mat>, cv::Point, SafeValue<Shape>,
+                           SafeValue<ShapeVector>>;
 
 struct IOSocketFlags {
   enum Flags {
@@ -41,7 +45,10 @@ struct IOSocketFlags {
     eCanHoldFloat = 1 << 2,
     eCanHoldString = 1 << 3,
     eCanHoldMatrix = 1 << 4,
-    eCanChangeName = 1 << 5,
+    eCanHoldPoint = 1 << 5,
+    eCanHoldShape = 1 << 6,
+    eCanHoldShapeVector = 1 << 6,
+    eCanChangeName = 1 << 7,
     eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName
   };

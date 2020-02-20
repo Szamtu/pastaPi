@@ -43,6 +43,30 @@ ValueTypeDescription{
     "Matrix",
     { { 169, 169, 169, 255 }, { 169, 169, 169, 255 } },
     SafeValue<cv::Mat>()
+},
+ValueTypeDescription{
+    ValueType::ePoint,
+    IOSocketFlags::eCanHoldPoint,
+    "point",
+    "Point",
+    { { 201, 57, 237, 255 }, { 201, 57, 237, 255 } },
+    cv::Point()
+},
+ValueTypeDescription{
+    ValueType::eShape,
+    IOSocketFlags::eCanHoldShape,
+    "shape",
+    "Shape",
+    { { 57, 237, 222, 255 }, { 57, 237, 222, 255 } },
+    SafeValue<Shape>()
+},
+ValueTypeDescription{
+    ValueType::eShapeVector,
+    IOSocketFlags::eCanHoldShapeVector,
+    "shape_vector",
+    "ShapeVector",
+    { { 207, 237, 57, 255 }, { 207, 237, 57, 255 } },
+    SafeValue<ShapeVector>()
 }
   // clang-format on
 };
