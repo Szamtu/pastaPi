@@ -20,39 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <spaghetti/elements/opencv/findcontours.h>
-#include <opencv2/imgproc.hpp>
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_OPENCV_DRAWCONTOURS_H
+#define SPAGHETTI_ELEMENTS_OPENCV_DRAWCONTOURS_H
+
+#include <spaghetti/element.h>
 
 namespace spaghetti::elements::opencv {
-FindConturs::FindConturs()
-  : Element{}
-{
-  setMinInputs(1);
-  setMaxInputs(1);
-  setMinOutputs(1);
-  setMaxOutputs(1);
+class DrawContours final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "opencv/drawcontours" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-  addInput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
-  addOutput(ValueType::eShapeVector, "Contours", IOSocket::eCanHoldShapeVector | IOSocket::eCanChangeName);
-}
+  DrawContours();
 
-void FindConturs::calculate()
-{
-  auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
-  auto sourceImage = matrix.data();
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
 
-  if (!sourceImage.empty() && m_lastFrameTimeStamp != matrix.timeStamp()) {
-    ShapeVector contours{};
-    std::vector<cv::Vec4i> hierarchy{};
+  void calculate() override;
 
-    if (sourceImage.type() != CV_8UC1) {
-      cv::cvtColor(sourceImage, sourceImage, cv::COLOR_BGR2GRAY);
-    }
-
-    cv::findContours(sourceImage, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
-    m_outputs[0].value = contours;
-    m_lastFrameTimeStamp = matrix.timeStamp();
-  }
-}
+ private:
+  SafeValueTimeStamp m_imageTimestamp{};
+  SafeValueTimeStamp m_shapesTimestamp{};
+};
 
 } // namespace spaghetti::elements::opencv
+
+#endif // SPAGHETTI_ELEMENTS_OPENCV_DRAWCONTOURS_H

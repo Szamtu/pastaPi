@@ -26,6 +26,7 @@
 
 #include <spaghetti/elements/opencv/cap.h>
 #include <spaghetti/elements/opencv/color2gray.h>
+#include <spaghetti/elements/opencv/drawcontours.h>
 #include <spaghetti/elements/opencv/findcontours.h>
 #include <spaghetti/elements/opencv/medianblur.h>
 #include <spaghetti/elements/opencv/mog2.h>

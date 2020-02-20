@@ -20,38 +20,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <spaghetti/elements/opencv/findcontours.h>
+#include <spaghetti/elements/opencv/drawcontours.h>
+#include <QDebug>
 #include <opencv2/imgproc.hpp>
 
 namespace spaghetti::elements::opencv {
-FindConturs::FindConturs()
+DrawContours::DrawContours()
   : Element{}
 {
-  setMinInputs(1);
-  setMaxInputs(1);
+  setMinInputs(2);
+  setMaxInputs(2);
   setMinOutputs(1);
   setMaxOutputs(1);
 
   addInput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
-  addOutput(ValueType::eShapeVector, "Contours", IOSocket::eCanHoldShapeVector | IOSocket::eCanChangeName);
+  addInput(ValueType::eShapeVector, "Contours", IOSocket::eCanHoldShapeVector | IOSocket::eCanChangeName);
+  setDefaultNewInputFlags(IOSocket::eCanHoldShapeVector | IOSocket::eCanChangeName);
+
+  addOutput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
 }
 
-void FindConturs::calculate()
+void DrawContours::calculate()
 {
   auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
+  auto shapes = std::get<SafeValue<ShapeVector>>(m_inputs[1].value);
+
+  bool reCalculate{};
+
+  if (matrix.timeStamp() != m_imageTimestamp) reCalculate = true;
+  if (shapes.timeStamp() != m_shapesTimestamp) reCalculate = true;
+
   auto sourceImage = matrix.data();
+  auto shapeVec = shapes.data();
 
-  if (!sourceImage.empty() && m_lastFrameTimeStamp != matrix.timeStamp()) {
-    ShapeVector contours{};
-    std::vector<cv::Vec4i> hierarchy{};
+  qDebug() << reCalculate;
+  qDebug() << shapeVec.size();
 
-    if (sourceImage.type() != CV_8UC1) {
-      cv::cvtColor(sourceImage, sourceImage, cv::COLOR_BGR2GRAY);
+  if (sourceImage.empty()) reCalculate = false;
+
+  if (reCalculate) {
+    auto convertedImage = sourceImage.clone();
+    cv::RNG rng(12345);
+
+    for (size_t i = 0; i < shapeVec.size(); i++) {
+      cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
+      drawContours(convertedImage, shapeVec, static_cast<int>(i), color, 2, 8);
     }
 
-    cv::findContours(sourceImage, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
-    m_outputs[0].value = contours;
-    m_lastFrameTimeStamp = matrix.timeStamp();
+    m_outputs[0].value = convertedImage;
   }
 }
 
