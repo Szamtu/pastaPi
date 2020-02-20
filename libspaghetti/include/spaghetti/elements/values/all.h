@@ -31,6 +31,7 @@
 #include <spaghetti/elements/values/const_float.h>
 #include <spaghetti/elements/values/const_int.h>
 #include <spaghetti/elements/values/const_string.h>
+#include <spaghetti/elements/values/convert.h>
 #include <spaghetti/elements/values/degree_to_radian.h>
 #include <spaghetti/elements/values/float_to_int.h>
 #include <spaghetti/elements/values/int_to_float.h>
