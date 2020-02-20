@@ -364,7 +364,7 @@ void SocketItem::setValueType(ValueType const a_type)
 {
   m_valueType = a_type;
 
-  auto const colors = getTypeColor(m_valueType);
+  auto const colors = ValueDescription::typeColors(m_valueType);
   setColors(colors.first, colors.second);
 }
 

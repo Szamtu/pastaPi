@@ -48,7 +48,7 @@ void Element::serialize(Element::Json &a_json)
   for (size_t i = 0; i < INPUTS_COUNT; ++i) {
     Json socket{};
     socket["socket"] = i;
-    socket["type"] = getSocketType(m_inputs[i].type);
+    socket["type"] = ValueDescription::typeCString(m_inputs[i].type);
     socket["name"] = m_inputs[i].name;
     socket["flags"] = m_inputs[i].flags;
     jsonInputs.push_back(socket);
@@ -59,7 +59,7 @@ void Element::serialize(Element::Json &a_json)
   for (size_t i = 0; i < OUTPUTS_COUNT; ++i) {
     Json socket{};
     socket["socket"] = i;
-    socket["type"] = getSocketType(m_outputs[i].type);
+    socket["type"] = ValueDescription::typeCString(m_outputs[i].type);
     socket["name"] = m_outputs[i].name;
     socket["flags"] = m_outputs[i].flags;
     jsonOutputs.push_back(socket);
@@ -116,7 +116,7 @@ void Element::deserialize(Json const &a_json)
     auto const SOCKET_STRING_TYPE = a_socket["type"].get<std::string>();
     auto const SOCKET_NAME = a_socket["name"].get<std::string>();
     auto const SOCKET_FLAGS = a_socket["flags"].get<uint8_t>();
-    auto const SOCKET_TYPE = stringViewToType(SOCKET_STRING_TYPE);
+    auto const SOCKET_TYPE = ValueDescription::stringViewToType(SOCKET_STRING_TYPE);
 
     assert(a_socketCount == SOCKET_ID);
 
@@ -243,7 +243,7 @@ bool Element::connect(size_t const a_sourceId, uint8_t const a_outputId, uint8_t
 
 void Element::resetIOSocketValue(IOSocket &a_io)
 {
-  a_io.value = getDefaultValue(a_io.type);
+  a_io.value = ValueDescription::defaultValue(a_io.type);
 }
 
 void Element::handleEvent(Event const &a_event)

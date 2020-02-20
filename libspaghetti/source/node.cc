@@ -460,9 +460,10 @@ void Node::showIOProperties(IOSocketsType const a_type)
     }
 
     auto const comboBox = new QComboBox;
-    auto const holdedValues = getHoldedValues(static_cast<IOSocketFlags::Flags>(IO.flags));
+    auto const holdedValues = ValueDescription::heldedValues(static_cast<IOSocketFlags::Flags>(IO.flags));
 
-    for (auto const &value : holdedValues) comboBox->addItem(ValueType_to_QString(value), static_cast<int>(value));
+    for (auto const &value : holdedValues)
+      comboBox->addItem(ValueDescription::typeQstring(value), static_cast<int>(value));
 
     int const INDEX{ comboBox->findData(static_cast<int>(IO.type)) };
     comboBox->setCurrentIndex(INDEX);
@@ -596,7 +597,8 @@ void Node::addInput()
   uint8_t const SIZE{ static_cast<uint8_t>(m_element->inputs().size()) };
   QString const INPUT_NAME{ QString("#%1").arg(SIZE + 1) };
 
-  ValueType const TYPE{ first_available_type_for_flags(m_element->defaultNewInputFlags()) };
+  ValueType const TYPE{ ValueDescription::firstAvailableTypeForFlags(
+      static_cast<IOSocketFlags::Flags>(m_element->defaultNewInputFlags())) };
   m_element->addInput(TYPE, INPUT_NAME.toStdString(), m_element->defaultNewInputFlags());
 
   m_packageView->showProperties();
@@ -621,7 +623,8 @@ void Node::addOutput()
   uint8_t const SIZE{ static_cast<uint8_t>(m_element->outputs().size()) };
   QString const OUTPUT_NAME{ QString("#%1").arg(SIZE + 1) };
 
-  ValueType const TYPE{ first_available_type_for_flags(m_element->defaultNewOutputFlags()) };
+  ValueType const TYPE{ ValueDescription::firstAvailableTypeForFlags(
+      static_cast<IOSocketFlags::Flags>(m_element->defaultNewInputFlags())) };
   m_element->addOutput(TYPE, OUTPUT_NAME.toStdString(), m_element->defaultNewOutputFlags());
 
   m_packageView->showProperties();
@@ -682,9 +685,9 @@ void Node::setSocketType(IOSocketsType const a_socketType, uint8_t const a_socke
   bool const INPUTS{ a_socketType == IOSocketsType::eInputs };
   auto &io = INPUTS ? m_element->inputs()[a_socketId] : m_element->outputs()[a_socketId];
 
-  if (!value_type_allowed(io.flags, a_type)) {
+  if (!ValueDescription::isTypeAlowed(a_type, static_cast<IOSocketFlags::Flags>(io.flags))) {
     spaghetti::log::error("Changing io's {}@{} type to {} is not allowed.", m_element->id(), io.id,
-                          ValueType_to_QString(a_type).toStdString());
+                          ValueDescription::typeQstring(a_type).toStdString());
     return;
   }
 

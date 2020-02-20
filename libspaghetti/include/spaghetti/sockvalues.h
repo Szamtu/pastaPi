@@ -47,14 +47,28 @@ struct IOSocketFlags {
   };
 };
 
-QString ValueType_to_QString(ValueType const a_type);
-const char *getSocketType(ValueType const a_type);
-bool value_type_allowed(uint8_t const a_flags, ValueType const a_type);
-ValueType first_available_type_for_flags(uint8_t const a_flags);
-std::pair<QColor, QColor> getTypeColor(ValueType const a_type);
-ValueType stringViewToType(std::string_view const a_type);
-std::vector<ValueType> getHoldedValues(IOSocketFlags::Flags const a_flags);
-Value getDefaultValue(ValueType const a_valueType);
+struct ValueTypeDescription {
+  ValueTypeDescription(ValueType const a_type, IOSocketFlags::Flags const a_holdType, std::string const a_typeString,
+                       QString const a_typeQstring, std::pair<QColor, QColor> const a_colors, Value const a_value);
+  ValueType const type{};
+  IOSocketFlags::Flags const holdType{};
+  std::string const typeString{};
+  QString const typeQstring{};
+  std::pair<QColor, QColor> const colors{};
+  Value const value{};
+};
+
+class ValueDescription {
+ public:
+  static QString typeQstring(ValueType const a_type);
+  static const char *typeCString(ValueType const a_type);
+  static bool isTypeAlowed(ValueType const a_type, IOSocketFlags::Flags const a_flags);
+  static ValueType firstAvailableTypeForFlags(IOSocketFlags::Flags const a_flags);
+  static std::pair<QColor, QColor> typeColors(ValueType const a_type);
+  static ValueType stringViewToType(std::string_view const a_type);
+  static std::vector<ValueType> heldedValues(IOSocketFlags::Flags const a_flags);
+  static Value defaultValue(ValueType const a_valueType);
+};
 
 } // namespace spaghetti
 
