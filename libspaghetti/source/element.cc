@@ -80,12 +80,12 @@ void Element::deserialize(Json const &a_json)
 {
   auto const &ELEMENT = a_json["element"];
   auto const NAME = ELEMENT["name"].get<std::string>();
-  auto const MIN_INPUTS = ELEMENT["min_inputs"].get<uint8_t>();
-  auto const MAX_INPUTS = ELEMENT["max_inputs"].get<uint8_t>();
-  auto const MIN_OUTPUTS = ELEMENT["min_outputs"].get<uint8_t>();
-  auto const MAX_OUTPUTS = ELEMENT["max_outputs"].get<uint8_t>();
-  auto const DEFAULT_NEW_INPUT_FLAGS = ELEMENT["default_new_input_flags"].get<uint8_t>();
-  auto const DEFAULT_NEW_OUTPUT_FLAGS = ELEMENT["default_new_output_flags"].get<uint8_t>();
+  auto const MIN_INPUTS = ELEMENT["min_inputs"].get<uint64_t>();
+  auto const MAX_INPUTS = ELEMENT["max_inputs"].get<uint64_t>();
+  auto const MIN_OUTPUTS = ELEMENT["min_outputs"].get<uint64_t>();
+  auto const MAX_OUTPUTS = ELEMENT["max_outputs"].get<uint64_t>();
+  auto const DEFAULT_NEW_INPUT_FLAGS = ELEMENT["default_new_input_flags"].get<uint64_t>();
+  auto const DEFAULT_NEW_OUTPUT_FLAGS = ELEMENT["default_new_output_flags"].get<uint64_t>();
 
   auto const &IO = ELEMENT["io"];
   auto const &INPUTS = IO["inputs"];
@@ -111,11 +111,11 @@ void Element::deserialize(Json const &a_json)
   iconify(ICONIFY);
   setIconifyingHidesCentralWidget(ICONIFYING_HIDES_CENTRAL_WIDGET);
 
-  auto add_socket = [&](Json const &a_socket, bool const a_input, uint8_t &a_socketCount) {
-    auto const SOCKET_ID = a_socket["socket"].get<uint8_t>();
+  auto add_socket = [&](Json const &a_socket, bool const a_input, uint64_t &a_socketCount) {
+    auto const SOCKET_ID = a_socket["socket"].get<uint64_t>();
     auto const SOCKET_STRING_TYPE = a_socket["type"].get<std::string>();
     auto const SOCKET_NAME = a_socket["name"].get<std::string>();
-    auto const SOCKET_FLAGS = a_socket["flags"].get<uint8_t>();
+    auto const SOCKET_FLAGS = a_socket["flags"].get<uint64_t>();
     auto const SOCKET_TYPE = ValueDescription::stringViewToType(SOCKET_STRING_TYPE);
 
     assert(a_socketCount == SOCKET_ID);
@@ -124,7 +124,7 @@ void Element::deserialize(Json const &a_json)
     a_socketCount++;
   };
 
-  uint8_t inputsCount{}, outputsCount{};
+  uint64_t inputsCount{}, outputsCount{};
   for (auto &&socket : INPUTS) add_socket(socket, true, inputsCount);
   for (auto &&socket : OUTPUTS) add_socket(socket, false, outputsCount);
 }
@@ -137,7 +137,7 @@ void Element::setName(std::string const &a_name)
   handleEvent(Event{ EventType::eElementNameChanged, EventNameChanged{ OLD_NAME, a_name } });
 }
 
-bool Element::addInput(ValueType const a_type, std::string const &a_name, uint8_t const a_flags)
+bool Element::addInput(ValueType const a_type, std::string const &a_name, uint64_t const a_flags)
 {
   if (m_inputs.size() + 1 > m_maxInputs) return false;
 
@@ -154,7 +154,7 @@ bool Element::addInput(ValueType const a_type, std::string const &a_name, uint8_
   return true;
 }
 
-void Element::setInputName(uint8_t const a_input, std::string const &a_name)
+void Element::setInputName(uint64_t const a_input, std::string const &a_name)
 {
   auto const OLD_NAME = m_inputs[a_input].name;
   if (OLD_NAME == a_name) return;
@@ -176,7 +176,7 @@ void Element::clearInputs()
   m_inputs.clear();
 }
 
-bool Element::addOutput(ValueType const a_type, std::string const &a_name, uint8_t const a_flags)
+bool Element::addOutput(ValueType const a_type, std::string const &a_name, uint64_t const a_flags)
 {
   if (m_outputs.size() + 1 > m_maxOutputs) return false;
 
@@ -193,7 +193,7 @@ bool Element::addOutput(ValueType const a_type, std::string const &a_name, uint8
   return true;
 }
 
-void Element::setOutputName(uint8_t const a_output, std::string const &a_name)
+void Element::setOutputName(uint64_t const a_output, std::string const &a_name)
 {
   auto const OLD_NAME = m_outputs[a_output].name;
   if (OLD_NAME == a_name) return;
@@ -215,7 +215,7 @@ void Element::clearOutputs()
   m_outputs.clear();
 }
 
-void Element::setIOName(bool const a_input, uint8_t const a_id, std::string const &a_name)
+void Element::setIOName(bool const a_input, uint64_t const a_id, std::string const &a_name)
 {
   if (a_input)
     setInputName(a_id, a_name);
@@ -223,7 +223,7 @@ void Element::setIOName(bool const a_input, uint8_t const a_id, std::string cons
     setOutputName(a_id, a_name);
 }
 
-void Element::setIOValueType(bool const a_input, uint8_t const a_id, ValueType const a_type)
+void Element::setIOValueType(bool const a_input, uint64_t const a_id, ValueType const a_type)
 {
   auto &io = a_input ? m_inputs[a_id] : m_outputs[a_id];
   auto const OLD_TYPE = io.type;
@@ -236,7 +236,7 @@ void Element::setIOValueType(bool const a_input, uint8_t const a_id, ValueType c
   handleEvent(Event{ EventType::eIOTypeChanged, EventIOTypeChanged{ a_input, a_id, OLD_TYPE, a_type } });
 }
 
-bool Element::connect(size_t const a_sourceId, uint8_t const a_outputId, uint8_t const a_inputId)
+bool Element::connect(size_t const a_sourceId, uint64_t const a_outputId, uint64_t const a_inputId)
 {
   return m_package->connect(a_sourceId, a_outputId, m_id, a_inputId);
 }
@@ -252,25 +252,25 @@ void Element::handleEvent(Event const &a_event)
   if (m_handler) m_handler(a_event);
 }
 
-void Element::setMinInputs(uint8_t const a_min)
+void Element::setMinInputs(uint64_t const a_min)
 {
   if (a_min > m_maxInputs) return;
   m_minInputs = a_min;
 }
 
-void Element::setMaxInputs(uint8_t const a_max)
+void Element::setMaxInputs(uint64_t const a_max)
 {
   if (a_max < m_minInputs) return;
   m_maxInputs = a_max;
 }
 
-void Element::setMinOutputs(uint8_t const a_min)
+void Element::setMinOutputs(uint64_t const a_min)
 {
   if (a_min > m_maxOutputs) return;
   m_minOutputs = a_min;
 }
 
-void Element::setMaxOutputs(uint8_t const a_max)
+void Element::setMaxOutputs(uint64_t const a_max)
 {
   if (a_max < m_minOutputs) return;
   m_maxOutputs = a_max;
