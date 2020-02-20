@@ -53,9 +53,6 @@ void DrawContours::calculate()
   auto sourceImage = matrix.data();
   auto shapeVec = shapes.data();
 
-  qDebug() << reCalculate;
-  qDebug() << shapeVec.size();
-
   if (sourceImage.empty()) reCalculate = false;
 
   if (reCalculate) {
