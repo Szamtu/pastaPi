@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,24 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_ELEMENTS_UI_ALL_H
-#define SPAGHETTI_ELEMENTS_UI_ALL_H
+#ifndef SPAGHETTI_ELEMENTS_UI_STRING_INFO_H
+#define SPAGHETTI_ELEMENTS_UI_STRING_INFO_H
 
-#include <spaghetti/elements/ui/bcd_to_seven_segment_display.h>
-#include <spaghetti/elements/ui/float_info.h>
-#include <spaghetti/elements/ui/int_info.h>
-#include <spaghetti/elements/ui/push_button.h>
-#include <spaghetti/elements/ui/seven_segment_display.h>
-#include <spaghetti/elements/ui/string_info.h>
-#include <spaghetti/elements/ui/toggle_button.h>
+#include <spaghetti/element.h>
 
-#endif // SPAGHETTI_ELEMENTS_UI_ALL_H
+namespace spaghetti::elements::ui {
+
+class StringInfo final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "ui/string_info" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+
+  StringInfo();
+
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+};
+
+} // namespace spaghetti::elements::ui
+
+#endif // SPAGHETTI_ELEMENTS_UI_STRING_INFO_H

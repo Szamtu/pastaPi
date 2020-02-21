@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_ELEMENTS_UI_ALL_H
-#define SPAGHETTI_ELEMENTS_UI_ALL_H
-
-#include <spaghetti/elements/ui/bcd_to_seven_segment_display.h>
-#include <spaghetti/elements/ui/float_info.h>
-#include <spaghetti/elements/ui/int_info.h>
-#include <spaghetti/elements/ui/push_button.h>
-#include <spaghetti/elements/ui/seven_segment_display.h>
 #include <spaghetti/elements/ui/string_info.h>
-#include <spaghetti/elements/ui/toggle_button.h>
 
-#endif // SPAGHETTI_ELEMENTS_UI_ALL_H
+namespace spaghetti::elements::ui {
+
+StringInfo::StringInfo()
+{
+  setMinInputs(1);
+  setMaxInputs(1);
+  setMinOutputs(0);
+  setMaxOutputs(0);
+
+  addInput(ValueType::eString, "String", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
+}
+
+} // namespace spaghetti::elements::ui

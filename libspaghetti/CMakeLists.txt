@@ -97,6 +97,7 @@ set(LIBSPAGHETTI_PUBLIC_UI_HEADERS
   include/spaghetti/elements/ui/bcd_to_seven_segment_display.h
   include/spaghetti/elements/ui/float_info.h
   include/spaghetti/elements/ui/int_info.h
+  include/spaghetti/elements/ui/string_info.h
   include/spaghetti/elements/ui/push_button.h
   include/spaghetti/elements/ui/toggle_button.h
   include/spaghetti/elements/ui/seven_segment_display.h
@@ -241,6 +242,7 @@ set(LIBSPAGHETTI_SOURCES
   source/elements/ui/bcd_to_seven_segment_display.cc
   source/elements/ui/float_info.cc
   source/elements/ui/int_info.cc
+  source/elements/ui/string_info.cc
   source/elements/ui/push_button.cc
   source/elements/ui/toggle_button.cc
   source/elements/ui/seven_segment_display.cc
@@ -296,6 +298,8 @@ set(LIBSPAGHETTI_SOURCES
   source/nodes/ui/float_info.h
   source/nodes/ui/int_info.cc
   source/nodes/ui/int_info.h
+  source/nodes/ui/string_info.cc
+  source/nodes/ui/string_info.h
   source/nodes/ui/push_button.cc
   source/nodes/ui/push_button.h
   source/nodes/ui/toggle_button.cc
