@@ -179,7 +179,7 @@ void Editor::populateLibrary()
     std::string const path{ info.type };
     std::string category{ path };
 
-    if (auto const it = path.find_first_of('/'); it != std::string::npos) category = path.substr(0, it);
+    if (auto const it = path.find_last_of('/'); it != std::string::npos) category = path.substr(0, it);
     category[0] = static_cast<char>(std::toupper(category[0]));
 
     addElement(QString::fromStdString(category), QString::fromStdString(info.name), QString::fromStdString(info.type),
