@@ -29,11 +29,12 @@ FindConturs::FindConturs()
 {
   setMinInputs(1);
   setMaxInputs(1);
-  setMinOutputs(1);
-  setMaxOutputs(1);
+  setMinOutputs(2);
+  setMaxOutputs(2);
 
   addInput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
   addOutput(ValueType::eShapeVector, "Contours", IOSocket::eCanHoldShapeVector | IOSocket::eCanChangeName);
+  addOutput(ValueType::eInt, "N", IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
 }
 
 void FindConturs::calculate()
@@ -51,6 +52,7 @@ void FindConturs::calculate()
 
     cv::findContours(sourceImage, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
     m_outputs[0].value = contours;
+    m_outputs[1].value = static_cast<int>(contours.size());
     m_lastFrameTimeStamp = matrix.timeStamp();
   }
 }
