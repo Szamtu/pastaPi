@@ -212,10 +212,10 @@ class SPAGHETTI_API Element {
   vec2d m_position{};
   bool m_isIconified{};
   bool m_iconifyingHidesCentralWidget{};
-  uint64_t m_minInputs{};
-  uint64_t m_maxInputs{ std::numeric_limits<uint64_t>::max() };
-  uint64_t m_minOutputs{};
-  uint64_t m_maxOutputs{ std::numeric_limits<uint64_t>::max() };
+  uint8_t m_minInputs{};
+  uint8_t m_maxInputs{ std::numeric_limits<uint8_t>::max() };
+  uint8_t m_minOutputs{};
+  uint8_t m_maxOutputs{ std::numeric_limits<uint8_t>::max() };
   uint64_t m_defaultNewInputFlags{};
   uint64_t m_defaultNewOutputFlags{};
   EventCallback m_handler{};
