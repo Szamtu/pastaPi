@@ -139,6 +139,7 @@ set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
   include/spaghetti/elements/opencv/findcontours.h
   include/spaghetti/elements/opencv/drawcontours.h
   include/spaghetti/elements/opencv/imwrite.h
+  include/spaghetti/elements/opencv/crop_image.h
   )
 set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
   include/spaghetti/elements/all.h
@@ -280,6 +281,7 @@ set(LIBSPAGHETTI_SOURCES
   source/elements/opencv/findcontours.cc
   source/elements/opencv/drawcontours.cc
   source/elements/opencv/imwrite.cc
+  source/elements/opencv/crop_image.cc
 
   source/icons/icons.qrc
 

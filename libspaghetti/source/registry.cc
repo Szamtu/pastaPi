@@ -253,6 +253,7 @@ void Registry::registerInternalElements()
   registerElement<opencv::FindConturs>("Find contours", ":/unknown.png");
   registerElement<opencv::DrawContours>("Draw contours", ":/unknown.png");
   registerElement<opencv::ImWrite>("Write image", ":/unknown.png");
+  registerElement<opencv::CropImage>("Crop image", ":/unknown.png");
 
   // clang-format off
   registerElement<values::CharacteristicCurve
