@@ -124,6 +124,7 @@ set(LIBSPAGHETTI_PUBLIC_VALUES_HEADERS
   include/spaghetti/elements/values/random_int.h
   include/spaghetti/elements/values/random_int_if.h
   include/spaghetti/elements/values/convert.h
+  include/spaghetti/elements/values/concat.h
   )
 set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
   include/spaghetti/elements/opencv/all.h
@@ -265,6 +266,7 @@ set(LIBSPAGHETTI_SOURCES
   source/elements/values/random_int.cc
   source/elements/values/random_int_if.cc
   source/elements/values/convert.cc
+  source/elements/values/concat.cc
 
   source/elements/opencv/cap.cc
   source/elements/opencv/videodisplay.cc

@@ -27,6 +27,7 @@
 #include <spaghetti/elements/values/characteristic_curve.h>
 #include <spaghetti/elements/values/clamp_float.h>
 #include <spaghetti/elements/values/clamp_int.h>
+#include <spaghetti/elements/values/concat.h>
 #include <spaghetti/elements/values/const_bool.h>
 #include <spaghetti/elements/values/const_float.h>
 #include <spaghetti/elements/values/const_int.h>

@@ -232,6 +232,7 @@ void Registry::registerInternalElements()
   registerElement<values::Int2Float>("Convert value (Int2Float)", ":/unknown.png");
   registerElement<values::Float2Int>("Convert value (Float2Int)", ":/unknown.png");
   registerElement<values::Convert>("Convert value", ":/unknown.png");
+  registerElement<values::ConCat>("Concat strings", ":/unknown.png");
 
   registerElement<values::MinInt>("Minimum value (Int)", ":/unknown.png");
   registerElement<values::MaxInt>("Maximum value (Int)", ":/unknown.png");
