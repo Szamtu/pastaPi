@@ -339,10 +339,8 @@ set(LIBSPAGHETTI_SOURCES
   source/ui/colors.h
   source/ui/editor.cc
   source/ui/editor.ui
-  source/ui/elements_list.cc
-  source/ui/elements_list.h
-  source/ui/expander_widget.cc
-  source/ui/expander_widget.h
+  source/ui/elementstree.cc
+  source/ui/elementstree.h
   source/ui/link_item.cc
   source/ui/link_item.h
   source/ui/package_view.cc

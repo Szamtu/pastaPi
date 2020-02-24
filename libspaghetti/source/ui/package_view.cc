@@ -44,7 +44,6 @@
 #include "spaghetti/node.h"
 #include "spaghetti/package.h"
 #include "spaghetti/registry.h"
-#include "ui/elements_list.h"
 #include "ui/link_item.h"
 #include "nodes/package.h"
 

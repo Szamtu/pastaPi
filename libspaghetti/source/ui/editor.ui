@@ -117,7 +117,19 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="ExpanderWidget" name="elementsContainer">
+          <widget class="ElementsTree" name="elementsContainer">
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragOnly</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::CopyAction</enum>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
            <column>
             <property name="text">
              <string notr="true">1</string>
@@ -141,7 +153,19 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="ExpanderWidget" name="packagesContainer">
+          <widget class="ElementsTree" name="packagesContainer">
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragOnly</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::CopyAction</enum>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
            <column>
             <property name="text">
              <string notr="true">1</string>
@@ -308,9 +332,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>ExpanderWidget</class>
+   <class>ElementsTree</class>
    <extends>QTreeWidget</extends>
-   <header>ui/expander_widget.h</header>
+   <header>ui/elementstree.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

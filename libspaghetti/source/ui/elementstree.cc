@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,55 +20,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "ui/elements_list.h"
-
+#include "elementstree.h"
+#include "package_view.h"
 #include "spaghetti/editor.h"
-#include "ui/package_view.h"
 
 #include <QDebug>
 #include <QDrag>
+#include <QDropEvent>
 #include <QMimeData>
-#include <cassert>
 
-namespace spaghetti {
-
-ElementsList::ElementsList(Editor *const a_parent)
-  : QListWidget{}
-  , m_editor{ a_parent }
+ElementsTree::ElementsTree(QWidget *a_parent)
+  : QTreeWidget{ a_parent }
 {
   assert(a_parent);
-  setDragEnabled(true);
-  setViewMode(QListView::ListMode);
-  setIconSize(QSize(50, 25));
-  setSpacing(5);
 
-  connect(this, &ElementsList::itemDoubleClicked, [this](auto a_item) {
-    auto const IS_PACKAGE = a_item->data(ElementsList::eMetaDataIsPackage).toBool();
-    auto const FILE = a_item->data(ElementsList::eMetaDataFilename).toString();
-    if (IS_PACKAGE)
-      m_editor->openPackageFile(FILE);
-  });
+  setIconSize(QSize{ 32, 32 });
 }
 
-void ElementsList::doResize()
-{
-  doItemsLayout();
-  setFixedHeight(qMax(contentsSize().height(), 1));
-}
-
-void ElementsList::startDrag(Qt::DropActions a_supportedActions)
+void ElementsTree::startDrag(Qt::DropActions a_supportedActions)
 {
   (void)a_supportedActions;
-
-  auto const packageView = m_editor->packageView();
-  if (!packageView) return;
+  if (currentItem()->childCount()) return;
 
   auto const item = currentItem();
-  auto const TYPE = item->data(ElementsList::eMetaDataType).toString();
-  auto const IS_PACKAGE = item->data(ElementsList::eMetaDataIsPackage).toByteArray();
-  auto const NAME = item->data(ElementsList::eMetaDataName).toByteArray();
-  auto const ICON = item->data(ElementsList::eMetaDataIcon).toByteArray();
-  auto const FILE = item->data(ElementsList::eMetaDataFilename).toByteArray();
+  auto const TYPE = item->data(0, ElementsTree::eMetaDataType).toString();
+  auto const IS_PACKAGE = item->data(0, ElementsTree::eMetaDataIsPackage).toByteArray();
+  auto const NAME = item->data(0, ElementsTree::eMetaDataName).toByteArray();
+  auto const ICON = item->data(0, ElementsTree::eMetaDataIcon).toByteArray();
+  auto const FILE = item->data(0, ElementsTree::eMetaDataFilename).toByteArray();
 
   auto const mimeData = new QMimeData;
   mimeData->setText(TYPE);
@@ -82,4 +61,26 @@ void ElementsList::startDrag(Qt::DropActions a_supportedActions)
   drag->exec(Qt::CopyAction);
 }
 
-} // namespace spaghetti
+QTreeWidgetItem *ElementsTree::getCathegory(QString const a_category)
+{
+  auto categoryList = a_category.split('/');
+  QTreeWidgetItem *categoryItem{ nullptr };
+
+  for (auto category : categoryList) {
+    auto categorySearchResult = findItems(category, Qt::MatchExactly);
+
+    if (categorySearchResult.size()) {
+      categoryItem = categorySearchResult.first();
+    } else {
+      if (categoryItem) {
+        categoryItem = new QTreeWidgetItem{ categoryItem };
+      } else {
+        categoryItem = new QTreeWidgetItem{};
+        addTopLevelItem(categoryItem);
+      }
+      categoryItem->setText(0, category);
+    }
+  }
+
+  return categoryItem;
+}

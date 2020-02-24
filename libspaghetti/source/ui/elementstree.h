@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef UI_ELEMENTS_LIST_H
-#define UI_ELEMENTS_LIST_H
+#ifndef PROJECTTREEWIDGET_H
+#define PROJECTTREEWIDGET_H
 
-#include <QListWidget>
-
-namespace spaghetti {
+#include <QObject>
+#include <QTreeWidget>
 
 class Editor;
 
-class ElementsList : public QListWidget {
+class ElementsTree : public QTreeWidget {
   Q_OBJECT
 
  public:
@@ -42,19 +40,12 @@ class ElementsList : public QListWidget {
     eMetaDataFilename = Qt::UserRole + 4,
   };
 
-  explicit ElementsList(Editor *const a_parent = nullptr);
+  explicit ElementsTree(QWidget *a_parent = nullptr);
 
-  static QString elementsMimeType() { return QStringLiteral("data/x-element"); }
-
-  void doResize();
+  QTreeWidgetItem *getCathegory(QString const a_category);
 
  protected:
   void startDrag(Qt::DropActions a_supportedActions) override;
-
- private:
-  Editor *const m_editor{};
 };
 
-} // namespace spaghetti
-
-#endif // UI_ELEMENTS_LIST_H
+#endif // PROJECTTREEWIDGET_H
