@@ -137,6 +137,25 @@ void Element::setName(std::string const &a_name)
   handleEvent(Event{ EventType::eElementNameChanged, EventNameChanged{ OLD_NAME, a_name } });
 }
 
+bool Element::anyOfInputsChanged()
+{
+  bool flag{ false };
+
+  if (m_inputs.size() != m_inputsBuf.size()) {
+    m_inputsBuf = m_inputs;
+    flag = true;
+  } else {
+    for (size_t i = 0; i < m_inputs.size(); i++) {
+      if (m_inputs[i].value == m_inputsBuf[i].value) {
+        m_inputsBuf = m_inputs;
+        flag = true;
+      }
+    }
+  }
+
+  return flag;
+}
+
 bool Element::addInput(ValueType const a_type, std::string const &a_name, uint64_t const a_flags)
 {
   if (m_inputs.size() + 1 > m_maxInputs) return false;

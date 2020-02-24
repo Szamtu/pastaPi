@@ -24,6 +24,9 @@
 #include <opencv2/imgproc.hpp>
 
 namespace spaghetti::elements::opencv {
+
+using namespace std;
+
 CropImage::CropImage()
   : Element{}
 {
@@ -43,29 +46,20 @@ CropImage::CropImage()
 
 void CropImage::calculate()
 {
-  auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
-  auto x = std::get<int>(m_inputs[1].value);
-  auto y = std::get<int>(m_inputs[2].value);
-  auto width = std::get<int>(m_inputs[3].value);
-  auto height = std::get<int>(m_inputs[4].value);
+  if (!anyOfInputsChanged()) return;
 
-  bool recount{ false };
-  if (m_lastFrameTimeStamp != matrix.timeStamp()) recount = true;
-  if (m_x != x) recount = true;
-  if (m_y != y) recount = true;
-  if (m_width != width) recount = true;
-  if (m_height != height) recount = true;
+  auto matrix = get<SafeValue<cv::Mat>>(m_inputs[0].value);
 
   auto sourceImage = matrix.data();
-  if (!sourceImage.empty() && recount) {
+  auto x = clamp(get<int>(m_inputs[1].value), 0, sourceImage.cols - 1);
+  auto y = clamp(get<int>(m_inputs[2].value), 0, sourceImage.rows - 1);
+  auto width = clamp(get<int>(m_inputs[3].value), 0, sourceImage.cols - x - 1);
+  auto height = clamp(get<int>(m_inputs[4].value), 0, sourceImage.rows - y - 1);
+
+  if (!sourceImage.empty()) {
     cv::Mat convertedImage{};
 
     convertedImage = sourceImage(cv::Rect(x, y, width, height)).clone();
-    m_x = x;
-    m_y = y;
-    m_width = width;
-    m_height = height;
-
     m_outputs[0].value = convertedImage;
   }
 }

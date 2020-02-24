@@ -150,6 +150,7 @@ class SPAGHETTI_API Element {
   IOSockets const &inputs() const { return m_inputs; }
   IOSockets &outputs() { return m_outputs; }
   IOSockets const &outputs() const { return m_outputs; }
+  bool anyOfInputsChanged();
 
   bool addInput(ValueType const a_type, std::string const &a_name, uint64_t const a_flags);
   void setInputName(uint64_t const a_input, std::string const &a_name);
@@ -202,6 +203,7 @@ class SPAGHETTI_API Element {
  protected:
   IOSockets m_inputs{};
   IOSockets m_outputs{};
+  IOSockets m_inputsBuf{};
 
   friend class Package;
   Package *m_package{};

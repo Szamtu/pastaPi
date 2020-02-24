@@ -60,6 +60,8 @@ class SafeValue {
     return *this;
   }
 
+  bool operator==(SafeValue const &a_value) const { return m_timeStamp == a_value.m_timeStamp; }
+
   ~SafeValue() { const std::lock_guard<std::mutex> lock(m_mutex); }
 
   T data()
