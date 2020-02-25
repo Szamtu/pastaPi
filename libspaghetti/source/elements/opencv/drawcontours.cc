@@ -42,20 +42,10 @@ DrawContours::DrawContours()
 
 void DrawContours::calculate()
 {
-  auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
-  auto shapes = std::get<SafeValue<ShapeVector>>(m_inputs[1].value);
+  auto sourceImage = std::get<cv::Mat>(m_inputs[0].value);
+  auto shapeVec = std::get<ShapeVector>(m_inputs[1].value);
 
-  bool reCalculate{};
-
-  if (matrix.timeStamp() != m_imageTimestamp) reCalculate = true;
-  if (shapes.timeStamp() != m_shapesTimestamp) reCalculate = true;
-
-  auto sourceImage = matrix.data();
-  auto shapeVec = shapes.data();
-
-  if (sourceImage.empty()) reCalculate = false;
-
-  if (reCalculate) {
+  if (sourceImage.empty()) {
     auto convertedImage = sourceImage.clone();
     cv::RNG rng(12345);
 

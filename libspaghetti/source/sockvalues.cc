@@ -42,7 +42,7 @@ ValueTypeDescription{
     "matrix",
     "Matrix",
     { { 169, 169, 169, 255 }, { 169, 169, 169, 255 } },
-    SafeValue<cv::Mat>()
+    cv::Mat()
 },
 ValueTypeDescription{
     ValueType::ePoint,
@@ -58,7 +58,7 @@ ValueTypeDescription{
     "shape",
     "Shape",
     { { 57, 237, 222, 255 }, { 57, 237, 222, 255 } },
-    SafeValue<Shape>()
+    Shape()
 },
 ValueTypeDescription{
     ValueType::eShapeVector,
@@ -66,7 +66,7 @@ ValueTypeDescription{
     "shape_vector",
     "ShapeVector",
     { { 207, 237, 57, 255 }, { 207, 237, 57, 255 } },
-    SafeValue<ShapeVector>()
+    ShapeVector()
 }
   // clang-format on
 };

@@ -38,7 +38,6 @@ class VideoDisplay : public Node {
 
  private:
   QGraphicsPixmapItem *m_image{};
-  std::chrono::high_resolution_clock::time_point m_lastFrameTimeStamp{};
 };
 
 } // namespace spaghetti::nodes::opencv

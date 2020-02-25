@@ -41,19 +41,15 @@ Resize::Resize()
 
 void Resize::calculate()
 {
-  auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
-  if (m_lastFrameTimeStamp != matrix.timeStamp()) {
-    auto fx = static_cast<double>(std::get<float>(m_inputs[1].value));
-    auto fy = static_cast<double>(std::get<float>(m_inputs[2].value));
-    auto sourceImage = matrix.data();
-    cv::Mat convertedImage{};
+  auto fx = static_cast<double>(std::get<float>(m_inputs[1].value));
+  auto fy = static_cast<double>(std::get<float>(m_inputs[2].value));
+  auto sourceImage = std::get<cv::Mat>(m_inputs[0].value);
+  cv::Mat convertedImage{};
 
-    if (!sourceImage.empty() && fx >= 0.1 && fy >= 0.1) {
-      cv::resize(sourceImage, convertedImage, cv::Size(), fx, fy);
+  if (!sourceImage.empty() && fx >= 0.1 && fy >= 0.1) {
+    cv::resize(sourceImage, convertedImage, cv::Size(), fx, fy);
 
-      m_outputs[0].value = convertedImage;
-      m_lastFrameTimeStamp = matrix.timeStamp();
-    }
+    m_outputs[0].value = convertedImage;
   }
 }
 

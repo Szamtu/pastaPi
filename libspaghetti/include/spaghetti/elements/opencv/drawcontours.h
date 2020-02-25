@@ -38,10 +38,6 @@ class DrawContours final : public Element {
   string::hash_t hash() const noexcept override { return HASH; }
 
   void calculate() override;
-
- private:
-  SafeValueTimeStamp m_imageTimestamp{};
-  SafeValueTimeStamp m_shapesTimestamp{};
 };
 
 } // namespace spaghetti::elements::opencv

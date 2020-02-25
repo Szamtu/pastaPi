@@ -39,10 +39,9 @@ FindConturs::FindConturs()
 
 void FindConturs::calculate()
 {
-  auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
-  auto sourceImage = matrix.data();
+  auto sourceImage = std::get<cv::Mat>(m_inputs[0].value);
 
-  if (!sourceImage.empty() && m_lastFrameTimeStamp != matrix.timeStamp()) {
+  if (!sourceImage.empty()) {
     ShapeVector contours{};
     std::vector<cv::Vec4i> hierarchy{};
 
@@ -53,7 +52,6 @@ void FindConturs::calculate()
     cv::findContours(sourceImage, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
     m_outputs[0].value = contours;
     m_outputs[1].value = static_cast<int>(contours.size());
-    m_lastFrameTimeStamp = matrix.timeStamp();
   }
 }
 

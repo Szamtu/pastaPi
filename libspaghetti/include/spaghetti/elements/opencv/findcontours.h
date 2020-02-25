@@ -38,9 +38,6 @@ class FindConturs final : public Element {
   string::hash_t hash() const noexcept override { return HASH; }
 
   void calculate() override;
-
- private:
-  std::chrono::high_resolution_clock::time_point m_lastFrameTimeStamp{};
 };
 
 } // namespace spaghetti::elements::opencv

@@ -72,7 +72,6 @@ class Writer final : public Element {
   bool m_color{};
 
   WriterAsync m_writer{};
-  std::chrono::high_resolution_clock::time_point m_lastFrameTimeStamp{};
 };
 
 } // namespace spaghetti::elements::opencv

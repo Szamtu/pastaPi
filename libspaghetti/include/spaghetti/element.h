@@ -102,12 +102,27 @@ class SPAGHETTI_API Element {
   using vec2d = Vec2<double>;
 
   struct IOSocket : public IOSocketFlags {
+    IOSocket()
+      : writeLock{ new std::mutex{} }
+    {
+    }
+
     Value value{};
     ValueType type{};
     size_t id{};
     uint64_t slot{};
     uint64_t flags{};
     std::string name{};
+    bool m_valueChanged{};
+
+    template<typename T>
+    T getValue()
+    {
+      m_valueChanged = false;
+      return std::get<T>(value);
+    }
+
+    std::shared_ptr<std::mutex> writeLock{};
   };
 
   using IOSockets = std::vector<IOSocket>;
@@ -150,7 +165,6 @@ class SPAGHETTI_API Element {
   IOSockets const &inputs() const { return m_inputs; }
   IOSockets &outputs() { return m_outputs; }
   IOSockets const &outputs() const { return m_outputs; }
-  bool anyOfInputsChanged();
 
   bool addInput(ValueType const a_type, std::string const &a_name, uint64_t const a_flags);
   void setInputName(uint64_t const a_input, std::string const &a_name);
@@ -203,7 +217,6 @@ class SPAGHETTI_API Element {
  protected:
   IOSockets m_inputs{};
   IOSockets m_outputs{};
-  IOSockets m_inputsBuf{};
 
   friend class Package;
   Package *m_package{};

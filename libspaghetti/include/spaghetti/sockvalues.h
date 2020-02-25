@@ -24,9 +24,9 @@
 #ifndef SPAGHETTI_SOCKVALUES_H
 #define SPAGHETTI_SOCKVALUES_H
 
-#include <spaghetti/custom_value_types/all.h>
 #include <QColor>
 #include <QString>
+#include <opencv2/core/mat.hpp>
 #include <variant>
 
 namespace spaghetti {
@@ -35,8 +35,7 @@ enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, ePoint, eShape, eS
 using Shape = std::vector<cv::Point>;
 using ShapeVector = std::vector<std::vector<cv::Point>>;
 
-using Value = std::variant<bool, int32_t, float, std::string, SafeValue<cv::Mat>, cv::Point, SafeValue<Shape>,
-                           SafeValue<ShapeVector>>;
+using Value = std::variant<bool, int32_t, float, std::string, cv::Mat, cv::Point, Shape, ShapeVector>;
 
 struct IOSocketFlags {
   enum Flags {

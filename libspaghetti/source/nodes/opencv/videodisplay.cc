@@ -40,10 +40,11 @@ void VideoDisplay::refreshCentralWidget()
 {
   if (!m_element) return;
 
-  auto matrix = std::get<SafeValue<cv::Mat>>(m_element->inputs()[0].value);
-  auto frame = matrix.data();
+  m_element->inputs()[0].writeLock->lock();
+  auto frame = std::get<cv::Mat>(m_element->inputs()[0].value);
+  m_element->inputs()[0].writeLock->unlock();
 
-  if (!frame.empty() && m_lastFrameTimeStamp != matrix.timeStamp()) {
+  if (!frame.empty()) {
     cv::Mat convertedFrame{};
     cv::cvtColor(frame, convertedFrame, cv::COLOR_BGR2RGB);
 
@@ -54,8 +55,6 @@ void VideoDisplay::refreshCentralWidget()
     if (!image.isNull()) {
       m_image->setPixmap(pixmap);
     }
-
-    m_lastFrameTimeStamp = matrix.timeStamp();
   }
 
   calculateBoundingRect();

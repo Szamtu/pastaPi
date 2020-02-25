@@ -39,10 +39,9 @@ ImWrite::ImWrite()
 
 void ImWrite::calculate()
 {
-  auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
   auto path = std::get<std::string>(m_inputs[1].value);
   auto trigger = std::get<bool>(m_inputs[2].value);
-  auto sourceImage = matrix.data();
+  auto sourceImage = std::get<cv::Mat>(m_inputs[0].value);
 
   if (trigger && !m_lastState && !path.empty() && !sourceImage.empty()) {
     cv::imwrite(path, sourceImage);

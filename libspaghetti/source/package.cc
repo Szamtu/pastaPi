@@ -184,9 +184,14 @@ void Package::calculate()
     auto const IS_SOURCE_SELF = connection.from_id == 0;
     auto const IS_TARGET_SELF = connection.to_id == 0;
 
-    auto const &SOURCE_IO = IS_SOURCE_SELF ? source->inputs() : source->outputs();
+    auto &SOURCE_IO = IS_SOURCE_SELF ? source->inputs() : source->outputs();
     auto &targetIO = IS_TARGET_SELF ? target->outputs() : target->inputs();
+
+    targetIO[connection.to_socket].writeLock->lock();
+    SOURCE_IO[connection.from_socket].writeLock->lock();
     targetIO[connection.to_socket].value = SOURCE_IO[connection.from_socket].value;
+    targetIO[connection.to_socket].writeLock->unlock();
+    SOURCE_IO[connection.from_socket].writeLock->unlock();
   }
 
   for (auto &&element : m_elements) {

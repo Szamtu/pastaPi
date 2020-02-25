@@ -46,11 +46,7 @@ CropImage::CropImage()
 
 void CropImage::calculate()
 {
-  if (!anyOfInputsChanged()) return;
-
-  auto matrix = get<SafeValue<cv::Mat>>(m_inputs[0].value);
-
-  auto sourceImage = matrix.data();
+  auto sourceImage = get<cv::Mat>(m_inputs[0].value);
   auto x = clamp(get<int>(m_inputs[1].value), 0, sourceImage.cols - 1);
   auto y = clamp(get<int>(m_inputs[2].value), 0, sourceImage.rows - 1);
   auto width = clamp(get<int>(m_inputs[3].value), 0, sourceImage.cols - x - 1);

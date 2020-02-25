@@ -65,11 +65,10 @@ void Mog2::calculate()
     m_subtractor->setDetectShadows(m_detectShadows);
   }
 
-  auto matrix = std::get<SafeValue<cv::Mat>>(m_inputs[0].value);
-  auto sourceImage = matrix.data();
+  auto sourceImage = std::get<cv::Mat>(m_inputs[0].value);
   cv::Mat foregroundMask{};
 
-  if (!sourceImage.empty() && m_lastFrameTimeStamp != matrix.timeStamp()) {
+  if (!sourceImage.empty()) {
     m_subtractor->apply(sourceImage, foregroundMask);
 
     m_outputs[0].value = foregroundMask;
@@ -78,8 +77,6 @@ void Mog2::calculate()
       m_subtractor->getBackgroundImage(backgroundImage);
       m_outputs[1].value = backgroundImage;
     }
-
-    m_lastFrameTimeStamp = matrix.timeStamp();
   }
 }
 

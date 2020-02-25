@@ -46,8 +46,6 @@ class Mog2 final : public Element {
   int m_history{};
   float m_threshold{};
   bool m_detectShadows{};
-
-  std::chrono::high_resolution_clock::time_point m_lastFrameTimeStamp{};
 };
 
 } // namespace spaghetti::elements::opencv
