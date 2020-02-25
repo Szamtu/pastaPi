@@ -24,10 +24,4 @@
 #ifndef SPAGHETTI_ELEMENTS_GATES_ALL_H
 #define SPAGHETTI_ELEMENTS_GATES_ALL_H
 
-#include <spaghetti/elements/gates/and.h>
-#include <spaghetti/elements/gates/nand.h>
-#include <spaghetti/elements/gates/nor.h>
-#include <spaghetti/elements/gates/not.h>
-#include <spaghetti/elements/gates/or.h>
-
 #endif // SPAGHETTI_ELEMENTS_GATES_ALL_H

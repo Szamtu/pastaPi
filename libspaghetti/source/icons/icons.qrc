@@ -1,23 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>gates/and.png</file>
-        <file>gates/nand.png</file>
-        <file>gates/nor.png</file>
-        <file>gates/not.png</file>
-        <file>gates/or.png</file>
-        <file>logic/clock.png</file>
-        <file>logic/inputs.png</file>
-        <file>logic/outputs.png</file>
-        <file>logic/package.png</file>
-        <file>logic/switch.png</file>
-        <file>ui/push_button.png</file>
-        <file>ui/toggle_button.png</file>
-        <file>values/const_bool.png</file>
-        <file>values/const_float.png</file>
-        <file>values/const_int.png</file>
-        <file>values/random_value.png</file>
-        <file>collapsed.png</file>
-        <file>expanded.png</file>
         <file>unknown.png</file>
     </qresource>
 </RCC>

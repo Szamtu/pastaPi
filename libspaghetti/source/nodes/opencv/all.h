@@ -24,6 +24,4 @@
 #ifndef NODES_OPENCV_ALL_H
 #define NODES_OPENCV_ALL_H
 
-#include "nodes/opencv/videodisplay.h"
-
 #endif // NODES_OPENCV_ALL_H

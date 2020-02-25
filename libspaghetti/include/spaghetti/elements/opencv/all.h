@@ -24,16 +24,4 @@
 #ifndef SPAGHETTI_ELEMENTS_OPENCV_ALL_H
 #define SPAGHETTI_ELEMENTS_OPENCV_ALL_H
 
-#include <spaghetti/elements/opencv/cap.h>
-#include <spaghetti/elements/opencv/color2gray.h>
-#include <spaghetti/elements/opencv/crop_image.h>
-#include <spaghetti/elements/opencv/drawcontours.h>
-#include <spaghetti/elements/opencv/findcontours.h>
-#include <spaghetti/elements/opencv/imwrite.h>
-#include <spaghetti/elements/opencv/medianblur.h>
-#include <spaghetti/elements/opencv/mog2.h>
-#include <spaghetti/elements/opencv/resize.h>
-#include <spaghetti/elements/opencv/videodisplay.h>
-#include <spaghetti/elements/opencv/writer.h>
-
 #endif // SPAGHETTI_ELEMENTS_OPENCV_ALL_H

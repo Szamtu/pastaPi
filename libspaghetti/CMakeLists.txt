@@ -29,117 +29,24 @@ configure_file(include/spaghetti/version.h.in include/spaghetti/version.h)
 
 set(LIBSPAGHETTI_PUBLIC_GATES_HEADERS
   include/spaghetti/elements/gates/all.h
-  include/spaghetti/elements/gates/and.h
-  include/spaghetti/elements/gates/nand.h
-  include/spaghetti/elements/gates/nor.h
-  include/spaghetti/elements/gates/not.h
-  include/spaghetti/elements/gates/or.h
   )
 set(LIBSPAGHETTI_PUBLIC_LOGIC_HEADERS
   include/spaghetti/elements/logic/all.h
-  include/spaghetti/elements/logic/assign_float.h
-  include/spaghetti/elements/logic/assign_int.h
-  include/spaghetti/elements/logic/blinker.h
-  include/spaghetti/elements/logic/counter_down.h
-  include/spaghetti/elements/logic/counter_up.h
-  include/spaghetti/elements/logic/counter_up_down.h
-  include/spaghetti/elements/logic/demultiplexer_int.h
-  include/spaghetti/elements/logic/if_equal.h
-  include/spaghetti/elements/logic/if_greater.h
-  include/spaghetti/elements/logic/if_greater_equal.h
-  include/spaghetti/elements/logic/if_lower.h
-  include/spaghetti/elements/logic/if_lower_equal.h
-  include/spaghetti/elements/logic/latch.h
-  include/spaghetti/elements/logic/memory_difference.h
-  include/spaghetti/elements/logic/memory_reset_set.h
-  include/spaghetti/elements/logic/memory_set_reset.h
-  include/spaghetti/elements/logic/multiplexer_int.h
-  include/spaghetti/elements/logic/pid.h
-  include/spaghetti/elements/logic/snapshot_float.h
-  include/spaghetti/elements/logic/snapshot_int.h
-  include/spaghetti/elements/logic/switch.h
-  include/spaghetti/elements/logic/trigger_falling.h
-  include/spaghetti/elements/logic/trigger_rising.h
   )
 set(LIBSPAGHETTI_PUBLIC_MATH_HEADERS
-  include/spaghetti/elements/math/abs.h
-  include/spaghetti/elements/math/add.h
-  include/spaghetti/elements/math/add_if.h
   include/spaghetti/elements/math/all.h
-  include/spaghetti/elements/math/bcd.h
-  include/spaghetti/elements/math/cos.h
-  include/spaghetti/elements/math/divide.h
-  include/spaghetti/elements/math/divide_if.h
-  include/spaghetti/elements/math/lerp.h
-  include/spaghetti/elements/math/multiply.h
-  include/spaghetti/elements/math/multiply_if.h
-  include/spaghetti/elements/math/sign.h
-  include/spaghetti/elements/math/sin.h
-  include/spaghetti/elements/math/square_root.h
-  include/spaghetti/elements/math/subtract.h
-  include/spaghetti/elements/math/subtract_if.h
-  )
-set(LIBSPAGHETTI_PUBLIC_PNEUMATIC_HEADERS
-  include/spaghetti/elements/pneumatic/all.h
-  include/spaghetti/elements/pneumatic/tank.h
-  include/spaghetti/elements/pneumatic/valve.h
   )
 set(LIBSPAGHETTI_PUBLIC_TIMERS_HEADERS
   include/spaghetti/elements/timers/all.h
-  include/spaghetti/elements/timers/clock.h
-  include/spaghetti/elements/timers/delta_time.h
-  include/spaghetti/elements/timers/t_off.h
-  include/spaghetti/elements/timers/t_on.h
-  include/spaghetti/elements/timers/t_pulse.h
   )
 set(LIBSPAGHETTI_PUBLIC_UI_HEADERS
   include/spaghetti/elements/ui/all.h
-  include/spaghetti/elements/ui/bcd_to_seven_segment_display.h
-  include/spaghetti/elements/ui/float_info.h
-  include/spaghetti/elements/ui/int_info.h
-  include/spaghetti/elements/ui/string_info.h
-  include/spaghetti/elements/ui/push_button.h
-  include/spaghetti/elements/ui/toggle_button.h
-  include/spaghetti/elements/ui/seven_segment_display.h
   )
 set(LIBSPAGHETTI_PUBLIC_VALUES_HEADERS
   include/spaghetti/elements/values/all.h
-  include/spaghetti/elements/values/characteristic_curve.h
-  include/spaghetti/elements/values/clamp_float.h
-  include/spaghetti/elements/values/clamp_int.h
-  include/spaghetti/elements/values/const_bool.h
-  include/spaghetti/elements/values/const_float.h
-  include/spaghetti/elements/values/const_int.h
-  include/spaghetti/elements/values/const_string.h
-  include/spaghetti/elements/values/degree_to_radian.h
-  include/spaghetti/elements/values/float_to_int.h
-  include/spaghetti/elements/values/int_to_float.h
-  include/spaghetti/elements/values/max_float.h
-  include/spaghetti/elements/values/max_int.h
-  include/spaghetti/elements/values/min_float.h
-  include/spaghetti/elements/values/min_int.h
-  include/spaghetti/elements/values/radian_to_degree.h
-  include/spaghetti/elements/values/random_bool.h
-  include/spaghetti/elements/values/random_float.h
-  include/spaghetti/elements/values/random_float_if.h
-  include/spaghetti/elements/values/random_int.h
-  include/spaghetti/elements/values/random_int_if.h
-  include/spaghetti/elements/values/convert.h
-  include/spaghetti/elements/values/concat.h
   )
 set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
   include/spaghetti/elements/opencv/all.h
-  include/spaghetti/elements/opencv/cap.h
-  include/spaghetti/elements/opencv/videodisplay.h
-  include/spaghetti/elements/opencv/mog2.h
-  include/spaghetti/elements/opencv/color2gray.h
-  include/spaghetti/elements/opencv/medianblur.h
-  include/spaghetti/elements/opencv/writer.h
-  include/spaghetti/elements/opencv/resize.h
-  include/spaghetti/elements/opencv/findcontours.h
-  include/spaghetti/elements/opencv/drawcontours.h
-  include/spaghetti/elements/opencv/imwrite.h
-  include/spaghetti/elements/opencv/crop_image.h
   )
 set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
   include/spaghetti/elements/all.h
@@ -180,151 +87,15 @@ set(LIBSPAGHETTI_SOURCES
   ${LIBSPAGHETTI_PUBLIC_HEADERS}
   include/spaghetti/version.h.in
 
-  source/elements/gates/and.cc
-  source/elements/gates/nand.cc
-  source/elements/gates/nor.cc
-  source/elements/gates/not.cc
-  source/elements/gates/or.cc
-
-  source/elements/logic/assign_float.cc
-  source/elements/logic/assign_int.cc
-  source/elements/logic/blinker.cc
-  source/elements/logic/counter_down.cc
-  source/elements/logic/counter_up.cc
-  source/elements/logic/counter_up_down.cc
-  source/elements/logic/demultiplexer_int.cc
-  source/elements/logic/if_equal.cc
-  source/elements/logic/if_greater.cc
-  source/elements/logic/if_greater_equal.cc
-  source/elements/logic/if_lower.cc
-  source/elements/logic/if_lower_equal.cc
-  source/elements/logic/latch.cc
-  source/elements/logic/memory_difference.cc
-  source/elements/logic/memory_reset_set.cc
-  source/elements/logic/memory_set_reset.cc
-  source/elements/logic/multiplexer_int.cc
-  source/elements/logic/pid.cc
-  source/elements/logic/snapshot_float.cc
-  source/elements/logic/snapshot_int.cc
-  source/elements/logic/switch.cc
-  source/elements/logic/trigger_falling.cc
-  source/elements/logic/trigger_rising.cc
-
-  source/elements/math/abs.cc
-  source/elements/math/add.cc
-  source/elements/math/add_if.cc
-  source/elements/math/bcd.cc
-  source/elements/math/cos.cc
-  source/elements/math/divide.cc
-  source/elements/math/divide_if.cc
-  source/elements/math/lerp.cc
-  source/elements/math/multiply.cc
-  source/elements/math/multiply_if.cc
-  source/elements/math/sign.cc
-  source/elements/math/sin.cc
-  source/elements/math/square_root.cc
-  source/elements/math/subtract.cc
-  source/elements/math/subtract_if.cc
-
-  source/elements/pneumatic/tank.cc
-  source/elements/pneumatic/valve.cc
-
-  source/elements/timers/clock.cc
-  source/elements/timers/delta_time.cc
-  source/elements/timers/t_off.cc
-  source/elements/timers/t_on.cc
-  source/elements/timers/t_pulse.cc
-
-  source/elements/ui/bcd_to_seven_segment_display.cc
-  source/elements/ui/float_info.cc
-  source/elements/ui/int_info.cc
-  source/elements/ui/string_info.cc
-  source/elements/ui/push_button.cc
-  source/elements/ui/toggle_button.cc
-  source/elements/ui/seven_segment_display.cc
-
-  source/elements/values/characteristic_curve.cc
-  source/elements/values/clamp_float.cc
-  source/elements/values/clamp_int.cc
-  source/elements/values/const_bool.cc
-  source/elements/values/const_float.cc
-  source/elements/values/const_int.cc
-  source/elements/values/degree_to_radian.cc
-  source/elements/values/float_to_int.cc
-  source/elements/values/const_string.cc
-  source/elements/values/int_to_float.cc
-  source/elements/values/max_float.cc
-  source/elements/values/max_int.cc
-  source/elements/values/min_float.cc
-  source/elements/values/min_int.cc
-  source/elements/values/radian_to_degree.cc
-  source/elements/values/random_bool.cc
-  source/elements/values/random_float.cc
-  source/elements/values/random_float_if.cc
-  source/elements/values/random_int.cc
-  source/elements/values/random_int_if.cc
-  source/elements/values/convert.cc
-  source/elements/values/concat.cc
-
-  source/elements/opencv/cap.cc
-  source/elements/opencv/videodisplay.cc
-  source/elements/opencv/mog2.cc
-  source/elements/opencv/color2gray.cc
-  source/elements/opencv/medianblur.cc
-  source/elements/opencv/writer.cc
-  source/elements/opencv/resize.cc
-  source/elements/opencv/findcontours.cc
-  source/elements/opencv/drawcontours.cc
-  source/elements/opencv/imwrite.cc
-  source/elements/opencv/crop_image.cc
-
   source/icons/icons.qrc
 
   source/nodes/logic/all.h
-  source/nodes/logic/blinker.cc
-  source/nodes/logic/blinker.h
-  source/nodes/logic/clock.cc
-  source/nodes/logic/clock.h
-
-  source/nodes/pneumatic/all.h
-  source/nodes/pneumatic/tank.cc
-  source/nodes/pneumatic/tank.h
 
   source/nodes/ui/all.h
-  source/nodes/ui/float_info.cc
-  source/nodes/ui/float_info.h
-  source/nodes/ui/int_info.cc
-  source/nodes/ui/int_info.h
-  source/nodes/ui/string_info.cc
-  source/nodes/ui/string_info.h
-  source/nodes/ui/push_button.cc
-  source/nodes/ui/push_button.h
-  source/nodes/ui/toggle_button.cc
-  source/nodes/ui/toggle_button.h
-  source/nodes/ui/seven_segment_display.cc
-  source/nodes/ui/seven_segment_display.h
 
   source/nodes/values/all.h
-  source/nodes/values/const_bool.cc
-  source/nodes/values/const_bool.h
-  source/nodes/values/const_float.cc
-  source/nodes/values/const_float.h
-  source/nodes/values/const_int.cc
-  source/nodes/values/const_int.h
-  source/nodes/values/const_string.cc
-  source/nodes/values/const_string.h
-  source/nodes/values/random_float.cc
-  source/nodes/values/random_float.h
-  source/nodes/values/random_float_if.cc
-  source/nodes/values/random_float_if.h
-  source/nodes/values/random_int.cc
-  source/nodes/values/random_int.h
-  source/nodes/values/random_int_if.cc
-  source/nodes/values/random_int_if.h
 
   source/nodes/opencv/all.h
-  source/nodes/opencv/videodisplay.cc
-  source/nodes/opencv/videodisplay.h
 
   source/nodes/all.h
   source/nodes/package.cc

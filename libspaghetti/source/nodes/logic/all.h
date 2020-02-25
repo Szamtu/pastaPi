@@ -24,7 +24,4 @@
 #ifndef NODES_LOGIC_ALL_H
 #define NODES_LOGIC_ALL_H
 
-#include "nodes/logic/blinker.h"
-#include "nodes/logic/clock.h"
-
 #endif // NODES_LOGIC_ALL_H

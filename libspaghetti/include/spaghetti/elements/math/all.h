@@ -24,20 +24,4 @@
 #ifndef SPAGHETTI_ELEMENTS_MATH_ALL_H
 #define SPAGHETTI_ELEMENTS_MATH_ALL_H
 
-#include <spaghetti/elements/math/abs.h>
-#include <spaghetti/elements/math/add.h>
-#include <spaghetti/elements/math/add_if.h>
-#include <spaghetti/elements/math/bcd.h>
-#include <spaghetti/elements/math/cos.h>
-#include <spaghetti/elements/math/divide.h>
-#include <spaghetti/elements/math/divide_if.h>
-#include <spaghetti/elements/math/lerp.h>
-#include <spaghetti/elements/math/multiply.h>
-#include <spaghetti/elements/math/multiply_if.h>
-#include <spaghetti/elements/math/sign.h>
-#include <spaghetti/elements/math/sin.h>
-#include <spaghetti/elements/math/square_root.h>
-#include <spaghetti/elements/math/subtract.h>
-#include <spaghetti/elements/math/subtract_if.h>
-
 #endif // SPAGHETTI_ELEMENTS_MATH_ALL_H

@@ -24,10 +24,4 @@
 #ifndef SPAGHETTI_ELEMENTS_TIMERS_ALL_H
 #define SPAGHETTI_ELEMENTS_TIMERS_ALL_H
 
-#include <spaghetti/elements/timers/clock.h>
-#include <spaghetti/elements/timers/delta_time.h>
-#include <spaghetti/elements/timers/t_off.h>
-#include <spaghetti/elements/timers/t_on.h>
-#include <spaghetti/elements/timers/t_pulse.h>
-
 #endif // SPAGHETTI_ELEMENTS_TIMERS_ALL_H

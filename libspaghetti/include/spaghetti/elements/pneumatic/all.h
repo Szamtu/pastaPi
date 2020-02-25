@@ -24,7 +24,4 @@
 #ifndef SPAGHETTI_ELEMENTS_PNEUMATIC_ALL_H
 #define SPAGHETTI_ELEMENTS_PNEUMATIC_ALL_H
 
-#include <spaghetti/elements/pneumatic/tank.h>
-#include <spaghetti/elements/pneumatic/valve.h>
-
 #endif // SPAGHETTI_ELEMENTS_PNEUMATIC_ALL_H

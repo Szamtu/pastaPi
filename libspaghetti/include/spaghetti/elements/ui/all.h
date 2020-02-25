@@ -24,12 +24,4 @@
 #ifndef SPAGHETTI_ELEMENTS_UI_ALL_H
 #define SPAGHETTI_ELEMENTS_UI_ALL_H
 
-#include <spaghetti/elements/ui/bcd_to_seven_segment_display.h>
-#include <spaghetti/elements/ui/float_info.h>
-#include <spaghetti/elements/ui/int_info.h>
-#include <spaghetti/elements/ui/push_button.h>
-#include <spaghetti/elements/ui/seven_segment_display.h>
-#include <spaghetti/elements/ui/string_info.h>
-#include <spaghetti/elements/ui/toggle_button.h>
-
 #endif // SPAGHETTI_ELEMENTS_UI_ALL_H
