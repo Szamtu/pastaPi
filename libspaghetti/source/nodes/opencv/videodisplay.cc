@@ -40,9 +40,7 @@ void VideoDisplay::refreshCentralWidget()
 {
   if (!m_element) return;
 
-  m_element->inputs()[0].writeLock->lock();
-  auto frame = std::get<cv::Mat>(m_element->inputs()[0].value);
-  m_element->inputs()[0].writeLock->unlock();
+  auto frame = m_element->inputs()[0].getValue<cv::Mat>();
 
   if (!frame.empty()) {
     cv::Mat convertedFrame{};

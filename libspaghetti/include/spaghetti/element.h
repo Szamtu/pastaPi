@@ -113,16 +113,52 @@ class SPAGHETTI_API Element {
     uint64_t slot{};
     uint64_t flags{};
     std::string name{};
-    bool m_valueChanged{};
+
+    bool valueChanged{};
+    std::shared_ptr<std::mutex> writeLock{};
 
     template<typename T>
     T getValue()
     {
-      m_valueChanged = false;
-      return std::get<T>(value);
+      T outValue;
+
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        outValue = std::get<T>(value);
+        writeLock->unlock();
+      } else {
+        outValue = std::get<T>(value);
+      }
+
+      valueChanged = false;
+      return outValue;
     }
 
-    std::shared_ptr<std::mutex> writeLock{};
+    template<typename T>
+    void setValue(T const a_value)
+    {
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        value = a_value;
+        writeLock->unlock();
+      } else {
+        value = a_value;
+      }
+
+      valueChanged = true;
+    }
+
+    void copyValue(IOSocket const &a_from)
+    {
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        value = a_from.value;
+        writeLock->unlock();
+      } else {
+        value = a_from.value;
+      }
+      valueChanged = true;
+    }
   };
 
   using IOSockets = std::vector<IOSocket>;

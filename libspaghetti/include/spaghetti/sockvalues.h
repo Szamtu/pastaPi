@@ -49,7 +49,8 @@ struct IOSocketFlags {
     eCanHoldShapeVector = 1 << 7,
     eCanChangeName = 1 << 8,
     eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString,
-    eDefaultFlags = eCanHoldAllValues | eCanChangeName
+    eDefaultFlags = eCanHoldAllValues | eCanChangeName,
+    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector
   };
 };
 
