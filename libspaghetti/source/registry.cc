@@ -136,7 +136,7 @@ void Registry::registerInternalElements()
 
   // using namespace elements;
 
-  registerElement<Package, nodes::Package>("Package", ":/logic/package.png");
+  registerElement<Package, nodes::Package>("Package", ":package.png");
 }
 
 void Registry::loadPlugins()

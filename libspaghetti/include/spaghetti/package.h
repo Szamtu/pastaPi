@@ -66,7 +66,7 @@ class SPAGHETTI_API Package final : public Element {
   Package();
   ~Package() override;
 
-  static constexpr char const *const TYPE{ "logic/package" };
+  static constexpr char const *const TYPE{ "base/package" };
   static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
   char const *type() const noexcept override { return TYPE; }

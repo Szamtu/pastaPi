@@ -119,7 +119,7 @@ PackageView::PackageView(Editor *const a_editor, Package *const a_package)
   , m_standalone{ m_package->package() == nullptr }
 {
   if (m_standalone) {
-    m_packageNode = static_cast<nodes::Package *>(Registry::get().createNode("logic/package"));
+    m_packageNode = static_cast<nodes::Package *>(Registry::get().createNode("base/package"));
     m_package->setNode(m_packageNode);
   } else
     m_packageNode = m_package->node<nodes::Package>();
@@ -179,7 +179,7 @@ PackageView::PackageView(Editor *const a_editor, Package *const a_package)
 
   if (m_package->name().empty()) {
     auto &registry = Registry::get();
-    m_package->setName(registry.elementName("logic/package"));
+    m_package->setName(registry.elementName("base/package"));
   }
 
   m_scene->addItem(m_inputs);
@@ -268,7 +268,7 @@ void PackageView::dragEnterEvent(QDragEnterEvent *a_event)
 
   if (mimeData->hasFormat("metadata/name") && mimeData->hasFormat("metadata/icon")) {
     auto const isPackage = mimeData->data("metadata/is_package") == "true";
-    auto const pathString = isPackage ? QString{ "logic/package" } : mimeData->text();
+    auto const pathString = isPackage ? QString{ "base/package" } : mimeData->text();
     auto const name = mimeData->data("metadata/name");
     auto const icon = mimeData->data("metadata/icon");
     auto const file = mimeData->data("metadata/filename");
@@ -330,7 +330,7 @@ void PackageView::dropEvent(QDropEvent *a_event)
     auto const file = mimeData->data("metadata/filename");
     auto const pathString = a_event->mimeData()->text();
     auto const stringData = pathString.toLatin1();
-    char const *const path{ isPackage ? "logic/package" : stringData.data() };
+    char const *const path{ isPackage ? "base/package" : stringData.data() };
 
     auto const element = m_package->add(path);
     element->setNode(m_dragNode);

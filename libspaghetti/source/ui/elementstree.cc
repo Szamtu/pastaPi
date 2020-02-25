@@ -35,6 +35,11 @@ ElementsTree::ElementsTree(QWidget *a_parent)
   assert(a_parent);
 
   setIconSize(QSize{ 32, 32 });
+
+  auto baseCategory = new QTreeWidgetItem{};
+  baseCategory->setText(0, "Base");
+  addTopLevelItem(baseCategory);
+  baseCategory->setHidden(true);
 }
 
 void ElementsTree::startDrag(Qt::DropActions a_supportedActions)
