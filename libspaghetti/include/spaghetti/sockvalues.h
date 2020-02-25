@@ -35,7 +35,7 @@ enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, ePoint, eShape, eS
 using Shape = std::vector<cv::Point>;
 using ShapeVector = std::vector<std::vector<cv::Point>>;
 
-using Value = std::variant<bool, int, double, std::string, cv::Mat, cv::Point, Shape, ShapeVector>;
+using Value = std::variant<bool, int32_t, double, std::string, cv::Mat, cv::Point, Shape, ShapeVector>;
 
 struct IOSocketFlags {
   enum Flags {
@@ -48,7 +48,8 @@ struct IOSocketFlags {
     eCanHoldShape = 1 << 6,
     eCanHoldShapeVector = 1 << 7,
     eCanChangeName = 1 << 8,
-    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString,
+    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString | eCanHoldMatrix | eCanHoldPoint |
+                        eCanHoldShape | eCanHoldShapeVector,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
     eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector
   };
