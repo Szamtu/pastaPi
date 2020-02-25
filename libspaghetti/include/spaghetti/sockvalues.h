@@ -35,7 +35,7 @@ enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, ePoint, eShape, eS
 using Shape = std::vector<cv::Point>;
 using ShapeVector = std::vector<std::vector<cv::Point>>;
 
-using Value = std::variant<bool, int32_t, float, std::string, cv::Mat, cv::Point, Shape, ShapeVector>;
+using Value = std::variant<bool, int, double, std::string, cv::Mat, cv::Point, Shape, ShapeVector>;
 
 struct IOSocketFlags {
   enum Flags {
