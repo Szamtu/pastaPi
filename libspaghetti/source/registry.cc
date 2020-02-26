@@ -134,8 +134,6 @@ void Registry::registerInternalElements()
 {
   init_resources();
 
-  // using namespace elements;
-
   registerElement<Package, nodes::Package>("Package", ":package.png");
 }
 

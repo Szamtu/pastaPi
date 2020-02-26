@@ -24,11 +24,6 @@
 #ifndef NODES_ALL_H
 #define NODES_ALL_H
 
-#include "nodes/logic/all.h"
-#include "nodes/opencv/all.h"
 #include "nodes/package.h"
-#include "nodes/pneumatic/all.h"
-#include "nodes/ui/all.h"
-#include "nodes/values/all.h"
 
 #endif // NODES_ALL_H
