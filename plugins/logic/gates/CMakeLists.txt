@@ -8,6 +8,18 @@ set(SOURCES
     and/and.cc
     and/and.h
 
+    nand/nand.cc
+    nand/nand.h
+
+    or/or.cc
+    or/or.h
+
+    nor/nor.cc
+    nor/nor.h
+
+    not/not.cc
+    not/not.h
+
     gates.cc
 )
 

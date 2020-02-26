@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2020 Paweł Adamski
+// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,29 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_GATES_NOR_H
+#define SPAGHETTI_ELEMENTS_GATES_NOR_H
 
 #include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/node.h>
-#include <spaghetti/registry.h>
 
-#include "and/and.h"
-#include "nand/nand.h"
-#include "nor/nor.h"
-#include "not/not.h"
-#include "or/or.h"
+namespace spaghetti::elements {
 
-using namespace spaghetti;
+class Nor final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "Logic/Gates/nor" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+  Nor();
 
-  a_registry.registerElement<elements::And>("AND", ":/unknown.png");
-  a_registry.registerElement<elements::Nand>("NAND", ":/unknown.png");
-  a_registry.registerElement<elements::Nor>("NOR", ":/unknown.png");
-  a_registry.registerElement<elements::Not>("NOT", ":/unknown.png");
-  a_registry.registerElement<elements::Or>("OR", ":/unknown.png");
-}
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void calculate() override;
+};
+
+} // namespace spaghetti::elements
+
+#endif // SPAGHETTI_ELEMENTS_GATES_NOR_H

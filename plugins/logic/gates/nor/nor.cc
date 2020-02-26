@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2020 Paweł Adamski
+// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,29 +20,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#include "nor.h"
 
-#include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/node.h>
-#include <spaghetti/registry.h>
+namespace spaghetti::elements {
 
-#include "and/and.h"
-#include "nand/nand.h"
-#include "nor/nor.h"
-#include "not/not.h"
-#include "or/or.h"
-
-using namespace spaghetti;
-
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
+Nor::Nor()
+  : Element{}
 {
-  spaghetti::log::init_from_plugin();
+  setMinInputs(2);
+  setMinOutputs(1);
+  setMaxOutputs(1);
 
-  a_registry.registerElement<elements::And>("AND", ":/unknown.png");
-  a_registry.registerElement<elements::Nand>("NAND", ":/unknown.png");
-  a_registry.registerElement<elements::Nor>("NOR", ":/unknown.png");
-  a_registry.registerElement<elements::Not>("NOT", ":/unknown.png");
-  a_registry.registerElement<elements::Or>("OR", ":/unknown.png");
+  addInput(ValueType::eBool, "#1", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+  addInput(ValueType::eBool, "#2", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+
+  addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+
+  setDefaultNewInputFlags(IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
 }
+
+void Nor::calculate()
+{
+  bool somethingSet{ false };
+  for (auto &input : m_inputs) {
+    bool const VALUE{ input.getValue<bool>() };
+    somethingSet |= VALUE;
+    if (VALUE) break;
+  }
+
+  m_outputs[0].setValue(!somethingSet);
+}
+
+} // namespace spaghetti::elements
