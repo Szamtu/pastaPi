@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2020 Paweł Adamski
+// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,29 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef NODES_VALUES_CONST_DOUBLE_H
+#define NODES_VALUES_CONST_DOUBLE_H
 
-#include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/node.h>
-#include <spaghetti/registry.h>
+#include "spaghetti/node.h"
 
-#include "bool/const_bool/const_bool.h"
-#include "bool/const_bool/const_bool_node.h"
-#include "bool/random_bool/random_bool.h"
+namespace spaghetti::nodes {
 
-#include "double/const_double/const_double.h"
-#include "double/const_double/const_double_node.h"
+class ConstDouble : public Node {
+ public:
+  ConstDouble();
 
-using namespace spaghetti;
+ private:
+  void refreshCentralWidget() override;
+  void showProperties() override;
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+ private:
+  QGraphicsSimpleTextItem *m_info{};
+};
 
-  a_registry.registerElement<elements::ConstBool, nodes::ConstBool>("Const bool", ":/unknown.png");
-  a_registry.registerElement<elements::RandomBool>("Random bool", ":/unknown.png");
+} // namespace spaghetti::nodes
 
-  a_registry.registerElement<elements::ConstDouble, nodes::ConstDouble>("Const float", ":/unknown.png");
-}
+#endif // NODES_VALUES_CONST_DOUBLE_H

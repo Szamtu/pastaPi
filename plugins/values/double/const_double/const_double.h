@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2020 Paweł Adamski
+// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,29 +20,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_VALUES_CONST_DOUBLE_H
+#define SPAGHETTI_ELEMENTS_VALUES_CONST_DOUBLE_H
 
 #include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/node.h>
-#include <spaghetti/registry.h>
 
-#include "bool/const_bool/const_bool.h"
-#include "bool/const_bool/const_bool_node.h"
-#include "bool/random_bool/random_bool.h"
+namespace spaghetti::elements {
 
-#include "double/const_double/const_double.h"
-#include "double/const_double/const_double_node.h"
+class ConstDouble final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "Values/Float/const_float" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-using namespace spaghetti;
+  ConstDouble();
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
 
-  a_registry.registerElement<elements::ConstBool, nodes::ConstBool>("Const bool", ":/unknown.png");
-  a_registry.registerElement<elements::RandomBool>("Random bool", ":/unknown.png");
+  void serialize(Json &a_json) override;
+  void deserialize(Json const &a_json) override;
 
-  a_registry.registerElement<elements::ConstDouble, nodes::ConstDouble>("Const float", ":/unknown.png");
-}
+  void set(double a_value);
+
+  double currentValue() const { return m_currentValue; }
+
+ private:
+  double m_currentValue{};
+};
+
+} // namespace spaghetti::elements
+
+#endif // SPAGHETTI_ELEMENTS_VALUES_CONST_FLOAT_H

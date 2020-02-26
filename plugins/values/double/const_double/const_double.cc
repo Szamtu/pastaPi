@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2020 Paweł Adamski
+// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,29 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#include "const_double.h"
 
-#include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/node.h>
-#include <spaghetti/registry.h>
+namespace spaghetti::elements {
 
-#include "bool/const_bool/const_bool.h"
-#include "bool/const_bool/const_bool_node.h"
-#include "bool/random_bool/random_bool.h"
-
-#include "double/const_double/const_double.h"
-#include "double/const_double/const_double_node.h"
-
-using namespace spaghetti;
-
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
+ConstDouble::ConstDouble()
 {
-  spaghetti::log::init_from_plugin();
+  setMinInputs(0);
+  setMaxInputs(0);
+  setMinOutputs(1);
+  setMaxOutputs(1);
 
-  a_registry.registerElement<elements::ConstBool, nodes::ConstBool>("Const bool", ":/unknown.png");
-  a_registry.registerElement<elements::RandomBool>("Random bool", ":/unknown.png");
-
-  a_registry.registerElement<elements::ConstDouble, nodes::ConstDouble>("Const float", ":/unknown.png");
+  addOutput(ValueType::eFloat, "Value", IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
 }
+
+void ConstDouble::serialize(Json &a_json)
+{
+  Element::serialize(a_json);
+
+  auto &properties = a_json["properties"];
+  properties["value"] = m_currentValue;
+}
+
+void ConstDouble::deserialize(Json const &a_json)
+{
+  Element::deserialize(a_json);
+
+  auto const &PROPERTIES = a_json["properties"];
+  m_currentValue = PROPERTIES["value"].get<double>();
+
+  m_outputs[0].setValue(m_currentValue);
+}
+
+void ConstDouble::set(double a_value)
+{
+  m_currentValue = a_value;
+  m_outputs[0].setValue(m_currentValue);
+}
+
+} // namespace spaghetti::elements

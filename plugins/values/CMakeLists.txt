@@ -12,6 +12,11 @@ set(SOURCES
     bool/random_bool/random_bool.cc
     bool/random_bool/random_bool.h
 
+    double/const_double/const_double.cc
+    double/const_double/const_double.h
+    double/const_double/const_double_node.cc
+    double/const_double/const_double_node.h
+
     values.cc
 )
 
