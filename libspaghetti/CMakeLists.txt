@@ -124,22 +124,6 @@ set(LIBSPAGHETTI_SOURCES
   source/filesystem.h.in
   )
 
-set(LIBSPAGHETTI_CHARTS_SOURCES
-  source/nodes/values/characteristic_curve/editor_widget.cc
-  source/nodes/values/characteristic_curve/editor_widget.h
-  source/nodes/values/characteristic_curve/editor_window.cc
-  source/nodes/values/characteristic_curve/editor_window.h
-  source/nodes/values/characteristic_curve/editor_window.ui
-  source/nodes/values/characteristic_curve/generators.cc
-  source/nodes/values/characteristic_curve/generators.h
-  source/nodes/values/characteristic_curve/line.cc
-  source/nodes/values/characteristic_curve/line.h
-  source/nodes/values/characteristic_curve/point.cc
-  source/nodes/values/characteristic_curve/point.h
-  source/nodes/values/characteristic_curve.cc
-  source/nodes/values/characteristic_curve.h
-  )
-
 set(LIBSPAGHETTI_ALL_SOURCES
   ${LIBSPAGHETTI_GENERATED_SOURCES}
   ${LIBSPAGHETTI_SOURCES}
@@ -150,7 +134,6 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${LIBSPAGHETTI_CHARTS_SOURCE
 source_group(TREE ${CMAKE_CURRENT_BINARY_DIR} FILES ${LIBSPAGHETTI_GENERATED_SOURCES})
 
 add_library(Spaghetti SHARED ${LIBSPAGHETTI_ALL_SOURCES})
-target_sources(Spaghetti PRIVATE $<$<BOOL:${SPAGHETTI_USE_CHARTS}>:${LIBSPAGHETTI_CHARTS_SOURCES}>)
 target_compile_features(Spaghetti PUBLIC cxx_std_17)
 target_compile_definitions(Spaghetti
   PUBLIC SPAGHETTI_SHARED
