@@ -5,10 +5,12 @@ project(Values VERSION 17.09.06 LANGUAGES C CXX)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 set(SOURCES
-    bool/const_bool.cc
-    bool/const_bool.h
-    bool/const_bool_node.cc
-    bool/const_bool_node.h
+    bool/const_bool/const_bool.cc
+    bool/const_bool/const_bool.h
+    bool/const_bool/const_bool_node.cc
+    bool/const_bool/const_bool_node.h
+    bool/random_bool/random_bool.cc
+    bool/random_bool/random_bool.h
 
     values.cc
 )

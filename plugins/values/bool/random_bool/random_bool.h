@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2020 Paweł Adamski
+// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,24 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_VALUES_RANDOM_BOOL_H
+#define SPAGHETTI_ELEMENTS_VALUES_RANDOM_BOOL_H
 
 #include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/node.h>
-#include <spaghetti/registry.h>
 
-#include "bool/const_bool/const_bool.h"
-#include "bool/const_bool/const_bool_node.h"
-#include "bool/random_bool/random_bool.h"
+namespace spaghetti::elements {
 
-using namespace spaghetti;
+class RandomBool final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "Values/Bool/random_bool" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+  RandomBool();
 
-  a_registry.registerElement<elements::ConstBool, nodes::ConstBool>("Bool", ":/unknown.png");
-  a_registry.registerElement<elements::RandomBool>("Random Bool", ":/unknown.png");
-}
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void calculate() override;
+
+ private:
+  bool m_state{};
+};
+
+} // namespace spaghetti::elements
+
+#endif // SPAGHETTI_ELEMENTS_VALUES_RANDOM_BOOL_H

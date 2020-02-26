@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2020 Paweł Adamski
+// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,24 +20,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#include <random>
 
-#include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/node.h>
-#include <spaghetti/registry.h>
+#include "random_bool.h"
 
-#include "bool/const_bool/const_bool.h"
-#include "bool/const_bool/const_bool_node.h"
-#include "bool/random_bool/random_bool.h"
+namespace {
+std::random_device g_random{};
+std::mt19937 g_generator{ g_random() };
+std::bernoulli_distribution g_distrib(0.5);
+} // namespace
 
-using namespace spaghetti;
+namespace spaghetti::elements {
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
+RandomBool::RandomBool()
+  : Element{}
 {
-  spaghetti::log::init_from_plugin();
+  setMinInputs(1);
+  setMaxInputs(1);
+  setMinOutputs(1);
+  setMaxOutputs(1);
 
-  a_registry.registerElement<elements::ConstBool, nodes::ConstBool>("Bool", ":/unknown.png");
-  a_registry.registerElement<elements::RandomBool>("Random Bool", ":/unknown.png");
+  addInput(ValueType::eBool, "Trigger", IOSocket::eCanHoldBool);
+
+  addOutput(ValueType::eBool, "Value", IOSocket::eCanHoldBool);
 }
+
+void RandomBool::calculate()
+{
+  bool const STATE{ m_inputs[0].getValue<bool>() };
+
+  if (STATE != m_state) {
+    bool const VALUE{ g_distrib(g_generator) };
+    m_outputs[0].setValue(VALUE);
+    m_state = STATE;
+  }
+}
+
+} // namespace spaghetti::elements
