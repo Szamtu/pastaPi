@@ -107,18 +107,15 @@ class SPAGHETTI_API Element {
     {
     }
 
-    Value value{};
+   public:
     ValueType type{};
     size_t id{};
     uint64_t slot{};
     uint64_t flags{};
     std::string name{};
 
-    bool valueChanged{};
-    std::shared_ptr<std::mutex> writeLock{};
-
     template<typename T>
-    T getValue()
+    T getValue() const
     {
       T outValue;
 
@@ -130,7 +127,6 @@ class SPAGHETTI_API Element {
         outValue = std::get<T>(value);
       }
 
-      valueChanged = false;
       return outValue;
     }
 
@@ -144,8 +140,6 @@ class SPAGHETTI_API Element {
       } else {
         value = a_value;
       }
-
-      valueChanged = true;
     }
 
     void copyValue(IOSocket const &a_from)
@@ -157,8 +151,11 @@ class SPAGHETTI_API Element {
       } else {
         value = a_from.value;
       }
-      valueChanged = true;
     }
+
+   private:
+    Value value{};
+    std::shared_ptr<std::mutex> writeLock{};
   };
 
   using IOSockets = std::vector<IOSocket>;
@@ -174,6 +171,7 @@ class SPAGHETTI_API Element {
 
   virtual void calculate() {}
   virtual void reset() {}
+  virtual bool alwaysCalculate() const noexcept { return true; }
 
   virtual void update(duration_t const &a_delta) { (void)a_delta; }
 

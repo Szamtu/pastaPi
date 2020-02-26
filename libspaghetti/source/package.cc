@@ -194,7 +194,9 @@ void Package::calculate()
     if (!element || element == this) continue;
 
     element->update(m_delta);
-    element->calculate();
+    if (element->alwaysCalculate()) {
+      element->calculate();
+    }
   }
 }
 

@@ -718,7 +718,7 @@ void Node::updateOutputs()
   for (size_t i = 0; i < SIZE; ++i) {
     switch (ELEMENT_IOS[i].type) {
       case ValueType::eBool: {
-        bool const SIGNAL{ std::get<bool>(ELEMENT_IOS[i].value) };
+        bool const SIGNAL{ ELEMENT_IOS[i].getValue<bool>() };
         NODE_IOS[static_cast<int>(i)]->setSignal(SIGNAL);
         break;
       }
