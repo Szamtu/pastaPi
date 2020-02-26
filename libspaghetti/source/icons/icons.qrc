@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>unknown.png</file>
+        <file>package.svg</file>
     </qresource>
 </RCC>

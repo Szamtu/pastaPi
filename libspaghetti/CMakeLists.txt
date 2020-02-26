@@ -27,30 +27,6 @@ endif ()
 configure_file(source/filesystem.h.in include/filesystem.h)
 configure_file(include/spaghetti/version.h.in include/spaghetti/version.h)
 
-set(LIBSPAGHETTI_PUBLIC_GATES_HEADERS
-  include/spaghetti/elements/gates/all.h
-  )
-set(LIBSPAGHETTI_PUBLIC_LOGIC_HEADERS
-  include/spaghetti/elements/logic/all.h
-  )
-set(LIBSPAGHETTI_PUBLIC_MATH_HEADERS
-  include/spaghetti/elements/math/all.h
-  )
-set(LIBSPAGHETTI_PUBLIC_TIMERS_HEADERS
-  include/spaghetti/elements/timers/all.h
-  )
-set(LIBSPAGHETTI_PUBLIC_UI_HEADERS
-  include/spaghetti/elements/ui/all.h
-  )
-set(LIBSPAGHETTI_PUBLIC_VALUES_HEADERS
-  include/spaghetti/elements/values/all.h
-  )
-set(LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS
-  include/spaghetti/elements/opencv/all.h
-  )
-set(LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS
-  include/spaghetti/elements/all.h
-  )
 set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
   include/spaghetti/api.h
   include/spaghetti/editor.h
@@ -74,7 +50,7 @@ set(LIBSPAGHETTI_PUBLIC_HEADERS
   ${LIBSPAGHETTI_PUBLIC_UI_HEADERS}
   ${LIBSPAGHETTI_PUBLIC_VALUES_HEADERS}
   ${LIBSPAGHETTI_PUBLIC_OPENCV_HEADERS}
-  ${LIBSPAGHETTI_PUBLIC_ELEMENTS_ALL_HEADERS}
+
   ${LIBSPAGHETTI_PUBLIC_COMMON_HEADERS}
   )
 
