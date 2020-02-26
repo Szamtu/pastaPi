@@ -113,7 +113,7 @@ Registry::Registry()
 
   fs::path const LIB_PATH{ fs::canonical(fs::path{ APP_PATH.string() + "/../lib" }) };
   fs::path const PACKAGES_PATH{ fs::canonical(fs::path{ APP_PATH.string() + "/../packages" }) };
-  fs::path const SYSTEM_PLUGINS_PATH{ LIB_PATH / "spaghetti" };
+  fs::path const SYSTEM_PLUGINS_PATH{ LIB_PATH };
   fs::path const SYSTEM_PACKAGES_PATH{ PACKAGES_PATH };
 
   fs::path const USER_PLUGINS_PATH{ fs::absolute(HOME_PATH / ".config/spaghetti/plugins") };

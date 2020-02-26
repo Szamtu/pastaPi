@@ -24,6 +24,7 @@
 #ifndef SPAGHETTI_SOCKVALUES_H
 #define SPAGHETTI_SOCKVALUES_H
 
+#include <spaghetti/api.h>
 #include <QColor>
 #include <QString>
 #include <opencv2/core/mat.hpp>
@@ -66,7 +67,7 @@ struct ValueTypeDescription {
   Value const value{};
 };
 
-class ValueDescription {
+class SPAGHETTI_API ValueDescription {
  public:
   static QString typeQstring(ValueType const a_type);
   static const char *typeCString(ValueType const a_type);
