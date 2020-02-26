@@ -72,7 +72,7 @@ QTreeWidgetItem *ElementsTree::getCathegory(QString const a_category)
   QTreeWidgetItem *categoryItem{ nullptr };
 
   for (auto category : categoryList) {
-    auto categorySearchResult = findItems(category, Qt::MatchExactly);
+    auto categorySearchResult = findItems(category, Qt::MatchExactly | Qt::MatchRecursive);
 
     if (categorySearchResult.size()) {
       categoryItem = categorySearchResult.first();
