@@ -34,6 +34,7 @@
 
 #include "double/const_double/const_double.h"
 #include "double/const_double/const_double_node.h"
+#include "double/random_double/random_double.h"
 
 using namespace spaghetti;
 
@@ -45,4 +46,5 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::RandomBool>("Random bool", ":/unknown.png");
 
   a_registry.registerElement<elements::ConstDouble, nodes::ConstDouble>("Const float", ":/unknown.png");
+  a_registry.registerElement<elements::RandomDouble>("Random float", ":/unknown.png");
 }

@@ -16,6 +16,8 @@ set(SOURCES
     double/const_double/const_double.h
     double/const_double/const_double_node.cc
     double/const_double/const_double_node.h
+    double/random_double/random_double.cc
+    double/random_double/random_double.h
 
     values.cc
 )
