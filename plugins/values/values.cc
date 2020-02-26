@@ -34,6 +34,8 @@
 
 #include "double/const_double/const_double.h"
 #include "double/const_double/const_double_node.h"
+#include "double/max_double/max_double.h"
+#include "double/min_double/min_double.h"
 #include "double/random_double/random_double.h"
 #include "double/random_double/random_double_node.h"
 
@@ -48,4 +50,6 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 
   a_registry.registerElement<elements::ConstDouble, nodes::ConstDouble>("Const float", ":/unknown.png");
   a_registry.registerElement<elements::RandomDouble, nodes::RandomDouble>("Random float", ":/unknown.png");
+  a_registry.registerElement<elements::MinDouble>("Minimum float", ":/unknown.png");
+  a_registry.registerElement<elements::MaxDouble>("Maximum float", ":/unknown.png");
 }

@@ -20,6 +20,10 @@ set(SOURCES
     double/random_double/random_double.h
     double/random_double/random_double_node.cc
     double/random_double/random_double_node.h
+    double/min_double/min_double.cc
+    double/min_double/min_double.h
+    double/max_double/max_double.cc
+    double/max_double/max_double.h
 
     values.cc
 )
