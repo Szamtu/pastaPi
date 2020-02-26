@@ -25,6 +25,19 @@ set(SOURCES
     double/max_double/max_double.cc
     double/max_double/max_double.h
 
+    integer/const_int/const_int.cc
+    integer/const_int/const_int.h
+    integer/const_int/const_int_node.cc
+    integer/const_int/const_int_node.h
+    integer/max_int/max_int.cc
+    integer/max_int/max_int.h
+    integer/min_int/min_int.cc
+    integer/min_int/min_int.h
+    integer/random_int/random_int.cc
+    integer/random_int/random_int.h
+    integer/random_int/random_int_node.cc
+    integer/random_int/random_int_node.h
+
     values.cc
 )
 

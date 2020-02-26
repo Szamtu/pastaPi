@@ -39,6 +39,13 @@
 #include "double/random_double/random_double.h"
 #include "double/random_double/random_double_node.h"
 
+#include "integer/const_int/const_int.h"
+#include "integer/const_int/const_int_node.h"
+#include "integer/max_int/max_int.h"
+#include "integer/min_int/min_int.h"
+#include "integer/random_int/random_int.h"
+#include "integer/random_int/random_int_node.h"
+
 using namespace spaghetti;
 
 extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
@@ -52,4 +59,9 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::RandomDouble, nodes::RandomDouble>("Random float", ":/unknown.png");
   a_registry.registerElement<elements::MinDouble>("Minimum float", ":/unknown.png");
   a_registry.registerElement<elements::MaxDouble>("Maximum float", ":/unknown.png");
+
+  a_registry.registerElement<elements::ConstInt, nodes::ConstInt>("Const int", ":/unknown.png");
+  a_registry.registerElement<elements::MinInt>("Minimum int", ":/unknown.png");
+  a_registry.registerElement<elements::MaxInt>("Maximum int", ":/unknown.png");
+  a_registry.registerElement<elements::RandomInt, nodes::RandomInt>("Random int", ":/unknown.png");
 }
