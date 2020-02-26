@@ -83,7 +83,11 @@ QTreeWidgetItem *ElementsTree::getCathegory(QString const a_category)
         categoryItem = new QTreeWidgetItem{};
         addTopLevelItem(categoryItem);
       }
+
       categoryItem->setText(0, category);
+      auto font = categoryItem->font(0);
+      font.setBold(true);
+      categoryItem->setFont(0, font);
     }
   }
 
