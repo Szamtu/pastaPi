@@ -8,7 +8,10 @@ set(SOURCES
     subtraction/subtraction.cc
     subtraction/subtraction.h
 
-    subtraction.cc
+    addition/addition.cc
+    addition/addition.h
+
+    arithmetic.cc
 )
 
 add_library(${PROJECT_NAME} MODULE ${SOURCES})
