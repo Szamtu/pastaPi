@@ -52,6 +52,30 @@ set(SOURCES
     convert/radian_to_degree/radian_to_degree.cc
     convert/radian_to_degree/radian_to_degree.h
 
+    values_ui/info_double/info_double.cc
+    values_ui/info_double/info_double.h
+    values_ui/info_double/info_double_node.cc
+    values_ui/info_double/info_double_node.h
+    values_ui/info_int/info_int.cc
+    values_ui/info_int/info_int.h
+    values_ui/info_int/info_int_node.cc
+    values_ui/info_int/info_int_node.h
+    values_ui/info_string/info_string.cc
+    values_ui/info_string/info_string.h
+    values_ui/info_string/info_string_node.cc
+    values_ui/info_string/info_string_node.h
+    values_ui/push_button/push_button.cc
+    values_ui/push_button/push_button.h
+    values_ui/push_button/push_button_node.cc
+    values_ui/push_button/push_button_node.h
+    values_ui/seven_segment_display/seven_segment_display.cc
+    values_ui/seven_segment_display/seven_segment_display.h
+    values_ui/seven_segment_display/seven_segment_display_node.cc
+    values_ui/seven_segment_display/seven_segment_display_node.h
+    values_ui/toggle_button/toggle_button.cc
+    values_ui/toggle_button/toggle_button.h
+    values_ui/toggle_button/toggle_button_node.cc
+    values_ui/toggle_button/toggle_button_node.h
 
     values.cc
 )

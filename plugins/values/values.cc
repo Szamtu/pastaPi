@@ -54,6 +54,19 @@
 #include "convert/degree_to_radian/degree_to_radian.h"
 #include "convert/radian_to_degree/radian_to_degree.h"
 
+#include "values_ui/info_double/info_double.h"
+#include "values_ui/info_double/info_double_node.h"
+#include "values_ui/info_int/info_int.h"
+#include "values_ui/info_int/info_int_node.h"
+#include "values_ui/info_string/info_string.h"
+#include "values_ui/info_string/info_string_node.h"
+#include "values_ui/push_button/push_button.h"
+#include "values_ui/push_button/push_button_node.h"
+#include "values_ui/seven_segment_display/seven_segment_display.h"
+#include "values_ui/seven_segment_display/seven_segment_display_node.h"
+#include "values_ui/toggle_button/toggle_button.h"
+#include "values_ui/toggle_button/toggle_button_node.h"
+
 using namespace spaghetti;
 
 extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
@@ -79,4 +92,12 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::ConvertValue>("Convert value", ":/unknown.png");
   a_registry.registerElement<elements::Degree2Radian>("Rad2Deg", ":/unknown.png");
   a_registry.registerElement<elements::Radian2Degree>("Deg2Rad", ":/unknown.png");
+
+  a_registry.registerElement<elements::InfoDouble, nodes::InfoDouble>("Info float", ":/unknown.png");
+  a_registry.registerElement<elements::InfoInt, nodes::InfoInt>("Info int", ":/unknown.png");
+  a_registry.registerElement<elements::InfoString, nodes::InfoString>("Info string", ":/unknown.png");
+  a_registry.registerElement<elements::PushButton, nodes::PushButton>("Push button", ":/unknown.png");
+  a_registry.registerElement<elements::SevenSegmentDisplay, nodes::SevenSegmentDisplay>("Seven segment display",
+                                                                                        ":/unknown.png");
+  a_registry.registerElement<elements::ToggleButton, nodes::ToggleButton>("Toggle button", ":/unknown.png");
 }
