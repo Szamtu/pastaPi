@@ -71,23 +71,43 @@ QTreeWidgetItem *ElementsTree::getCathegory(QString const a_category)
   auto categoryList = a_category.split('/');
   QTreeWidgetItem *categoryItem{ nullptr };
 
-  for (auto category : categoryList) {
-    auto categorySearchResult = findItems(category, Qt::MatchExactly | Qt::MatchRecursive);
+  auto CreateCategory = [](QString const a_text, QTreeWidgetItem *a_parent = nullptr) -> auto
+  {
+    auto item = new QTreeWidgetItem{ a_parent };
+    item->setText(0, a_text);
+    auto font = item->font(0);
+    font.setBold(true);
+    item->setFont(0, font);
 
-    if (categorySearchResult.size()) {
-      categoryItem = categorySearchResult.first();
+    return item;
+  };
+
+  auto toplevelCategories = findItems(categoryList[0], Qt::MatchExactly);
+  if (!toplevelCategories.size()) {
+    categoryItem = CreateCategory(categoryList[0]);
+    addTopLevelItem(categoryItem);
+  } else {
+    categoryItem = toplevelCategories[0];
+  }
+  categoryList.removeFirst();
+
+  for (auto &subCategory : categoryList) {
+    if (!categoryItem->childCount()) {
+      categoryItem = CreateCategory(subCategory, categoryItem);
     } else {
-      if (categoryItem) {
-        categoryItem = new QTreeWidgetItem{ categoryItem };
-      } else {
-        categoryItem = new QTreeWidgetItem{};
-        addTopLevelItem(categoryItem);
+      QTreeWidgetItem *subCategoryItem{ nullptr };
+      for (int childNum = 0; childNum < categoryItem->childCount(); childNum++) {
+        if (categoryItem->child(childNum)->text(0) == subCategory) {
+          subCategoryItem = categoryItem->child(childNum);
+          break;
+        }
       }
 
-      categoryItem->setText(0, category);
-      auto font = categoryItem->font(0);
-      font.setBold(true);
-      categoryItem->setFont(0, font);
+      if (subCategoryItem) {
+        categoryItem = subCategoryItem;
+      } else {
+        categoryItem = CreateCategory(subCategory, categoryItem);
+      }
     }
   }
 
