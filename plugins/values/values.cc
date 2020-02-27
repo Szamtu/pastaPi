@@ -46,6 +46,10 @@
 #include "integer/random_int/random_int.h"
 #include "integer/random_int/random_int_node.h"
 
+#include "string/concat_string/concat_string.h"
+#include "string/const_string/const_string.h"
+#include "string/const_string/const_string_node.h"
+
 using namespace spaghetti;
 
 extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
@@ -64,4 +68,7 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::MinInt>("Minimum int", ":/unknown.png");
   a_registry.registerElement<elements::MaxInt>("Maximum int", ":/unknown.png");
   a_registry.registerElement<elements::RandomInt, nodes::RandomInt>("Random int", ":/unknown.png");
+
+  a_registry.registerElement<elements::ConstString, nodes::ConstString>("Const string", ":/unknown.png");
+  a_registry.registerElement<elements::ConCat>("Concat string", ":/unknown.png");
 }

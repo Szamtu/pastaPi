@@ -38,6 +38,13 @@ set(SOURCES
     integer/random_int/random_int_node.cc
     integer/random_int/random_int_node.h
 
+    string/const_string/const_string.cc
+    string/const_string/const_string.h
+    string/const_string/const_string_node.cc
+    string/const_string/const_string_node.h
+    string/concat_string/concat_string.cc
+    string/concat_string/concat_string.h
+
     values.cc
 )
 
