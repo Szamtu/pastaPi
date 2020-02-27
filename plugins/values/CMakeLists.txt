@@ -45,6 +45,14 @@ set(SOURCES
     string/concat_string/concat_string.cc
     string/concat_string/concat_string.h
 
+    convert/convert_value/convert_value.cc
+    convert/convert_value/convert_value.h
+    convert/degree_to_radian/degree_to_radian.cc
+    convert/degree_to_radian/degree_to_radian.h
+    convert/radian_to_degree/radian_to_degree.cc
+    convert/radian_to_degree/radian_to_degree.h
+
+
     values.cc
 )
 

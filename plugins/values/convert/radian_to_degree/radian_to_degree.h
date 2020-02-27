@@ -21,36 +21,26 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_UTILS_H
-#define SPAGHETTI_UTILS_H
+#ifndef SPAGHETTI_ELEMENTS_VALUES_RADIAN_TO_DEGREE_H
+#define SPAGHETTI_ELEMENTS_VALUES_RADIAN_TO_DEGREE_H
 
-#include <cmath>
-#include <limits>
+#include <spaghetti/element.h>
 
-namespace spaghetti {
+namespace spaghetti::elements {
 
-constexpr auto const PI = 3.1415926535897932;
-constexpr auto const RAD2DEG = 180.0 / PI;
-constexpr auto const DEG2RAD = PI / 180.0;
+class Radian2Degree final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "Values/Convert/rad2deg" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-inline bool nearly_equal(float const &a_a, float const &a_b)
-{
-  return std::nextafter(a_a, std::numeric_limits<float>::lowest()) <= a_b &&
-         std::nextafter(a_a, std::numeric_limits<float>::max()) >= a_b;
-}
+  Radian2Degree();
 
-inline bool nearly_equal(double const &a_a, double const &a_b)
-{
-  return std::nextafter(a_a, std::numeric_limits<double>::lowest()) <= a_b &&
-         std::nextafter(a_a, std::numeric_limits<double>::max()) >= a_b;
-}
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
 
-template<typename T>
-inline T lerp(T a_v0, T a_v1, T a_t)
-{
-  return (1 - a_t) * a_v0 + a_t * a_v1;
-}
+  void calculate() override;
+};
 
-} // namespace spaghetti
+} // namespace spaghetti::elements
 
-#endif // SPAGHETTI_UTILS_H
+#endif // SPAGHETTI_ELEMENTS_VALUES_RADIAN_TO_DEGREE_H

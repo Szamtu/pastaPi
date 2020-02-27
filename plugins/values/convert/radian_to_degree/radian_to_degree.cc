@@ -20,37 +20,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef SPAGHETTI_UTILS_H
-#define SPAGHETTI_UTILS_H
+#include "radian_to_degree.h"
+#include <spaghetti/utils.h>
 
-#include <cmath>
-#include <limits>
+namespace spaghetti::elements {
 
-namespace spaghetti {
-
-constexpr auto const PI = 3.1415926535897932;
-constexpr auto const RAD2DEG = 180.0 / PI;
-constexpr auto const DEG2RAD = PI / 180.0;
-
-inline bool nearly_equal(float const &a_a, float const &a_b)
+Radian2Degree::Radian2Degree()
 {
-  return std::nextafter(a_a, std::numeric_limits<float>::lowest()) <= a_b &&
-         std::nextafter(a_a, std::numeric_limits<float>::max()) >= a_b;
+  setMinInputs(1);
+  setMaxInputs(1);
+  setMinOutputs(1);
+  setMaxOutputs(1);
+
+  addInput(ValueType::eFloat, "Radian", IOSocket::eCanHoldFloat);
+
+  addOutput(ValueType::eFloat, "Degree", IOSocket::eCanHoldFloat);
 }
 
-inline bool nearly_equal(double const &a_a, double const &a_b)
+void Radian2Degree::calculate()
 {
-  return std::nextafter(a_a, std::numeric_limits<double>::lowest()) <= a_b &&
-         std::nextafter(a_a, std::numeric_limits<double>::max()) >= a_b;
+  double const RADIAN{ m_inputs[0].getValue<double>() };
+
+  m_outputs[0].setValue(RADIAN * spaghetti::RAD2DEG);
 }
 
-template<typename T>
-inline T lerp(T a_v0, T a_v1, T a_t)
-{
-  return (1 - a_t) * a_v0 + a_t * a_v1;
-}
-
-} // namespace spaghetti
-
-#endif // SPAGHETTI_UTILS_H
+} // namespace spaghetti::elements

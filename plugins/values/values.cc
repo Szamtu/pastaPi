@@ -50,6 +50,10 @@
 #include "string/const_string/const_string.h"
 #include "string/const_string/const_string_node.h"
 
+#include "convert/convert_value/convert_value.h"
+#include "convert/degree_to_radian/degree_to_radian.h"
+#include "convert/radian_to_degree/radian_to_degree.h"
+
 using namespace spaghetti;
 
 extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
@@ -71,4 +75,8 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 
   a_registry.registerElement<elements::ConstString, nodes::ConstString>("Const string", ":/unknown.png");
   a_registry.registerElement<elements::ConCat>("Concat string", ":/unknown.png");
+
+  a_registry.registerElement<elements::ConvertValue>("Convert value", ":/unknown.png");
+  a_registry.registerElement<elements::Degree2Radian>("Rad2Deg", ":/unknown.png");
+  a_registry.registerElement<elements::Radian2Degree>("Deg2Rad", ":/unknown.png");
 }
