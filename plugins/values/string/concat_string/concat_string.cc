@@ -40,7 +40,7 @@ void ConCat::calculate()
 {
   std::string outputString{};
 
-  for (auto const &input : m_inputs) {
+  for (auto &input : m_inputs) {
     auto inputString = input.getValue<std::string>();
     outputString += inputString;
   }

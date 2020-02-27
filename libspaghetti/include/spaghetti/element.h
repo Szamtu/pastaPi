@@ -113,9 +113,27 @@ class SPAGHETTI_API Element {
     uint64_t slot{};
     uint64_t flags{};
     std::string name{};
+    bool valueChanged{ true };
 
     template<typename T>
-    T getValue() const
+    T getValue()
+    {
+      T outValue;
+
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        outValue = std::get<T>(value);
+        writeLock->unlock();
+      } else {
+        outValue = std::get<T>(value);
+      }
+
+      valueChanged = false;
+      return outValue;
+    }
+
+    template<typename T>
+    T getValueWithoutNotify() const
     {
       T outValue;
 
@@ -140,6 +158,7 @@ class SPAGHETTI_API Element {
       } else {
         value = a_value;
       }
+      valueChanged = true;
     }
 
     void copyValue(IOSocket const &a_from)
@@ -151,6 +170,7 @@ class SPAGHETTI_API Element {
       } else {
         value = a_from.value;
       }
+      valueChanged = a_from.valueChanged;
     }
 
    private:

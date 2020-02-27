@@ -129,7 +129,7 @@ void SevenSegmentDisplay::refreshCentralWidget()
 {
   if (!m_element) return;
 
-  auto const &inputs = m_element->inputs();
+  auto &inputs = m_element->inputs();
 
   bool const A{ inputs[0].getValue<bool>() };
   bool const B{ inputs[1].getValue<bool>() };
