@@ -33,8 +33,8 @@ Addition::Addition()
   setMinOutputs(1);
   setMaxOutputs(1);
 
-  addInput(ValueType::eInt, "#1", IOSocket::eCanHoldInt | IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
-  addInput(ValueType::eInt, "#2", IOSocket::eCanHoldInt | IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
+  addInput(ValueType::eInt, "A", IOSocket::eCanHoldInt | IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
+  addInput(ValueType::eInt, "B", IOSocket::eCanHoldInt | IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
 
   addOutput(ValueType::eInt, "Out", IOSocket::eCanHoldInt | IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
 
