@@ -31,6 +31,7 @@ class CropImage final : public Element {
  public:
   static constexpr char const *const TYPE{ "OpenCV/Improc/crop_image" };
   static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+  bool alwaysCalculate() const noexcept override { return false; }
 
   CropImage();
 

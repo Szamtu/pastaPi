@@ -31,6 +31,7 @@ class Resize final : public Element {
  public:
   static constexpr char const *const TYPE{ "OpenCV/Improc/resize" };
   static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+  bool alwaysCalculate() const noexcept override { return false; }
 
   Resize();
 

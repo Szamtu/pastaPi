@@ -32,6 +32,7 @@ class Mog2 final : public Element {
  public:
   static constexpr char const *const TYPE{ "OpenCV/Video/mog2" };
   static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+  bool alwaysCalculate() const noexcept override { return false; }
 
   Mog2();
 

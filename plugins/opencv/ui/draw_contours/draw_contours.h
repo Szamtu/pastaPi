@@ -31,6 +31,7 @@ class DrawContours final : public Element {
  public:
   static constexpr char const *const TYPE{ "OpenCV/UI/draw_contors" };
   static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+  bool alwaysCalculate() const noexcept override { return false; }
 
   DrawContours();
 
