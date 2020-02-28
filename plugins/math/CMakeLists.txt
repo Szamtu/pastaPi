@@ -38,6 +38,9 @@ set(SOURCES
     trigonometry/tangens/tangens.cc
     trigonometry/tangens/tangens.h
 
+    rounding/floor/floor.cc
+    rounding/floor/floor.h
+
     math.cc
 )
 

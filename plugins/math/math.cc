@@ -41,6 +41,8 @@
 #include "trigonometry/sinus/sinus.h"
 #include "trigonometry/tangens/tangens.h"
 
+#include "rounding/floor/floor.h"
+
 using namespace spaghetti;
 
 extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
@@ -51,6 +53,7 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::Addition>("Addition", ":/unknown.png");
   a_registry.registerElement<elements::Cosinus>("Cosinus", ":/unknown.png");
   a_registry.registerElement<elements::Division>("Division", ":/unknown.png");
+  a_registry.registerElement<elements::Floor>("Floor", ":/unknown.png");
   a_registry.registerElement<elements::Modulo>("Modulo", ":/unknown.png");
   a_registry.registerElement<elements::Multiplication>("Multiplication", ":/unknown.png");
   a_registry.registerElement<elements::Power>("Power", ":/unknown.png");
