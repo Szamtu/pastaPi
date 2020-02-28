@@ -26,7 +26,7 @@ set(SOURCES
     arithmetic/modulo/modulo.cc
     arithmetic/modulo/modulo.h
 
-    arithmetic.cc
+    math.cc
 )
 
 add_library(${PROJECT_NAME} MODULE ${SOURCES})
