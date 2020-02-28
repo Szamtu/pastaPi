@@ -38,6 +38,7 @@
 
 #include "trigonometry/cosinus/cosinus.h"
 #include "trigonometry/sinus/sinus.h"
+#include "trigonometry/tangens/tangens.h"
 
 using namespace spaghetti;
 
@@ -54,4 +55,5 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::Sinus>("Sinus", ":/unknown.png");
   a_registry.registerElement<elements::Square>("Square", ":/unknown.png");
   a_registry.registerElement<elements::Subtraction>("Subtraction", ":/unknown.png");
+  a_registry.registerElement<elements::Tangens>("Tangens", ":/unknown.png");
 }

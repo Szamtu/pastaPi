@@ -32,6 +32,9 @@ set(SOURCES
     trigonometry/cosinus/cosinus.cc
     trigonometry/cosinus/cosinus.h
 
+    trigonometry/tangens/tangens.cc
+    trigonometry/tangens/tangens.h
+
     math.cc
 )
 
