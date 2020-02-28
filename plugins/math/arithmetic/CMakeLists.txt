@@ -23,6 +23,9 @@ set(SOURCES
     square/square.cc
     square/square.h
 
+    modulo/modulo.cc
+    modulo/modulo.h
+
     arithmetic.cc
 )
 
