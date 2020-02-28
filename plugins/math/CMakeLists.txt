@@ -41,6 +41,9 @@ set(SOURCES
     rounding/floor/floor.cc
     rounding/floor/floor.h
 
+    rounding/ceil/ceil.cc
+    rounding/ceil/ceil.h
+
     math.cc
 )
 
