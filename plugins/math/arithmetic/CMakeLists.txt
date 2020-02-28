@@ -17,6 +17,9 @@ set(SOURCES
     division/division.cc
     division/division.h
 
+    power/power.cc
+    power/power.h
+
     arithmetic.cc
 )
 
