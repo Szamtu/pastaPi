@@ -14,6 +14,9 @@ set(SOURCES
     multiplication/multiplication.cc
     multiplication/multiplication.h
 
+    division/division.cc
+    division/division.h
+
     arithmetic.cc
 )
 
