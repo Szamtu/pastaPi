@@ -20,6 +20,9 @@ set(SOURCES
     power/power.cc
     power/power.h
 
+    square/square.cc
+    square/square.h
+
     arithmetic.cc
 )
 
