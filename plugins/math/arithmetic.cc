@@ -28,13 +28,13 @@
 #include <spaghetti/node.h>
 #include <spaghetti/registry.h>
 
-#include "addition/addition.h"
-#include "division/division.h"
-#include "modulo/modulo.h"
-#include "multiplication/multiplication.h"
-#include "power/power.h"
-#include "square/square.h"
-#include "subtraction/subtraction.h"
+#include "arithmetic/addition/addition.h"
+#include "arithmetic/division/division.h"
+#include "arithmetic/modulo/modulo.h"
+#include "arithmetic/multiplication/multiplication.h"
+#include "arithmetic/power/power.h"
+#include "arithmetic/square/square.h"
+#include "arithmetic/subtraction/subtraction.h"
 
 using namespace spaghetti;
 
