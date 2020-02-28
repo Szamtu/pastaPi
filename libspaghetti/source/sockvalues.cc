@@ -1,4 +1,5 @@
 #include <spaghetti/sockvalues.h>
+#include <spaghetti/utils.h>
 
 namespace spaghetti {
 
@@ -148,6 +149,29 @@ Value ValueDescription::defaultValue(ValueType const a_valueType)
   assert(typeID < g_valuesDescriptions.size());
 
   return g_valuesDescriptions[typeID].value;
+}
+
+template<typename T>
+bool compare(Value const &a_a, Value const &a_b)
+{
+  return std::get<T>(a_a) == std::get<T>(a_b);
+}
+
+bool ValueDescription::compareValues(Value const &a_a, Value const &a_b, ValueType const a_type)
+{
+  switch (a_type) {
+    case ValueType::eBool: return compare<bool>(a_a, a_b);
+    case ValueType::eInt: return compare<int>(a_a, a_b);
+    case ValueType::eFloat: return nearly_equal(std::get<double>(a_a), std::get<double>(a_a));
+    case ValueType::eString: return compare<std::string>(a_a, a_b);
+    case ValueType::eMatrix: assert(false);
+    case ValueType::ePoint: return compare<cv::Point>(a_a, a_b);
+    case ValueType::eShape: assert(false);
+    case ValueType::eShapeVector: assert(false);
+    default: assert(false);
+  }
+
+  return false;
 }
 
 } // namespace spaghetti

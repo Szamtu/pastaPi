@@ -145,6 +145,7 @@ bool Element::addInput(ValueType const a_type, std::string const &a_name, uint64
   input.name = a_name;
   input.type = a_type;
   input.flags = a_flags;
+  if (!alwaysCalculate()) input.isMonitored = true;
 
   resetIOSocketValue(input);
   m_inputs.emplace_back(input);
@@ -244,6 +245,7 @@ bool Element::connect(size_t const a_sourceId, uint64_t const a_outputId, uint64
 void Element::resetIOSocketValue(IOSocket &a_io)
 {
   a_io.setValue(ValueDescription::defaultValue(a_io.type));
+  a_io.valueChanged = true;
 }
 
 void Element::handleEvent(Event const &a_event)

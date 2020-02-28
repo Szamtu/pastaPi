@@ -52,7 +52,8 @@ struct IOSocketFlags {
     eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString | eCanHoldMatrix | eCanHoldPoint |
                         eCanHoldShape | eCanHoldShapeVector,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
-    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector
+    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector,
+    eTimeStampedValues = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector
   };
 };
 
@@ -77,6 +78,7 @@ class SPAGHETTI_API ValueDescription {
   static ValueType stringViewToType(std::string_view const a_type);
   static std::vector<ValueType> heldedValues(IOSocketFlags::Flags const a_flags);
   static Value defaultValue(ValueType const a_valueType);
+  static bool compareValues(Value const &a_a, Value const &a_b, ValueType const a_type);
 };
 
 } // namespace spaghetti

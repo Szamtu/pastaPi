@@ -102,6 +102,8 @@ class SPAGHETTI_API Element {
   using vec2d = Vec2<double>;
 
   struct IOSocket : public IOSocketFlags {
+    using TimeStamp = std::chrono::high_resolution_clock::time_point;
+
     IOSocket()
       : writeLock{ new std::mutex{} }
     {
@@ -113,7 +115,10 @@ class SPAGHETTI_API Element {
     uint64_t slot{};
     uint64_t flags{};
     std::string name{};
+
     bool valueChanged{ true };
+    bool isMonitored{ false };
+    TimeStamp timeStamp{};
 
     template<typename T>
     T getValue()
@@ -151,6 +156,9 @@ class SPAGHETTI_API Element {
     template<typename T>
     void setValue(T const a_value)
     {
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eTimeStampedValues))
+        timeStamp = std::chrono::high_resolution_clock::now();
+
       if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
         writeLock->lock();
         value = a_value;
@@ -158,11 +166,24 @@ class SPAGHETTI_API Element {
       } else {
         value = a_value;
       }
-      valueChanged = true;
     }
 
     void copyValue(IOSocket const &a_from)
     {
+      if (isMonitored) {
+        if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eTimeStampedValues)) {
+          if (timeStamp == a_from.timeStamp) {
+            valueChanged = false;
+          } else {
+            timeStamp = a_from.timeStamp;
+            valueChanged = true;
+          }
+
+        } else {
+          valueChanged = !ValueDescription::compareValues(value, a_from.value, type);
+        }
+      }
+
       if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
         writeLock->lock();
         value = a_from.value;
@@ -170,7 +191,6 @@ class SPAGHETTI_API Element {
       } else {
         value = a_from.value;
       }
-      valueChanged = a_from.valueChanged;
     }
 
    private:

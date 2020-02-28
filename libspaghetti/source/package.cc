@@ -201,7 +201,10 @@ void Package::calculate()
           std::begin(element->inputs()), std::end(element->inputs()),
           [](auto &input) -> auto { return input.valueChanged; });
 
-      if (IT != std::end(element->inputs())) element->calculate();
+      if (IT != std::end(element->inputs())) {
+        element->calculate();
+        for (auto &input : element->inputs()) input.valueChanged = false;
+      }
     }
   }
 }
