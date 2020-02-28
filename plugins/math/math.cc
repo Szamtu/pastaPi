@@ -36,6 +36,7 @@
 #include "arithmetic/square/square.h"
 #include "arithmetic/subtraction/subtraction.h"
 
+#include "trigonometry/cosinus/cosinus.h"
 #include "trigonometry/sinus/sinus.h"
 
 using namespace spaghetti;
@@ -45,6 +46,7 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   spaghetti::log::init_from_plugin();
 
   a_registry.registerElement<elements::Addition>("Addition", ":/unknown.png");
+  a_registry.registerElement<elements::Cosinus>("Cosinus", ":/unknown.png");
   a_registry.registerElement<elements::Division>("Division", ":/unknown.png");
   a_registry.registerElement<elements::Modulo>("Modulo", ":/unknown.png");
   a_registry.registerElement<elements::Multiplication>("Multiplication", ":/unknown.png");

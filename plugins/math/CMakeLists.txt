@@ -29,6 +29,9 @@ set(SOURCES
     trigonometry/sinus/sinus.cc
     trigonometry/sinus/sinus.h
 
+    trigonometry/cosinus/cosinus.cc
+    trigonometry/cosinus/cosinus.h
+
     math.cc
 )
 
