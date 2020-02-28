@@ -28,6 +28,7 @@
 #include <spaghetti/node.h>
 #include <spaghetti/registry.h>
 
+#include "arithmetic/absolute/absolute.h"
 #include "arithmetic/addition/addition.h"
 #include "arithmetic/division/division.h"
 #include "arithmetic/modulo/modulo.h"
@@ -46,6 +47,7 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 {
   spaghetti::log::init_from_plugin();
 
+  a_registry.registerElement<elements::Absolute>("Absolute", ":/unknown.png");
   a_registry.registerElement<elements::Addition>("Addition", ":/unknown.png");
   a_registry.registerElement<elements::Cosinus>("Cosinus", ":/unknown.png");
   a_registry.registerElement<elements::Division>("Division", ":/unknown.png");

@@ -26,6 +26,9 @@ set(SOURCES
     arithmetic/modulo/modulo.cc
     arithmetic/modulo/modulo.h
 
+    arithmetic/absolute/absolute.cc
+    arithmetic/absolute/absolute.h
+
     trigonometry/sinus/sinus.cc
     trigonometry/sinus/sinus.h
 
