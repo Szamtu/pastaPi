@@ -20,25 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_ARITHMETIC_MULTIPLICATION_H
+#define SPAGHETTI_ELEMENTS_ARITHMETIC_MULTIPLICATION_H
 
 #include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/node.h>
-#include <spaghetti/registry.h>
 
-#include "addition/addition.h"
-#include "multiplication/multiplication.h"
-#include "subtraction/subtraction.h"
+namespace spaghetti::elements {
 
-using namespace spaghetti;
+class Multiplication final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "Math/Arithmetic/Multiplication" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+  Multiplication();
 
-  a_registry.registerElement<elements::Subtraction>("Subtraction", ":/unknown.png");
-  a_registry.registerElement<elements::Multiplication>("Multiplication", ":/unknown.png");
-  a_registry.registerElement<elements::Addition>("Addition", ":/unknown.png");
-}
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void calculate() override;
+};
+
+} // namespace spaghetti::elements
+
+#endif // SPAGHETTI_ELEMENTS
