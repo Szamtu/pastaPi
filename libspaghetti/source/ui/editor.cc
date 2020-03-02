@@ -105,7 +105,6 @@ Editor::Editor(QWidget *const a_parent)
   });
 
   connect(m_ui->clearSearchText, &QToolButton::clicked, [this] { m_ui->searchNode->clear(); });
-
   connect(m_ui->searchNode, &QLineEdit::textChanged, [this](QString const &a_search) {
     m_ui->clearSearchText->setDisabled(a_search.isEmpty());
 

@@ -607,6 +607,7 @@ void Node::addInput()
 
 void Node::removeInput()
 {
+  m_inputs.last()->disconnectAll();
   m_element->removeInput();
   m_packageView->showProperties();
 }
@@ -633,6 +634,7 @@ void Node::addOutput()
 
 void Node::removeOutput()
 {
+  m_outputs.last()->disconnectAll();
   m_element->removeOutput();
   m_packageView->showProperties();
 }
