@@ -125,6 +125,10 @@ Editor::Editor(QWidget *const a_parent)
   auto const shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_F), this);
   connect(shortcut, &QShortcut::activated, [this] { m_ui->searchNode->setFocus(); });
 
+  connect(m_ui->clearSearchElement, &QToolButton::clicked, [this] { m_ui->searchElement->clear(); });
+  connect(m_ui->searchElement, &QLineEdit::textChanged,
+          [this](QString const &a_search) { m_ui->elementsContainer->applyFilter(a_search); });
+
   QDir packagesDir{ PACKAGES_DIR };
   if (!packagesDir.exists()) packagesDir.mkpath(".");
 

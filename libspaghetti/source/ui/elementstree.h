@@ -24,6 +24,7 @@
 #define PROJECTTREEWIDGET_H
 
 #include <QObject>
+#include <QSortFilterProxyModel>
 #include <QTreeWidget>
 
 class Editor;
@@ -43,9 +44,13 @@ class ElementsTree : public QTreeWidget {
   explicit ElementsTree(QWidget *a_parent = nullptr);
 
   QTreeWidgetItem *getCathegory(QString const a_category);
+  void applyFilter(QString const a_text);
 
  protected:
   void startDrag(Qt::DropActions a_supportedActions) override;
+
+ private:
+  QList<QPair<QTreeWidgetItem *, QPair<bool, bool>>> m_savedTreeState;
 };
 
 #endif // PROJECTTREEWIDGET_H

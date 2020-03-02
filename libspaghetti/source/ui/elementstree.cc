@@ -113,3 +113,38 @@ QTreeWidgetItem *ElementsTree::getCathegory(QString const a_category)
 
   return categoryItem;
 }
+
+void ElementsTree::applyFilter(QString const a_text)
+{
+  bool saveState = m_savedTreeState.empty();
+
+  auto allItems = findItems("", Qt::MatchRecursive | Qt::MatchContains);
+  for (auto &element : allItems) {
+    if (saveState) m_savedTreeState.push_back({ element, { element->isHidden(), element->isExpanded() } });
+    element->setExpanded(true);
+    element->setHidden(true);
+  }
+
+  if (!a_text.isEmpty()) {
+    auto foundedItems = findItems(a_text, Qt::MatchRecursive | Qt::MatchContains);
+    for (auto &item : foundedItems) {
+      if (item->text(0) == "Base" || item->text(0) == "Package") continue;
+
+      auto parent = item->parent();
+      while (parent) {
+        parent->setHidden(false);
+        parent = parent->parent();
+      }
+
+      item->setHidden(false);
+    }
+  } else {
+    if (!m_savedTreeState.empty()) {
+      for (auto const &item : m_savedTreeState) {
+        item.first->setHidden(item.second.first);
+        item.first->setExpanded(item.second.second);
+      }
+      m_savedTreeState.clear();
+    }
+  }
+}
