@@ -85,14 +85,11 @@ void SocketItem::paint(QPainter *a_painter, QStyleOptionGraphicsItem const *a_op
     brush.setColor(m_colorSignalOn);
   else if (!m_isSignalOn)
     brush.setColor(m_colorSignalOff);
-  //  else if (m_type == Type::eInput)
-  //    brush.setColor(config.getColor(Config::Color::eSocketInput));
-  //  else if (m_type == Type::eOutput)
-  //    brush.setColor(config.getColor(Config::Color::eSocketOutput));
   brush.setStyle(Qt::SolidPattern);
 
   a_painter->setPen(pen);
   a_painter->setBrush(brush);
+
   if (m_type == Type::eOutput)
     a_painter->drawEllipse(rect);
   else
@@ -373,6 +370,7 @@ void SocketItem::removeLink(LinkItem *const a_linkItem)
 {
   auto const it = std::remove(std::begin(m_links), std::end(m_links), a_linkItem);
   m_links.erase(it, std::end(m_links));
+  setSignal(false);
 }
 
 LinkItem *SocketItem::linkBetween(SocketItem *const a_from, SocketItem *const a_to) const

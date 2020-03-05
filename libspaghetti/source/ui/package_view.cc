@@ -66,7 +66,7 @@ QVariant NodesListModel::data(QModelIndex const &a_index, int a_role) const
 
   auto const node = m_nodes[a_index.row()];
   if (a_role == Qt::DecorationRole)
-    return node->icon().scaled(QSize(50, 25));
+    return node->icon().scaled(QSize(32, 32));
   else if (a_role == Qt::DisplayRole)
     return QString("%1 (%2)").arg(node->name()).arg(node->element()->id());
 

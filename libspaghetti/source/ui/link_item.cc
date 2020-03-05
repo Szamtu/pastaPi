@@ -112,8 +112,9 @@ void LinkItem::setFrom(SocketItem *const a_from)
 
 void LinkItem::setTo(SocketItem *const a_to)
 {
-  m_to = a_to;
+  if (m_to) m_to->setSignal(false);
 
+  m_to = a_to;
   m_isSnapped = a_to != nullptr;
 
   trackNodes();
