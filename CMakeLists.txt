@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(PastaPi
-  VERSION 18.05.21
+  VERSION 00.09.10
   DESCRIPTION "Graphical openCV image processor"
   LANGUAGES C CXX
 )
