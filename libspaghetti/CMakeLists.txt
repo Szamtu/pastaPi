@@ -57,6 +57,9 @@ set(LIBSPAGHETTI_SOURCES
   source/ui/colors.h
   source/ui/editor.cc
   source/ui/editor.ui
+  source/ui/aboutpastapi.cc
+  source/ui/aboutpastapi.h
+  source/ui/aboutpastapi.ui
   source/ui/elementstree.cc
   source/ui/elementstree.h
   source/ui/link_item.cc

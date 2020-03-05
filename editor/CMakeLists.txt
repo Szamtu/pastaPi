@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(SpaghettiEditor VERSION ${Spaghetti_VERSION} LANGUAGES C CXX)
+project(SpaghettiEditor VERSION ${PastaPi_VERSION} LANGUAGES C CXX)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 

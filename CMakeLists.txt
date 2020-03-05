@@ -47,7 +47,6 @@ endif ()
 
 if (SPAGHETTI_ENABLE_CPACK)
   include(InstallRequiredSystemLibraries)
-#  set(CPACK_GENERATOR TBZ2)
   list(APPEND CPACK_GENERATOR IFW)
   if (WIN32)
     list(APPEND CPACK_GENERATOR NSIS64)

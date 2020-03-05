@@ -58,6 +58,7 @@
 #include "spaghetti/package.h"
 #include "spaghetti/registry.h"
 #include "spaghetti/version.h"
+#include "ui/aboutpastapi.h"
 #include "ui/package_view.h"
 
 QString const PACKAGES_DIR{ "../packages" };
@@ -252,7 +253,6 @@ void Editor::showEvent(QShowEvent *a_event)
   if (s_firstTime) {
     s_firstTime = false;
     newPackage();
-    //  openPackage();
 
     auto const tab = m_ui->tabWidget;
     auto const index = tab->currentIndex();
@@ -456,36 +456,8 @@ void Editor::recentChanges()
 
 void Editor::about()
 {
-  QMessageBox::about(
-      this, "About PastaPi",
-      QString("<b>PastaPi</b><br>"
-              "Graphical OpenCV image Processor<br>"
-              "Forked from Spaghetti<br>"
-              "<br>"
-              "<b>Oryginal project:</b><br>"
-              "<a href='https://github.com/aljen/spaghetti'>Spaghetti</a> version: %1<br>"
-              "<br>"
-              "Copyright © 2017-2018 <b>Artur Wyszyński</b><br>"
-              "<br>"
-              "Build date: <b>%2, %3</b><br>"
-              "Git branch: <b>%4</b><br>"
-              "Git commit: <b>%5</b><br>"
-              "<br>"
-              "Used libraries:<br>"
-              "<a href='https://github.com/nlohmann/json'>JSON for Modern C++</a> by <b>Niels Lohmann</b><br>"
-              "<a href='https://github.com/cameron314/concurrentqueue'>An industrial-strength lock-free queue for "
-              "C++</a> by <b>Cameron Desrochers</b><br>"
-              "<a href='https://github.com/greg7mdp/sparsepp'>A fast, memory efficient hash map for C++</a> by "
-              "<b>Gregory Popovitch</b><br>"
-#if SPAGHETTI_FS_IMPLEMENTATION == SPAGHETTI_FS_BOOST_FILESYSTEM
-              "<a href='http://www.boost.org/'>Boost libraries</a><br>"
-#endif
-              )
-          .arg(version::STRING)
-          .arg(__DATE__)
-          .arg(__TIME__)
-          .arg(version::BRANCH)
-          .arg(version::COMMIT_SHORT_HASH));
+  AboutPastaPI aboutPastaPi{};
+  aboutPastaPi.exec();
 }
 
 void Editor::aboutQt()

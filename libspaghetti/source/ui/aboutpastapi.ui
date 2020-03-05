@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AboutPastaPI</class>
+ <widget class="QDialog" name="AboutPastaPI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>732</width>
+    <height>697</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>About Pasta PI</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../icons/icons.qrc">
+    <normaloff>:/pastapi_logo.png</normaloff>:/pastapi_logo.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>698</width>
+        <height>733</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/pastapi_logo.png&quot;/&gt;&lt;br/&gt;&lt;span style=&quot; font-size:36pt; font-weight:600;&quot;&gt;Pasta PI&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Graphical multi-purpose editor / simulator.&lt;br/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Copyright © 2020 by:&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Paweł Adamski&lt;br/&gt;Piotr Zdanowicz&lt;/span&gt;&lt;br/&gt;from:&lt;br/&gt;&lt;img src=&quot;:/escortLogo.png&quot;/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://escort-technology.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;escort-technology.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Project forked from:&lt;br/&gt;&lt;a href=&quot;https://github.com/aljen/spaghetti&quot;&gt;&lt;span style=&quot; font-size:24pt; font-weight:600; text-decoration: underline; color:#007af4;&quot;&gt;Spaghetti&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Grapgical logic editor / simulator&lt;br/&gt;by&lt;br/&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Artur Wyszyński&lt;br/&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Used libraries:&lt;br/&gt;&lt;a href=&quot;https://github.com/nlohmann/json&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Spaghetti&lt;/span&gt;&lt;/a&gt; by &lt;span style=&quot; font-weight:600;&quot;&gt;Niels Lohmann&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://github.com/cameron314/concurrentqueue&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;An industrial-strength lock-free queue for C++&lt;/span&gt;&lt;/a&gt; by &lt;span style=&quot; font-weight:600;&quot;&gt;Cameron Desrochers&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://github.com/greg7mdp/sparsepp&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;A fast, memory efficient hash map for C++&lt;/span&gt;&lt;/a&gt; by &lt;span style=&quot; font-weight:600;&quot;&gt;Gregory Popovitch&lt;/span&gt;&lt;br/&gt;&lt;a href=&quot;https://opencv.org/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;OpenCV&lt;/span&gt;&lt;/a&gt; by &lt;span style=&quot; font-weight:600;&quot;&gt;Intel Corporation&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="versionLabel">
+     <property name="text">
+      <string>Version:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="closeButton">
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../icons/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
