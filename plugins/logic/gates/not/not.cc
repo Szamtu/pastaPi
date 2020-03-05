@@ -39,7 +39,7 @@ Not::Not()
 
 void Not::calculate()
 {
-  m_outputs[0].setValue(m_inputs[0].getValue<bool>());
+  m_outputs[0].setValue(!m_inputs[0].getValue<bool>());
 }
 
 } // namespace spaghetti::elements
