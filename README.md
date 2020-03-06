@@ -22,8 +22,8 @@ Version 0.9.10
 This is the first version of PastaPI - Graphical multi-purpose editor / simulator
 We start here at version 0.9.10.
 
-Changes (from oryginal Spaghetti):
-New things:
+Changes (from oryginal Spaghetti):  
+**New things:**  
 *   Added support of new data types:
   *  String
   *  Matrix
@@ -47,13 +47,13 @@ New things:
   *  concat strings
 *  Moved elements from libSpaghetti to plugins
 *  Added subcategories to elements panel
-*  Added searchbar to elements panel
-**BugFixes:**
+*  Added searchbar to elements panel  
+**BugFixes:**  
 *  Crash on delete input/output element of package - now it's non deletable
 *  Crash on decrease number of inputs/outputs when they are connected - now they are automatically disconnected
 *  Bad bool input color when touched with ON connection, now it's displays right state
-*  Bad bool input color when disconnected ON connection,  now it's displays right state
-**Removed:**
+*  Bad bool input color when disconnected ON connection,  now it's displays right state  
+**Removed:**  
 *  Some elements that we think that will be never used like: Pneumatic - tank
 
 **Forked from:**  
