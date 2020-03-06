@@ -53,6 +53,7 @@
 #include "editor.h"
 #include "elementstree.h"
 #include "source/node.h"
+#include "source/package.h"
 #include "ui/aboutpastapi.h"
 #include "ui/link_item.h"
 #include "ui/package_view.h"
@@ -131,7 +132,7 @@ Editor::Editor(QWidget *const a_parent)
   if (!packagesDir.exists()) packagesDir.mkpath(".");
 
   auto &elementRegister = Registry::get();
-  elementRegister.registerElement<Package>("Package", ":package.png");
+  elementRegister.registerElement<Package, nodes::Package>("Package", ":package.png");
 
   populateLibrary();
 }
