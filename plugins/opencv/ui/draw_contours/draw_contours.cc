@@ -45,7 +45,7 @@ void DrawContours::calculate()
   auto sourceImage = m_inputs[0].getValue<cv::Mat>();
   auto shapeVec = m_inputs[1].getValue<ShapeVector>();
 
-  if (sourceImage.empty()) {
+  if (!sourceImage.empty()) {
     auto convertedImage = sourceImage.clone();
     cv::RNG rng(12345);
 
