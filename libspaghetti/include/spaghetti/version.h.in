@@ -28,15 +28,17 @@
 
 namespace spaghetti::version {
 
-constexpr char const *const STRING{ "@Spaghetti_VERSION@" };
-constexpr uint8_t const MAJOR{ @Spaghetti_VERSION_MAJOR@ };
-constexpr uint8_t const MINOR{ @Spaghetti_VERSION_MINOR@ };
-constexpr uint8_t const PATCH{ @Spaghetti_VERSION_PATCH@ };
+// clang-format off
+constexpr char const *const STRING{ "@PastaPi_VERSION@" };
+constexpr uint8_t const MAJOR{ @PastaPi_VERSION_MAJOR@ };
+constexpr uint8_t const MINOR{ @PastaPi_VERSION_MINOR@ };
+constexpr uint8_t const PATCH{ @PastaPi_VERSION_PATCH@ };
 constexpr uint32_t const VERSION{ MAJOR * 10000 + MINOR * 100 + PATCH };
+// clang-format on
 
-constexpr char const *const BRANCH{ "@Spaghetti_GIT_BRANCH@" };
-constexpr char const *const COMMIT_HASH{ "@Spaghetti_GIT_COMMIT_HASH@" };
-constexpr char const *const COMMIT_SHORT_HASH{ "@Spaghetti_GIT_COMMIT_SHORT_HASH@" };
+constexpr char const *const BRANCH{ "@PastaPi_GIT_BRANCH@" };
+constexpr char const *const COMMIT_HASH{ "@PastaPi_GIT_COMMIT_HASH@" };
+constexpr char const *const COMMIT_SHORT_HASH{ "@PastaPi_GIT_COMMIT_SHORT_HASH@" };
 
 } // namespace spaghetti::version
 

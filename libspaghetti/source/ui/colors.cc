@@ -59,13 +59,6 @@ std::array<QColor, static_cast<size_t>(Color::eCount)> const g_colors{ {
     { 135, 206, 235, 255 }, // Color::eSocketOutput
     { 173, 255, 47, 255 },  // Color::eSocketDrop
     { 255, 215, 0, 255 },   // Color::eSocketHover
-    { 244, 53, 64, 255 },   // Color::eBoolSignalOff
-    { 75, 173, 88, 255 },   // Color::eBoolSignalOn
-    { 62, 84, 174, 255 },   // Color::eIntegerSignalOff
-    { 0, 170, 238, 255 },   // Color::eIntegerSignalOn
-    { 111, 80, 96, 255 },   // Color::eFloatSignalOff
-                            //    { 232, 0, 99, 255 },    // Color::eFloatSignalOn
-    { 254, 144, 50, 255 },  // Color::eFloatSignalOn
     { 165, 165, 165, 64 },  // Color::eLink
     { 255, 255, 255, 255 }  // Color::eSelected
 } };

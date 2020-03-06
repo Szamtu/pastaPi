@@ -29,14 +29,20 @@
 
 namespace spaghetti {
 
-constexpr float const PI = 3.1415926535897932f;
-constexpr float const RAD2DEG = 180.0f / PI;
-constexpr float const DEG2RAD = PI / 180.0f;
+constexpr auto const PI = 3.1415926535897932;
+constexpr auto const RAD2DEG = 180.0 / PI;
+constexpr auto const DEG2RAD = PI / 180.0;
 
 inline bool nearly_equal(float const &a_a, float const &a_b)
 {
   return std::nextafter(a_a, std::numeric_limits<float>::lowest()) <= a_b &&
          std::nextafter(a_a, std::numeric_limits<float>::max()) >= a_b;
+}
+
+inline bool nearly_equal(double const &a_a, double const &a_b)
+{
+  return std::nextafter(a_a, std::numeric_limits<double>::lowest()) <= a_b &&
+         std::nextafter(a_a, std::numeric_limits<double>::max()) >= a_b;
 }
 
 template<typename T>

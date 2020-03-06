@@ -37,12 +37,6 @@ enum class Color {
   eSocketOutput,
   eSocketDrop,
   eSocketHover,
-  eBoolSignalOff,
-  eBoolSignalOn,
-  eIntegerSignalOff,
-  eIntegerSignalOn,
-  eFloatSignalOff,
-  eFloatSignalOn,
   eLink,
   eSelected,
   eCount

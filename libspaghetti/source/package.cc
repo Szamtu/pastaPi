@@ -168,9 +168,9 @@ void Package::deserialize(Json const &a_json)
     auto const &FROM = CONNECTION["connect"];
     auto const &TO = CONNECTION["to"];
     auto const &FROM_ID = remappedIds[FROM["id"].get<size_t>()];
-    auto const &FROM_SOCKET = FROM["socket"].get<uint8_t>();
+    auto const &FROM_SOCKET = FROM["socket"].get<uint64_t>();
     auto const &TO_ID = remappedIds[TO["id"].get<size_t>()];
-    auto const &TO_SOCKET = TO["socket"].get<uint8_t>();
+    auto const &TO_SOCKET = TO["socket"].get<uint64_t>();
     connect(FROM_ID, FROM_SOCKET, TO_ID, TO_SOCKET);
   }
 }
@@ -186,14 +186,26 @@ void Package::calculate()
 
     auto const &SOURCE_IO = IS_SOURCE_SELF ? source->inputs() : source->outputs();
     auto &targetIO = IS_TARGET_SELF ? target->outputs() : target->inputs();
-    targetIO[connection.to_socket].value = SOURCE_IO[connection.from_socket].value;
+
+    targetIO[connection.to_socket].copyValue(SOURCE_IO[connection.from_socket]);
   }
 
   for (auto &&element : m_elements) {
     if (!element || element == this) continue;
 
     element->update(m_delta);
-    element->calculate();
+    if (element->alwaysCalculate()) {
+      element->calculate();
+    } else {
+      auto IT = std::find_if(
+          std::begin(element->inputs()), std::end(element->inputs()),
+          [](auto &input) -> auto { return input.valueChanged; });
+
+      if (IT != std::end(element->inputs())) {
+        element->calculate();
+        for (auto &input : element->inputs()) input.valueChanged = false;
+      }
+    }
   }
 }
 
@@ -252,8 +264,8 @@ Element *Package::get(size_t const a_id) const
   return m_elements[a_id];
 }
 
-bool Package::connect(size_t const a_sourceId, uint8_t const a_sourceSocket, size_t const a_targetId,
-                      uint8_t const a_targetSocket)
+bool Package::connect(size_t const a_sourceId, uint64_t const a_sourceSocket, size_t const a_targetId,
+                      uint64_t const a_targetSocket)
 {
   pauseDispatchThread();
 
@@ -288,8 +300,8 @@ bool Package::connect(size_t const a_sourceId, uint8_t const a_sourceSocket, siz
   return true;
 }
 
-bool Package::disconnect(size_t const a_sourceId, uint8_t const a_outputId, size_t const a_targetId,
-                         uint8_t const a_inputId)
+bool Package::disconnect(size_t const a_sourceId, uint64_t const a_outputId, size_t const a_targetId,
+                         uint64_t const a_inputId)
 {
   pauseDispatchThread();
 

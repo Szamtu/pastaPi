@@ -45,36 +45,6 @@ constexpr int32_t const SOCKET_SIZE = SocketItem::SIZE;
 qreal const ROUNDED_SOCKET_SIZE = std::round(static_cast<qreal>(SOCKET_SIZE) / 10.0) * 10.0;
 qreal const ROUNDED_SOCKET_SIZE_2 = ROUNDED_SOCKET_SIZE / 2.0;
 
-// clang-format off
-#ifdef _MSC_VER
-# pragma warning(disable:4715)
-#endif
-// clang-format on
-bool value_type_allowed(uint8_t const a_flags, ValueType const a_type)
-{
-  switch (a_type) {
-    case ValueType::eBool: return a_flags & Element::IOSocket::eCanHoldBool;
-    case ValueType::eInt: return a_flags & Element::IOSocket::eCanHoldInt;
-    case ValueType::eFloat: return a_flags & Element::IOSocket::eCanHoldFloat;
-  }
-
-  assert(false);
-}
-
-ValueType first_available_type_for_flags(uint8_t const a_flags)
-{
-  if (a_flags & Element::IOSocket::eCanHoldBool) return ValueType::eBool;
-  if (a_flags & Element::IOSocket::eCanHoldInt) return ValueType::eInt;
-  if (a_flags & Element::IOSocket::eCanHoldFloat) return ValueType::eFloat;
-
-  assert(false);
-}
-// clang-format off
-#ifdef _MSC_VER
-# pragma warning(default:4715)
-#endif
-// clang-format on
-
 Node::Node(QGraphicsItem *const a_parent)
   : QGraphicsItem{ a_parent }
 {
@@ -193,11 +163,11 @@ void Node::setElement(Element *const a_element)
     case Type::eElement:
       for (size_t i = 0; i < INPUTS.size(); ++i) {
         QString const NAME{ QString::fromStdString(INPUTS[i].name) };
-        addSocket(SocketType::eInput, static_cast<uint8_t>(i), NAME, INPUTS[i].type);
+        addSocket(SocketType::eInput, static_cast<uint64_t>(i), NAME, INPUTS[i].type);
       }
       for (size_t i = 0; i < OUTPUTS.size(); ++i) {
         QString const NAME{ QString::fromStdString(OUTPUTS[i].name) };
-        addSocket(SocketType::eOutput, static_cast<uint8_t>(i), NAME, OUTPUTS[i].type);
+        addSocket(SocketType::eOutput, static_cast<uint64_t>(i), NAME, OUTPUTS[i].type);
       }
 
       m_element->setPosition(x(), y());
@@ -209,13 +179,13 @@ void Node::setElement(Element *const a_element)
     case Type::eInputs:
       for (size_t i = 0; i < INPUTS.size(); ++i) {
         QString const NAME{ QString::fromStdString(INPUTS[i].name) };
-        addSocket(SocketType::eOutput, static_cast<uint8_t>(i), NAME, INPUTS[i].type);
+        addSocket(SocketType::eOutput, static_cast<uint64_t>(i), NAME, INPUTS[i].type);
       }
       break;
     case Type::eOutputs:
       for (size_t i = 0; i < OUTPUTS.size(); ++i) {
         QString const NAME{ QString::fromStdString(OUTPUTS[i].name) };
-        addSocket(SocketType::eInput, static_cast<uint8_t>(i), NAME, OUTPUTS[i].type);
+        addSocket(SocketType::eInput, static_cast<uint64_t>(i), NAME, OUTPUTS[i].type);
       }
       break;
   }
@@ -372,7 +342,7 @@ void Node::handleEvent(Event const &a_event)
       auto const &INPUTS = m_element->inputs();
       auto const SIZE = inputs().size();
       auto const &INPUT = INPUTS.back();
-      addSocket(SocketType::eInput, static_cast<uint8_t>(SIZE), QString::fromStdString(INPUT.name), INPUT.type);
+      addSocket(SocketType::eInput, static_cast<uint64_t>(SIZE), QString::fromStdString(INPUT.name), INPUT.type);
       calculateBoundingRect();
       break;
     }
@@ -384,7 +354,7 @@ void Node::handleEvent(Event const &a_event)
       auto const &OUTPUTS = m_element->outputs();
       auto const SIZE = outputs().size();
       auto const &OUTPUT = OUTPUTS.back();
-      addSocket(SocketType::eOutput, static_cast<uint8_t>(SIZE), QString::fromStdString(OUTPUT.name), OUTPUT.type);
+      addSocket(SocketType::eOutput, static_cast<uint64_t>(SIZE), QString::fromStdString(OUTPUT.name), OUTPUT.type);
       calculateBoundingRect();
       break;
     }
@@ -443,8 +413,8 @@ void Node::showIOProperties(IOSocketsType const a_type)
   auto &ios = INPUTS ? m_element->inputs() : m_element->outputs();
 
   int const IOS_SIZE{ static_cast<int>(ios.size()) };
-  uint8_t const MIN_IOS_SIZE{ INPUTS ? m_element->minInputs() : m_element->minOutputs() };
-  uint8_t const MAX_IOS_SIZE{ INPUTS ? m_element->maxInputs() : m_element->maxOutputs() };
+  uint64_t const MIN_IOS_SIZE{ INPUTS ? m_element->minInputs() : m_element->minOutputs() };
+  uint64_t const MAX_IOS_SIZE{ INPUTS ? m_element->maxInputs() : m_element->maxOutputs() };
   bool const ADDING_DISABLED{ MIN_IOS_SIZE == MAX_IOS_SIZE };
 
   QTableWidgetItem *item{};
@@ -480,7 +450,7 @@ void Node::showIOProperties(IOSocketsType const a_type)
     if (IO.flags & Element::IOSocket::eCanChangeName) {
       QLineEdit *const ioName{ new QLineEdit{ QString::fromStdString(IO.name) } };
       QObject::connect(ioName, &QLineEdit::editingFinished, [a_type, i, ioName, this]() {
-        m_element->setIOName(a_type == IOSocketsType::eInputs, static_cast<uint8_t>(i), ioName->text().toStdString());
+        m_element->setIOName(a_type == IOSocketsType::eInputs, static_cast<uint64_t>(i), ioName->text().toStdString());
       });
       m_properties->setCellWidget(row, 0, ioName);
     } else {
@@ -490,19 +460,18 @@ void Node::showIOProperties(IOSocketsType const a_type)
     }
 
     auto const comboBox = new QComboBox;
-    if (IO.flags & Element::IOSocket::eCanHoldBool)
-      comboBox->addItem(ValueType_to_QString(ValueType::eBool), static_cast<int>(ValueType::eBool));
-    if (IO.flags & Element::IOSocket::eCanHoldInt)
-      comboBox->addItem(ValueType_to_QString(ValueType::eInt), static_cast<int>(ValueType::eInt));
-    if (IO.flags & Element::IOSocket::eCanHoldFloat)
-      comboBox->addItem(ValueType_to_QString(ValueType::eFloat), static_cast<int>(ValueType::eFloat));
+    auto const holdedValues = ValueDescription::heldedValues(static_cast<IOSocketFlags::Flags>(IO.flags));
+
+    for (auto const &value : holdedValues)
+      comboBox->addItem(ValueDescription::typeQstring(value), static_cast<int>(value));
+
     int const INDEX{ comboBox->findData(static_cast<int>(IO.type)) };
     comboBox->setCurrentIndex(INDEX);
     m_properties->setCellWidget(row, 1, comboBox);
     QObject::connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated),
                      [a_type, i, comboBox, this](int a_index) {
                        ValueType const VALUE_TYPE{ static_cast<ValueType>(comboBox->itemData(a_index).toInt()) };
-                       setSocketType(a_type, static_cast<uint8_t>(i), VALUE_TYPE);
+                       setSocketType(a_type, static_cast<uint64_t>(i), VALUE_TYPE);
                      });
   }
 }
@@ -522,8 +491,9 @@ void Node::propertiesInsertTitle(QString const &a_title)
   QTableWidgetItem *const item{ new QTableWidgetItem{ a_title } };
   item->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-  item->setBackgroundColor(Qt::darkGray);
-  item->setTextColor(Qt::black);
+  item->setBackground(QBrush(Qt::darkGray));
+  item->setForeground(QBrush(Qt::black));
+
   m_properties->setItem(ROW, 0, item);
   m_properties->setSpan(ROW, 0, 1, 2);
 }
@@ -625,10 +595,11 @@ QString nodetype2string(Node::Type a_type)
 
 void Node::addInput()
 {
-  uint8_t const SIZE{ static_cast<uint8_t>(m_element->inputs().size()) };
+  uint64_t const SIZE{ static_cast<uint64_t>(m_element->inputs().size()) };
   QString const INPUT_NAME{ QString("#%1").arg(SIZE + 1) };
 
-  ValueType const TYPE{ first_available_type_for_flags(m_element->defaultNewInputFlags()) };
+  ValueType const TYPE{ ValueDescription::firstAvailableTypeForFlags(
+      static_cast<IOSocketFlags::Flags>(m_element->defaultNewInputFlags())) };
   m_element->addInput(TYPE, INPUT_NAME.toStdString(), m_element->defaultNewInputFlags());
 
   m_packageView->showProperties();
@@ -636,11 +607,12 @@ void Node::addInput()
 
 void Node::removeInput()
 {
+  m_inputs.last()->disconnectAll();
   m_element->removeInput();
   m_packageView->showProperties();
 }
 
-void Node::setInputName(uint8_t const a_socketId, QString const &a_name)
+void Node::setInputName(uint64_t const a_socketId, QString const &a_name)
 {
   m_element->setInputName(a_socketId, a_name.toStdString());
   m_inputs[a_socketId]->setName(a_name);
@@ -650,10 +622,11 @@ void Node::setInputName(uint8_t const a_socketId, QString const &a_name)
 
 void Node::addOutput()
 {
-  uint8_t const SIZE{ static_cast<uint8_t>(m_element->outputs().size()) };
+  uint64_t const SIZE{ static_cast<uint64_t>(m_element->outputs().size()) };
   QString const OUTPUT_NAME{ QString("#%1").arg(SIZE + 1) };
 
-  ValueType const TYPE{ first_available_type_for_flags(m_element->defaultNewOutputFlags()) };
+  ValueType const TYPE{ ValueDescription::firstAvailableTypeForFlags(
+      static_cast<IOSocketFlags::Flags>(m_element->defaultNewInputFlags())) };
   m_element->addOutput(TYPE, OUTPUT_NAME.toStdString(), m_element->defaultNewOutputFlags());
 
   m_packageView->showProperties();
@@ -661,11 +634,12 @@ void Node::addOutput()
 
 void Node::removeOutput()
 {
+  m_outputs.last()->disconnectAll();
   m_element->removeOutput();
   m_packageView->showProperties();
 }
 
-void Node::setOutputName(uint8_t const a_socketId, QString const &a_name)
+void Node::setOutputName(uint64_t const a_socketId, QString const &a_name)
 {
   m_element->setOutputName(a_socketId, a_name.toStdString());
   m_outputs[a_socketId]->setName(a_name);
@@ -673,7 +647,7 @@ void Node::setOutputName(uint8_t const a_socketId, QString const &a_name)
   m_packageView->showProperties();
 }
 
-void Node::addSocket(SocketType const a_type, uint8_t const a_id, QString const &a_name, ValueType const a_valueType)
+void Node::addSocket(SocketType const a_type, uint64_t const a_id, QString const &a_name, ValueType const a_valueType)
 {
   auto const socket = new SocketItem{ this, a_type };
   socket->setElementId(m_type == Type::eElement ? m_element->id() : 0);
@@ -707,16 +681,16 @@ void Node::removeSocket(Node::SocketType const a_type)
   }
 }
 
-void Node::setSocketType(IOSocketsType const a_socketType, uint8_t const a_socketId, ValueType const a_type)
+void Node::setSocketType(IOSocketsType const a_socketType, uint64_t const a_socketId, ValueType const a_type)
 {
   assert(m_element);
 
   bool const INPUTS{ a_socketType == IOSocketsType::eInputs };
   auto &io = INPUTS ? m_element->inputs()[a_socketId] : m_element->outputs()[a_socketId];
 
-  if (!value_type_allowed(io.flags, a_type)) {
+  if (!ValueDescription::isTypeAlowed(a_type, static_cast<IOSocketFlags::Flags>(io.flags))) {
     spaghetti::log::error("Changing io's {}@{} type to {} is not allowed.", m_element->id(), io.id,
-                          ValueType_to_QString(a_type).toStdString());
+                          ValueDescription::typeQstring(a_type).toStdString());
     return;
   }
 
@@ -746,7 +720,7 @@ void Node::updateOutputs()
   for (size_t i = 0; i < SIZE; ++i) {
     switch (ELEMENT_IOS[i].type) {
       case ValueType::eBool: {
-        bool const SIGNAL{ std::get<bool>(ELEMENT_IOS[i].value) };
+        bool const SIGNAL{ ELEMENT_IOS[i].getValueWithoutNotify<bool>() };
         NODE_IOS[static_cast<int>(i)]->setSignal(SIGNAL);
         break;
       }

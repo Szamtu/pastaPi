@@ -38,17 +38,17 @@
 #include <thread>
 #include <variant>
 #include <vector>
+#include <mutex>
 
 #include <spaghetti/vendor/json.hpp>
 
 #include <spaghetti/api.h>
 #include <spaghetti/strings.h>
+#include <spaghetti/sockvalues.h>
 
 namespace spaghetti {
 
 class Package;
-
-enum class ValueType { eBool, eInt, eFloat };
 
 struct EventNameChanged {
   std::string from;
@@ -57,12 +57,12 @@ struct EventNameChanged {
 struct EventIONameChanged {
   std::string from;
   std::string to;
-  uint8_t id;
+  uint64_t id;
   bool input;
 };
 struct EventIOTypeChanged {
   bool input;
-  uint8_t id;
+  uint64_t id;
   ValueType from;
   ValueType to;
 };
@@ -91,7 +91,7 @@ class SPAGHETTI_API Element {
   using duration_t = std::chrono::duration<double, std::milli>;
 
   using Json = nlohmann::json;
-  using Value = std::variant<bool, int32_t, float>;
+
   template<typename T>
   struct Vec2 {
     T x{};
@@ -101,22 +101,101 @@ class SPAGHETTI_API Element {
   using vec2f = Vec2<float>;
   using vec2d = Vec2<double>;
 
-  struct IOSocket {
-    enum Flags {
-      eCanHoldBool = 1 << 0,
-      eCanHoldInt = 1 << 1,
-      eCanHoldFloat = 1 << 2,
-      eCanChangeName = 1 << 3,
-      eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat,
-      eDefaultFlags = eCanHoldAllValues | eCanChangeName
-    };
-    Value value{};
-    ValueType type{};
+  struct IOSocket : public IOSocketFlags {
+    using TimeStamp = std::chrono::high_resolution_clock::time_point;
 
+    IOSocket()
+      : writeLock{ new std::mutex{} }
+    {
+    }
+
+   public:
+    ValueType type{};
     size_t id{};
-    uint8_t slot{};
-    uint8_t flags{};
+    uint64_t slot{};
+    uint64_t flags{};
     std::string name{};
+
+    bool valueChanged{ true };
+    bool isMonitored{ false };
+    TimeStamp timeStamp{};
+
+    template<typename T>
+    T getValue()
+    {
+      T outValue;
+
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        outValue = std::get<T>(value);
+        writeLock->unlock();
+      } else {
+        outValue = std::get<T>(value);
+      }
+
+      valueChanged = false;
+      return outValue;
+    }
+
+    template<typename T>
+    T getValueWithoutNotify() const
+    {
+      T outValue;
+
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        outValue = std::get<T>(value);
+        writeLock->unlock();
+      } else {
+        outValue = std::get<T>(value);
+      }
+
+      return outValue;
+    }
+
+    template<typename T>
+    void setValue(T const a_value)
+    {
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eTimeStampedValues))
+        timeStamp = std::chrono::high_resolution_clock::now();
+
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        value = a_value;
+        writeLock->unlock();
+      } else {
+        value = a_value;
+      }
+    }
+
+    void copyValue(IOSocket const &a_from)
+    {
+      if (isMonitored) {
+        if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eTimeStampedValues)) {
+          if (timeStamp == a_from.timeStamp) {
+            valueChanged = false;
+          } else {
+            timeStamp = a_from.timeStamp;
+            valueChanged = true;
+          }
+
+        } else {
+          valueChanged = !ValueDescription::compareValues(value, a_from.value, type);
+        }
+      }
+
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        value = a_from.value;
+        writeLock->unlock();
+      } else {
+        value = a_from.value;
+      }
+    }
+
+   private:
+    Value value{};
+    std::shared_ptr<std::mutex> writeLock{};
   };
 
   using IOSockets = std::vector<IOSocket>;
@@ -132,6 +211,7 @@ class SPAGHETTI_API Element {
 
   virtual void calculate() {}
   virtual void reset() {}
+  virtual bool alwaysCalculate() const noexcept { return true; }
 
   virtual void update(duration_t const &a_delta) { (void)a_delta; }
 
@@ -160,27 +240,27 @@ class SPAGHETTI_API Element {
   IOSockets &outputs() { return m_outputs; }
   IOSockets const &outputs() const { return m_outputs; }
 
-  bool addInput(ValueType const a_type, std::string const &a_name, uint8_t const a_flags);
-  void setInputName(uint8_t const a_input, std::string const &a_name);
+  bool addInput(ValueType const a_type, std::string const &a_name, uint64_t const a_flags);
+  void setInputName(uint64_t const a_input, std::string const &a_name);
   void removeInput();
   void clearInputs();
 
-  bool addOutput(ValueType const a_type, std::string const &a_name, uint8_t const a_flags);
-  void setOutputName(uint8_t const a_output, std::string const &a_name);
+  bool addOutput(ValueType const a_type, std::string const &a_name, uint64_t const a_flags);
+  void setOutputName(uint64_t const a_output, std::string const &a_name);
   void removeOutput();
   void clearOutputs();
 
-  void setIOName(bool const a_input, uint8_t const a_id, std::string const &a_name);
-  void setIOValueType(bool const a_input, uint8_t const a_id, ValueType const a_type);
+  void setIOName(bool const a_input, uint64_t const a_id, std::string const &a_name);
+  void setIOValueType(bool const a_input, uint64_t const a_id, ValueType const a_type);
 
-  bool connect(size_t const a_sourceId, uint8_t const a_outputId, uint8_t const a_inputId);
+  bool connect(size_t const a_sourceId, uint64_t const a_outputId, uint64_t const a_inputId);
 
-  uint8_t minInputs() const { return m_minInputs; }
-  uint8_t maxInputs() const { return m_maxInputs; }
-  uint8_t defaultNewInputFlags() const { return m_defaultNewInputFlags; }
-  uint8_t minOutputs() const { return m_minOutputs; }
-  uint8_t maxOutputs() const { return m_maxOutputs; }
-  uint8_t defaultNewOutputFlags() const { return m_defaultNewOutputFlags; }
+  uint64_t minInputs() const { return m_minInputs; }
+  uint64_t maxInputs() const { return m_maxInputs; }
+  uint64_t defaultNewInputFlags() const { return m_defaultNewInputFlags; }
+  uint64_t minOutputs() const { return m_minOutputs; }
+  uint64_t maxOutputs() const { return m_maxOutputs; }
+  uint64_t defaultNewOutputFlags() const { return m_defaultNewOutputFlags; }
 
   Package *package() const { return m_package; }
 
@@ -200,13 +280,13 @@ class SPAGHETTI_API Element {
   void handleEvent(Event const &a_event);
   virtual void onEvent(Event const &a_event) { (void)a_event; }
 
-  void setMinInputs(uint8_t const a_min);
-  void setMaxInputs(uint8_t const a_max);
-  void setDefaultNewInputFlags(uint8_t const a_flags) { m_defaultNewInputFlags = a_flags; }
+  void setMinInputs(uint64_t const a_min);
+  void setMaxInputs(uint64_t const a_max);
+  void setDefaultNewInputFlags(uint64_t const a_flags) { m_defaultNewInputFlags = a_flags; }
 
-  void setMinOutputs(uint8_t const a_min);
-  void setMaxOutputs(uint8_t const a_max);
-  void setDefaultNewOutputFlags(uint8_t const a_flags) { m_defaultNewOutputFlags = a_flags; }
+  void setMinOutputs(uint64_t const a_min);
+  void setMaxOutputs(uint64_t const a_max);
+  void setDefaultNewOutputFlags(uint64_t const a_flags) { m_defaultNewOutputFlags = a_flags; }
 
  protected:
   IOSockets m_inputs{};
@@ -225,8 +305,8 @@ class SPAGHETTI_API Element {
   uint8_t m_maxInputs{ std::numeric_limits<uint8_t>::max() };
   uint8_t m_minOutputs{};
   uint8_t m_maxOutputs{ std::numeric_limits<uint8_t>::max() };
-  uint8_t m_defaultNewInputFlags{};
-  uint8_t m_defaultNewOutputFlags{};
+  uint64_t m_defaultNewInputFlags{};
+  uint64_t m_defaultNewOutputFlags{};
   EventCallback m_handler{};
   void *m_node{};
 };

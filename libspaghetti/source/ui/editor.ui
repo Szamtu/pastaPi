@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Spaghetti</string>
+   <string>PastaPi</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="8">
@@ -115,9 +115,35 @@
         <attribute name="label">
          <string>Elements</string>
         </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="ExpanderWidget" name="elementsContainer">
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QLineEdit" name="searchElement">
+           <property name="placeholderText">
+            <string>Search</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QToolButton" name="clearSearchElement">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="ElementsTree" name="elementsContainer">
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragOnly</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::CopyAction</enum>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
            <column>
             <property name="text">
              <string notr="true">1</string>
@@ -141,7 +167,19 @@
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="ExpanderWidget" name="packagesContainer">
+          <widget class="ElementsTree" name="packagesContainer">
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::DragOnly</enum>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::CopyAction</enum>
+           </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
            <column>
             <property name="text">
              <string notr="true">1</string>
@@ -308,9 +346,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>ExpanderWidget</class>
+   <class>ElementsTree</class>
    <extends>QTreeWidget</extends>
-   <header>ui/expander_widget.h</header>
+   <header>ui/elementstree.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

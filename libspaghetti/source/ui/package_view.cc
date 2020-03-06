@@ -28,6 +28,7 @@
 #include <QDragMoveEvent>
 #include <QGraphicsScene>
 #include <QHeaderView>
+#include <QMessageBox>
 #include <QMimeData>
 #include <QSortFilterProxyModel>
 #include <QTableWidget>
@@ -43,7 +44,6 @@
 #include "spaghetti/node.h"
 #include "spaghetti/package.h"
 #include "spaghetti/registry.h"
-#include "ui/elements_list.h"
 #include "ui/link_item.h"
 #include "nodes/package.h"
 
@@ -66,7 +66,7 @@ QVariant NodesListModel::data(QModelIndex const &a_index, int a_role) const
 
   auto const node = m_nodes[a_index.row()];
   if (a_role == Qt::DecorationRole)
-    return node->icon().scaled(QSize(50, 25));
+    return node->icon().scaled(QSize(32, 32));
   else if (a_role == Qt::DisplayRole)
     return QString("%1 (%2)").arg(node->name()).arg(node->element()->id());
 
@@ -119,11 +119,11 @@ PackageView::PackageView(Editor *const a_editor, Package *const a_package)
   , m_standalone{ m_package->package() == nullptr }
 {
   if (m_standalone) {
-    m_packageNode = static_cast<nodes::Package *>(Registry::get().createNode("logic/package"));
+    m_packageNode = static_cast<nodes::Package *>(Registry::get().createNode("base/package"));
     m_package->setNode(m_packageNode);
   } else
     m_packageNode = m_package->node<nodes::Package>();
-  Q_ASSERT(m_package->node<Node*>());
+  Q_ASSERT(m_package->node<Node *>());
 #ifdef SPAGHETTI_USE_OPENGL
   QGLFormat format{ QGL::DoubleBuffer | QGL::SampleBuffers | QGL::DirectRendering };
   format.setProfile(QGLFormat::CoreProfile);
@@ -164,12 +164,14 @@ PackageView::PackageView(Editor *const a_editor, Package *const a_package)
   m_inputs->setIcon(":/logic/inputs.png");
   m_inputs->setPackageView(this);
   m_inputs->iconify();
+  m_inputs->setLocked(true);
   m_outputs->setType(NodeType::eOutputs);
   m_outputs->setPos(m_package->outputsPosition().x, m_package->outputsPosition().y);
   m_outputs->setElement(m_package);
   m_outputs->setIcon(":/logic/outputs.png");
   m_outputs->setPackageView(this);
   m_outputs->iconify();
+  m_outputs->setLocked(true);
 
   m_packageNode->setInputsNode(m_inputs);
   m_packageNode->setOutputsNode(m_outputs);
@@ -177,7 +179,7 @@ PackageView::PackageView(Editor *const a_editor, Package *const a_package)
 
   if (m_package->name().empty()) {
     auto &registry = Registry::get();
-    m_package->setName(registry.elementName("logic/package"));
+    m_package->setName(registry.elementName("base/package"));
   }
 
   m_scene->addItem(m_inputs);
@@ -266,7 +268,7 @@ void PackageView::dragEnterEvent(QDragEnterEvent *a_event)
 
   if (mimeData->hasFormat("metadata/name") && mimeData->hasFormat("metadata/icon")) {
     auto const isPackage = mimeData->data("metadata/is_package") == "true";
-    auto const pathString = isPackage ? QString{ "logic/package" } : mimeData->text();
+    auto const pathString = isPackage ? QString{ "base/package" } : mimeData->text();
     auto const name = mimeData->data("metadata/name");
     auto const icon = mimeData->data("metadata/icon");
     auto const file = mimeData->data("metadata/filename");
@@ -328,7 +330,7 @@ void PackageView::dropEvent(QDropEvent *a_event)
     auto const file = mimeData->data("metadata/filename");
     auto const pathString = a_event->mimeData()->text();
     auto const stringData = pathString.toLatin1();
-    char const *const path{ isPackage ? "logic/package" : stringData.data() };
+    char const *const path{ isPackage ? "base/package" : stringData.data() };
 
     auto const element = m_package->add(path);
     element->setNode(m_dragNode);
@@ -479,13 +481,18 @@ void PackageView::deleteElement()
     switch (item->type()) {
       case NODE_TYPE: {
         auto const node = reinterpret_cast<Node *>(item);
-        auto const ID = node->element()->id();
-        m_nodes.remove(ID);
-        m_nodesModel->remove(node);
-        m_nodesProxyModel->sort(0);
+        if (!node->isLocked()) {
+          auto const ID = node->element()->id();
+          m_nodes.remove(ID);
+          m_nodesModel->remove(node);
+          m_nodesProxyModel->sort(0);
 
-        if (node == m_selectedNode) setSelectedNode(nullptr);
-        delete node;
+          if (node == m_selectedNode) setSelectedNode(nullptr);
+          delete node;
+        } else {
+          QMessageBox::warning(this, "Node delete failed!", "Cannot remove selected item, becouse it's locked!");
+        }
+
         break;
       }
       case LINK_TYPE: {

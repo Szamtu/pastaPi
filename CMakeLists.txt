@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(Spaghetti
-  VERSION 18.05.21
-  DESCRIPTION "Graphical logic editor/simulator"
+project(PastaPi
+  VERSION 00.09.10
+  DESCRIPTION "Graphical openCV image processor"
   LANGUAGES C CXX
 )
 
@@ -22,7 +22,6 @@ option(SPAGHETTI_ENABLE_CPACK "Enable CPack" OFF)
 option(SPAGHETTI_ENABLE_ALL_WARNINGS "Enable all warnings" OFF)
 option(SPAGHETTI_TREAT_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 option(SPAGHETTI_USE_OPENGL "Use OpenGL in QGraphicsView" OFF)
-option(SPAGHETTI_USE_CHARTS "Use Qt::Charts in Spaghetti Editor" OFF)
 option(BUILD_SHARED_LIBS "Build shared libs" ON)
 if (GCC OR CLANG)
   option(SPAGHETTI_BUILD_NATIVE "Build native" OFF)
@@ -48,7 +47,6 @@ endif ()
 
 if (SPAGHETTI_ENABLE_CPACK)
   include(InstallRequiredSystemLibraries)
-#  set(CPACK_GENERATOR TBZ2)
   list(APPEND CPACK_GENERATOR IFW)
   if (WIN32)
     list(APPEND CPACK_GENERATOR NSIS64)

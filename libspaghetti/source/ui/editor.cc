@@ -23,9 +23,9 @@
 #include "spaghetti/editor.h"
 #include "ui_editor.h"
 
+#include "elementstree.h"
 #include "spaghetti/socket_item.h"
 #include "ui/colors.h"
-#include "ui/elements_list.h"
 #include "ui/link_item.h"
 
 #include <QAction>
@@ -53,14 +53,13 @@
 #include <typeinfo>
 #include <vector>
 
-#include <spaghetti/elements/logic/all.h>
+#include "filesystem.h"
 #include "spaghetti/node.h"
 #include "spaghetti/package.h"
 #include "spaghetti/registry.h"
 #include "spaghetti/version.h"
-#include "ui/expander_widget.h"
+#include "ui/aboutpastapi.h"
 #include "ui/package_view.h"
-#include "filesystem.h"
 
 QString const PACKAGES_DIR{ "../packages" };
 
@@ -72,8 +71,6 @@ Editor::Editor(QWidget *const a_parent)
 {
   setObjectName("SpaghettiEditor");
   m_ui->setupUi(this);
-  m_ui->elementsContainer->removeItem(0);
-  m_ui->packagesContainer->removeItem(0);
   m_ui->tabWidget->removeTab(0);
   m_ui->clearSearchText->setIcon(style()->standardIcon(QStyle::SP_DialogResetButton));
   m_ui->elementsList->setIconSize(QSize(50, 25));
@@ -109,7 +106,6 @@ Editor::Editor(QWidget *const a_parent)
   });
 
   connect(m_ui->clearSearchText, &QToolButton::clicked, [this] { m_ui->searchNode->clear(); });
-
   connect(m_ui->searchNode, &QLineEdit::textChanged, [this](QString const &a_search) {
     m_ui->clearSearchText->setDisabled(a_search.isEmpty());
 
@@ -120,8 +116,18 @@ Editor::Editor(QWidget *const a_parent)
     model->setFilterWildcard(a_search);
   });
 
+  connect(m_ui->packagesContainer, &QTreeWidget::itemDoubleClicked, this, [this](auto a_item) {
+    auto const IS_PACKAGE = a_item->data(0, ElementsTree::eMetaDataIsPackage).toBool();
+    auto const FILE = a_item->data(0, ElementsTree::eMetaDataFilename).toString();
+    if (IS_PACKAGE) openPackageFile(FILE);
+  });
+
   auto const shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_F), this);
   connect(shortcut, &QShortcut::activated, [this] { m_ui->searchNode->setFocus(); });
+
+  connect(m_ui->clearSearchElement, &QToolButton::clicked, [this] { m_ui->searchElement->clear(); });
+  connect(m_ui->searchElement, &QLineEdit::textChanged,
+          [this](QString const &a_search) { m_ui->elementsContainer->applyFilter(a_search); });
 
   QDir packagesDir{ PACKAGES_DIR };
   if (!packagesDir.exists()) packagesDir.mkpath(".");
@@ -179,7 +185,7 @@ void Editor::populateLibrary()
     std::string const path{ info.type };
     std::string category{ path };
 
-    if (auto const it = path.find_first_of('/'); it != std::string::npos) category = path.substr(0, it);
+    if (auto const it = path.find_last_of('/'); it != std::string::npos) category = path.substr(0, it);
     category[0] = static_cast<char>(std::toupper(category[0]));
 
     addElement(QString::fromStdString(category), QString::fromStdString(info.name), QString::fromStdString(info.type),
@@ -210,72 +216,32 @@ void Editor::populateLibrary()
 
 void Editor::addElement(QString const &a_category, QString const &a_name, QString const &a_type, QString const &a_icon)
 {
-  ExpanderWidget *const library{ m_ui->elementsContainer };
+  auto categoryItem = m_ui->elementsContainer->getCathegory(a_category);
 
-  ElementsList *list{};
-
-  int const count{ library->count() };
-  for (int i = 0; i < count; ++i) {
-    QString const text{ library->itemText(i) };
-    if (text != a_category) continue;
-
-    list = qobject_cast<ElementsList *>(library->widget(i));
-    assert(list);
-    break;
-  }
-
-  if (list == nullptr) {
-    list = new ElementsList{ this };
-    library->addItem(list, a_category);
-  }
-
-  QListWidgetItem *const item{ new QListWidgetItem{ a_name } };
-  item->setData(ElementsList::eMetaDataIsPackage, false);
-  item->setData(ElementsList::eMetaDataType, a_type);
-  item->setData(ElementsList::eMetaDataName, a_name);
-  item->setData(ElementsList::eMetaDataIcon, a_icon);
-  item->setIcon(QIcon(a_icon));
-
-  list->addItem(item);
-  list->doResize();
-  list->sortItems();
+  QTreeWidgetItem *const item{ new QTreeWidgetItem{ categoryItem } };
+  item->setText(0, a_name);
+  item->setData(0, ElementsTree::eMetaDataIsPackage, false);
+  item->setData(0, ElementsTree::eMetaDataType, a_type);
+  item->setData(0, ElementsTree::eMetaDataName, a_name);
+  item->setData(0, ElementsTree::eMetaDataIcon, a_icon);
+  item->setIcon(0, QIcon(a_icon));
 }
 
 void Editor::addPackage(QString const &a_category, QString const &a_filename, QString const &a_path,
                         QString const &a_icon)
 {
-  auto const library = m_ui->packagesContainer;
-
-  ElementsList *list{};
-
-  int const COUNT{ library->count() };
-  for (int i = 0; i < COUNT; ++i) {
-    QString const text{ library->itemText(i) };
-    if (text != a_category) continue;
-
-    list = qobject_cast<ElementsList *>(library->widget(i));
-    assert(list);
-    break;
-  }
-
-  if (list == nullptr) {
-    list = new ElementsList{ this };
-    library->addItem(list, a_category);
-  }
+  auto categoryItem = m_ui->packagesContainer->getCathegory(a_category);
 
   const bool INVALID = a_path.isEmpty();
   auto const NAME = INVALID ? a_filename.right(a_filename.length() - a_filename.lastIndexOf('/') - 1) : a_path;
-  auto const item = new QListWidgetItem{ NAME };
-  item->setData(ElementsList::eMetaDataIsPackage, true);
-  item->setData(ElementsList::eMetaDataType, a_path);
-  item->setData(ElementsList::eMetaDataName, a_path);
-  item->setData(ElementsList::eMetaDataIcon, a_icon);
-  item->setData(ElementsList::eMetaDataFilename, a_filename);
-  item->setIcon(QIcon(a_icon));
-
-  list->addItem(item);
-  list->doResize();
-  list->sortItems();
+  auto const item = new QTreeWidgetItem{ categoryItem };
+  item->setText(0, NAME);
+  item->setData(0, ElementsTree::eMetaDataIsPackage, true);
+  item->setData(0, ElementsTree::eMetaDataType, a_path);
+  item->setData(0, ElementsTree::eMetaDataName, a_path);
+  item->setData(0, ElementsTree::eMetaDataIcon, a_icon);
+  item->setData(0, ElementsTree::eMetaDataFilename, a_filename);
+  item->setIcon(0, QIcon(a_icon));
 }
 
 void Editor::aboutToQuit() {}
@@ -287,7 +253,6 @@ void Editor::showEvent(QShowEvent *a_event)
   if (s_firstTime) {
     s_firstTime = false;
     newPackage();
-  //  openPackage();
 
     auto const tab = m_ui->tabWidget;
     auto const index = tab->currentIndex();
@@ -491,31 +456,8 @@ void Editor::recentChanges()
 
 void Editor::about()
 {
-  QMessageBox::about(
-      this, "About Spaghetti",
-      QString("<a href='https://github.com/aljen/spaghetti'>Spaghetti</a> version: %1<br>"
-              "<br>"
-              "Copyright © 2017-2018 <b>Artur Wyszyński</b><br>"
-              "<br>"
-              "Build date: <b>%2, %3</b><br>"
-              "Git branch: <b>%4</b><br>"
-              "Git commit: <b>%5</b><br>"
-              "<br>"
-              "Used libraries:<br>"
-              "<a href='https://github.com/nlohmann/json'>JSON for Modern C++</a> by <b>Niels Lohmann</b><br>"
-              "<a href='https://github.com/cameron314/concurrentqueue'>An industrial-strength lock-free queue for "
-              "C++</a> by <b>Cameron Desrochers</b><br>"
-              "<a href='https://github.com/greg7mdp/sparsepp'>A fast, memory efficient hash map for C++</a> by "
-              "<b>Gregory Popovitch</b><br>"
-#if SPAGHETTI_FS_IMPLEMENTATION == SPAGHETTI_FS_BOOST_FILESYSTEM
-              "<a href='http://www.boost.org/'>Boost libraries</a><br>"
-#endif
-              )
-          .arg(version::STRING)
-          .arg(__DATE__)
-          .arg(__TIME__)
-          .arg(version::BRANCH)
-          .arg(version::COMMIT_SHORT_HASH));
+  AboutPastaPI aboutPastaPi{};
+  aboutPastaPi.exec();
 }
 
 void Editor::aboutQt()

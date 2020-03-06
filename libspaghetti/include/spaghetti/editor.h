@@ -65,8 +65,8 @@ class SPAGHETTI_API Editor final : public QMainWindow {
   int indexForPackageView(PackageView *const a_packageView) const;
   void setPackageViewTabName(int const a_index, QString const &a_name);
 
-  QListView* elementsList();
-  QTableWidget* propertiesTable();
+  QListView *elementsList();
+  QTableWidget *propertiesTable();
 
  protected:
   void showEvent(QShowEvent *a_event) override;
@@ -98,7 +98,7 @@ class SPAGHETTI_API Editor final : public QMainWindow {
   Ui::Editor *const m_ui{};
   int m_packageViewIndex{ -1 };
   QMap<QString, int> m_openFiles{};
-  QMap<Package*, int> m_openPackages{};
+  QMap<Package *, int> m_openPackages{};
 };
 
 } // namespace spaghetti

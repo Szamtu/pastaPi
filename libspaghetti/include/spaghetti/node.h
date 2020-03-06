@@ -40,16 +40,6 @@ constexpr int NODE_TYPE{ QGraphicsItem::UserType + 1 };
 
 class PackageView;
 
-inline QString ValueType_to_QString(ValueType const a_type)
-{
-  switch (a_type) {
-    case ValueType::eBool: return "Bool";
-    case ValueType::eInt: return "Int";
-    case ValueType::eFloat: return "Float";
-  }
-  return "Unknown";
-}
-
 class SPAGHETTI_API Node : public QGraphicsItem {
  public:
   using Sockets = QVector<SocketItem *>;
@@ -85,6 +75,9 @@ class SPAGHETTI_API Node : public QGraphicsItem {
   QPixmap icon() const { return m_icon; }
   QString iconPath() const { return m_iconPath; }
 
+  void setLocked(bool a_isLocked) { m_isLocked = a_isLocked; }
+  bool isLocked() const { return m_isLocked; }
+
   void showName();
   void hideName();
 
@@ -114,9 +107,9 @@ class SPAGHETTI_API Node : public QGraphicsItem {
 
   void changeInputName(int const a_id, QString const &a_name);
   void changeOutputName(int const a_id, QString const &a_name);
-  void addSocket(SocketType const a_type, uint8_t const a_id, QString const &a_name, ValueType const a_valueType);
+  void addSocket(SocketType const a_type, uint64_t const a_id, QString const &a_name, ValueType const a_valueType);
   void removeSocket(SocketType const a_type);
-  void setSocketType(IOSocketsType const a_socketType, uint8_t const a_socketId, ValueType const a_type);
+  void setSocketType(IOSocketsType const a_socketType, uint64_t const a_socketId, ValueType const a_type);
 
  protected:
   void setCentralWidget(QGraphicsItem *a_centralWidget);
@@ -126,11 +119,11 @@ class SPAGHETTI_API Node : public QGraphicsItem {
  private:
   void addInput();
   void removeInput();
-  void setInputName(uint8_t const a_socketId, QString const &a_name);
+  void setInputName(uint64_t const a_socketId, QString const &a_name);
 
   void addOutput();
   void removeOutput();
-  void setOutputName(uint8_t const a_socketId, QString const &a_name);
+  void setOutputName(uint64_t const a_socketId, QString const &a_name);
 
   void updateOutputs();
 
@@ -148,6 +141,7 @@ class SPAGHETTI_API Node : public QGraphicsItem {
   QString m_path{};
   QString m_iconPath{};
   QPixmap m_icon{};
+  bool m_isLocked{ false };
   QRectF m_boundingRect{};
   QPointF m_centralWidgetPosition{};
 

@@ -68,8 +68,8 @@ QRectF SocketItem::boundingRect() const
 
 void SocketItem::paint(QPainter *a_painter, QStyleOptionGraphicsItem const *a_option, QWidget *a_widget)
 {
-  Q_UNUSED(a_option);
-  Q_UNUSED(a_widget);
+  Q_UNUSED(a_option)
+  Q_UNUSED(a_widget)
 
   QRectF const rect{ boundingRect() };
 
@@ -85,14 +85,11 @@ void SocketItem::paint(QPainter *a_painter, QStyleOptionGraphicsItem const *a_op
     brush.setColor(m_colorSignalOn);
   else if (!m_isSignalOn)
     brush.setColor(m_colorSignalOff);
-  //  else if (m_type == Type::eInput)
-  //    brush.setColor(config.getColor(Config::Color::eSocketInput));
-  //  else if (m_type == Type::eOutput)
-  //    brush.setColor(config.getColor(Config::Color::eSocketOutput));
   brush.setStyle(Qt::SolidPattern);
 
   a_painter->setPen(pen);
   a_painter->setBrush(brush);
+
   if (m_type == Type::eOutput)
     a_painter->drawEllipse(rect);
   else
@@ -120,13 +117,14 @@ void SocketItem::paint(QPainter *a_painter, QStyleOptionGraphicsItem const *a_op
     if (m_type == Type::eInput)
       a_painter->drawText(static_cast<int>(rect.width()) - 4, (FONT_HEIGHT / 2) - metrics.strikeOutPos(), m_name);
     else
-      a_painter->drawText(-metrics.width(m_name) - SIZE + SIZE / 3, (FONT_HEIGHT / 2) - metrics.strikeOutPos(), m_name);
+      a_painter->drawText(-metrics.horizontalAdvance(m_name) - SIZE + SIZE / 3,
+                          (FONT_HEIGHT / 2) - metrics.strikeOutPos(), m_name);
   }
 }
 
 void SocketItem::hoverEnterEvent(QGraphicsSceneHoverEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 
   m_isHover = true;
 
@@ -135,7 +133,7 @@ void SocketItem::hoverEnterEvent(QGraphicsSceneHoverEvent *a_event)
 
 void SocketItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 
   m_isHover = false;
 
@@ -144,7 +142,7 @@ void SocketItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *a_event)
 
 void SocketItem::dragEnterEvent(QGraphicsSceneDragDropEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 
   if (m_used) {
     a_event->ignore();
@@ -165,7 +163,7 @@ void SocketItem::dragEnterEvent(QGraphicsSceneDragDropEvent *a_event)
 
 void SocketItem::dragLeaveEvent(QGraphicsSceneDragDropEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 
   m_isDrop = false;
 
@@ -178,12 +176,12 @@ void SocketItem::dragLeaveEvent(QGraphicsSceneDragDropEvent *a_event)
 
 void SocketItem::dragMoveEvent(QGraphicsSceneDragDropEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 }
 
 void SocketItem::dropEvent(QGraphicsSceneDragDropEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 
   auto const packageView = reinterpret_cast<PackageView *>(scene()->views()[0]);
 
@@ -207,7 +205,7 @@ void SocketItem::dropEvent(QGraphicsSceneDragDropEvent *a_event)
 
 void SocketItem::mousePressEvent(QGraphicsSceneMouseEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 
   if (m_type == Type::eInput) return;
 
@@ -216,7 +214,7 @@ void SocketItem::mousePressEvent(QGraphicsSceneMouseEvent *a_event)
 
 void SocketItem::mouseMoveEvent(QGraphicsSceneMouseEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 
   if (m_type == Type::eInput) return;
 
@@ -253,7 +251,7 @@ void SocketItem::mouseMoveEvent(QGraphicsSceneMouseEvent *a_event)
 
 void SocketItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *a_event)
 {
-  Q_UNUSED(a_event);
+  Q_UNUSED(a_event)
 
   if (m_type == Type::eInput) return;
 
@@ -276,7 +274,7 @@ void SocketItem::setName(QString const &a_name)
 int SocketItem::nameWidth() const
 {
   QFontMetrics const metrics{ m_font };
-  return metrics.width(m_name);
+  return metrics.horizontalAdvance(m_name);
 }
 
 void SocketItem::setColors(QColor const a_signalOff, QColor const a_signalOn)
@@ -364,17 +362,15 @@ void SocketItem::setValueType(ValueType const a_type)
 {
   m_valueType = a_type;
 
-  switch (m_valueType) {
-    case ValueType::eBool: setColors(get_color(Color::eBoolSignalOff), get_color(Color::eBoolSignalOn)); break;
-    case ValueType::eFloat: setColors(get_color(Color::eFloatSignalOn), get_color(Color::eFloatSignalOff)); break;
-    case ValueType::eInt: setColors(get_color(Color::eIntegerSignalOn), get_color(Color::eIntegerSignalOn)); break;
-  }
+  auto const colors = ValueDescription::typeColors(m_valueType);
+  setColors(colors.first, colors.second);
 }
 
 void SocketItem::removeLink(LinkItem *const a_linkItem)
 {
   auto const it = std::remove(std::begin(m_links), std::end(m_links), a_linkItem);
   m_links.erase(it, std::end(m_links));
+  setSignal(false);
 }
 
 LinkItem *SocketItem::linkBetween(SocketItem *const a_from, SocketItem *const a_to) const
