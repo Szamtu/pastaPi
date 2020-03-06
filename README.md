@@ -1,19 +1,23 @@
-![pastapi_logo.png](docs/pastapi_logo.png)
-# Pasta Pi
+<p align="center">
+  <img src="docs/pastapi_logo.png"/>
+</p>
+
+# Pasta Pi  
 **Graphical multi-purpose editor / simulator**
 
 ![screen1.png](docs/screen1.png)
 
-## Developed by:
+## Developed by:  
 *  **[Szamtu](https://github.com/Szamtu)**
 *  **[Gryze](https://github.com/Gryze)**
 
-**from:**
-![escort_logo.png](docs/escort_logo.png)
+**from:**  
+![escort_logo.png](docs/escort_logo.png)  
 **[escort-technology.com](https://escort-technology.com/)**
 
 
 **Last changes:**
+
 Version 0.9.10
 This is the first version of PastaPI - Graphical multi-purpose editor / simulator
 We start here at version 0.9.10.
@@ -52,7 +56,7 @@ New things:
 **Removed:**
 *  Some elements that we think that will be never used like: Pneumatic - tank
 
-**Forked from:**
+**Forked from:**  
 **[Spaghetti](https://github.com/aljen/spaghetti)** - by Aljen
 
 **License:**
