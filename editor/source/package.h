@@ -21,9 +21,35 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef NODES_ALL_H
-#define NODES_ALL_H
+#ifndef NODES_PACKAGE_H
+#define NODES_PACKAGE_H
 
-#include "nodes/package.h"
+#include "node.h"
 
-#endif // NODES_ALL_H
+namespace spaghetti::nodes {
+
+class Package : public Node {
+ public:
+  Package();
+
+  void setInputsNode(Node *const a_node) { m_inputsNode = a_node; }
+  Node *inputsNode() { return m_inputsNode; }
+  Node const *inputsNode() const { return m_inputsNode; }
+
+  void setOutputsNode(Node *const a_node) { m_outputsNode = a_node; }
+  Node *outputsNode() { return m_outputsNode; }
+  Node const *outputsNode() const { return m_outputsNode; }
+
+ private:
+  void showProperties() override;
+  void handleEvent(Event const &a_event) override;
+  bool open() override;
+
+ private:
+  Node *m_inputsNode{};
+  Node *m_outputsNode{};
+};
+
+} // namespace spaghetti::nodes
+
+#endif // NODES_PACKAGE_H

@@ -37,15 +37,9 @@
 #include "filesystem.h"
 #include "shared_library.h"
 
-#include "nodes/all.h"
 #include <spaghetti/logger.h>
 #include <spaghetti/version.h>
 #include <spaghetti/package.h>
-
-inline void init_resources()
-{
-  Q_INIT_RESOURCE(icons);
-}
 
 static std::string get_application_path()
 {
@@ -130,12 +124,7 @@ Registry::Registry()
   m_pimpl->user_packages_path = USER_PACKAGES_PATH;
 }
 
-void Registry::registerInternalElements()
-{
-  init_resources();
-
-  registerElement<Package, nodes::Package>("Package", ":package.png");
-}
+void Registry::registerInternalElements() {}
 
 void Registry::loadPlugins()
 {

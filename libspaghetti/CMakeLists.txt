@@ -6,12 +6,7 @@ project(libSpaghetti
 )
 
 find_package(Threads REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
-if (SPAGHETTI_USE_OPENGL)
-  find_package(Qt5 REQUIRED COMPONENTS OpenGL)
-endif ()
 find_package(OpenCV REQUIRED)
-
 
 if (HAVE_CXX_FILESYSTEM)
   set(SPAGHETTI_FILESYSTEM_IMPLEMENTATION SPAGHETTI_FS_STD_FILESYSTEM)
@@ -26,14 +21,11 @@ configure_file(include/spaghetti/version.h.in include/spaghetti/version.h)
 
 set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
   include/spaghetti/api.h
-  include/spaghetti/editor.h
   include/spaghetti/sockvalues.h
   include/spaghetti/element.h
   include/spaghetti/logger.h
-  include/spaghetti/node.h
   include/spaghetti/package.h
   include/spaghetti/registry.h
-  include/spaghetti/socket_item.h
   include/spaghetti/strings.h
   include/spaghetti/utils.h
   )
@@ -47,31 +39,9 @@ set(LIBSPAGHETTI_SOURCES
   ${LIBSPAGHETTI_PUBLIC_COMMON_HEADERS}
   include/spaghetti/version.h.in
 
-  source/icons/icons.qrc
-
-  source/nodes/all.h
-  source/nodes/package.cc
-  source/nodes/package.h
-
-  source/ui/colors.cc
-  source/ui/colors.h
-  source/ui/editor.cc
-  source/ui/editor.ui
-  source/ui/aboutpastapi.cc
-  source/ui/aboutpastapi.h
-  source/ui/aboutpastapi.ui
-  source/ui/elementstree.cc
-  source/ui/elementstree.h
-  source/ui/link_item.cc
-  source/ui/link_item.h
-  source/ui/package_view.cc
-  source/ui/package_view.h
-  source/ui/socket_item.cc
-
   source/sockvalues.cc
   source/element.cc
   source/logger.cc
-  source/node.cc
   source/package.cc
   source/registry.cc
   source/shared_library.cc
@@ -95,7 +65,6 @@ target_compile_definitions(Spaghetti
   PRIVATE SPAGHETTI_EXPORTS ${SPAGHETTI_DEFINITIONS}
   PRIVATE $<$<CONFIG:Debug>:${SPAGHETTI_DEFINITIONS_DEBUG}>
   PRIVATE $<$<CONFIG:Release>:${SPAGHETTI_DEFINITIONS_RELEASE}>
-  PRIVATE $<$<BOOL:${SPAGHETTI_USE_OPENGL}>:SPAGHETTI_USE_OPENGL>
   )
 target_compile_options(Spaghetti
   PRIVATE ${SPAGHETTI_FLAGS}
@@ -117,10 +86,10 @@ target_include_directories(Spaghetti SYSTEM PRIVATE
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/vendor>
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/vendor/spdlog/include>
   )
+
 target_link_libraries(Spaghetti
-  PUBLIC ${CMAKE_THREAD_LIBS_INIT} Qt5::Widgets ${OpenCV_LIBS}
+  PUBLIC ${CMAKE_THREAD_LIBS_INIT} opencv_core
   PRIVATE ${CMAKE_DL_LIBS} ${CXX_FILESYSTEM_LIBS}
-  PRIVATE $<$<BOOL:${SPAGHETTI_USE_OPENGL}>:Qt5::OpenGL>
 )
 if (CLANG)
   target_link_libraries(Spaghetti PUBLIC -stdlib=libc++)

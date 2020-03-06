@@ -73,8 +73,8 @@ ValueTypeDescription{
 };
 
 ValueTypeDescription::ValueTypeDescription(ValueType const a_type, IOSocketFlags::Flags const a_holdType,
-                                           std::string const a_typeString, QString const a_typeQstring,
-                                           std::pair<QColor, QColor> const a_colors, Value const a_value)
+                                           std::string const a_typeString, std::string const a_typeQstring,
+                                           std::pair<ElementColor, ElementColor> const a_colors, Value const a_value)
   : type{ a_type }
   , holdType{ a_holdType }
   , typeString{ a_typeString }
@@ -84,7 +84,7 @@ ValueTypeDescription::ValueTypeDescription(ValueType const a_type, IOSocketFlags
 {
 }
 
-QString ValueDescription::typeQstring(ValueType const a_type)
+std::string ValueDescription::typeStdString(ValueType const a_type)
 {
   auto typeID = static_cast<size_t>(a_type);
   assert(typeID < g_valuesDescriptions.size());
@@ -116,7 +116,7 @@ ValueType ValueDescription::firstAvailableTypeForFlags(IOSocketFlags::Flags cons
   assert(false);
 }
 
-std::pair<QColor, QColor> ValueDescription::typeColors(ValueType const a_type)
+std::pair<ElementColor, ElementColor> ValueDescription::typeColors(ValueType const a_type)
 {
   auto typeID = static_cast<size_t>(a_type);
   assert(typeID < g_valuesDescriptions.size());

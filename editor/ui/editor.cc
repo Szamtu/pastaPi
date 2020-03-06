@@ -20,14 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "spaghetti/editor.h"
-#include "ui_editor.h"
-
-#include "elementstree.h"
-#include "spaghetti/socket_item.h"
-#include "ui/colors.h"
-#include "ui/link_item.h"
-
 #include <QAction>
 #include <QDebug>
 #include <QDesktopServices>
@@ -53,13 +45,19 @@
 #include <typeinfo>
 #include <vector>
 
-#include "filesystem.h"
-#include "spaghetti/node.h"
-#include "spaghetti/package.h"
-#include "spaghetti/registry.h"
-#include "spaghetti/version.h"
+#include <filesystem.h>
+#include <spaghetti/package.h>
+#include <spaghetti/registry.h>
+#include <spaghetti/version.h>
+#include "colors.h"
+#include "editor.h"
+#include "elementstree.h"
+#include "source/node.h"
 #include "ui/aboutpastapi.h"
+#include "ui/link_item.h"
 #include "ui/package_view.h"
+#include "ui/socket_item.h"
+#include "ui_editor.h"
 
 QString const PACKAGES_DIR{ "../packages" };
 
@@ -131,6 +129,9 @@ Editor::Editor(QWidget *const a_parent)
 
   QDir packagesDir{ PACKAGES_DIR };
   if (!packagesDir.exists()) packagesDir.mkpath(".");
+
+  auto &elementRegister = Registry::get();
+  elementRegister.registerElement<Package>("Package", ":package.png");
 
   populateLibrary();
 }

@@ -24,9 +24,9 @@
 #include <QLineEdit>
 #include <QTableWidget>
 
-#include "nodes/package.h"
-#include "spaghetti/editor.h"
+#include "package.h"
 #include "spaghetti/package.h"
+#include "ui/editor.h"
 #include "ui/package_view.h"
 
 namespace spaghetti::nodes {

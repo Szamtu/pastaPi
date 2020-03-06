@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "spaghetti/socket_item.h"
+#include "socket_item.h"
 
 #include <QApplication>
 #include <QCursor>
@@ -31,7 +31,7 @@
 #include <QMimeData>
 #include <QWidget>
 
-#include "spaghetti/node.h"
+#include "source/node.h"
 #include "spaghetti/package.h"
 #include "ui/colors.h"
 #include "ui/link_item.h"
@@ -363,7 +363,11 @@ void SocketItem::setValueType(ValueType const a_type)
   m_valueType = a_type;
 
   auto const colors = ValueDescription::typeColors(m_valueType);
-  setColors(colors.first, colors.second);
+
+  QColor const firstColor{ colors.first.r, colors.first.g, colors.first.b, colors.first.a };
+  QColor const secondColor{ colors.second.r, colors.second.g, colors.second.b, colors.second.a };
+
+  setColors(firstColor, secondColor);
 }
 
 void SocketItem::removeLink(LinkItem *const a_linkItem)

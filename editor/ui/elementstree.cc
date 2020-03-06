@@ -21,10 +21,9 @@
 // SOFTWARE.
 
 #include "elementstree.h"
+#include "editor.h"
 #include "package_view.h"
-#include "spaghetti/editor.h"
 
-#include <QDebug>
 #include <QDrag>
 #include <QDropEvent>
 #include <QMimeData>

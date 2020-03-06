@@ -40,12 +40,12 @@
 #endif
 // clang-format on
 
-#include "spaghetti/editor.h"
-#include "spaghetti/node.h"
+#include "editor.h"
+#include "source/node.h"
 #include "spaghetti/package.h"
 #include "spaghetti/registry.h"
 #include "ui/link_item.h"
-#include "nodes/package.h"
+#include "source/package.h"
 
 namespace spaghetti {
 

@@ -27,7 +27,7 @@
 #include <QStyleOptionGraphicsItem>
 
 #include "colors.h"
-#include "spaghetti/socket_item.h"
+#include "socket_item.h"
 
 namespace spaghetti {
 
