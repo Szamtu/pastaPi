@@ -45,7 +45,6 @@
 #include <typeinfo>
 #include <vector>
 
-#include <filesystem.h>
 #include <spaghetti/package.h>
 #include <spaghetti/registry.h>
 #include <spaghetti/version.h>

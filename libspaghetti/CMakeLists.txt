@@ -8,15 +8,6 @@ project(libSpaghetti
 find_package(Threads REQUIRED)
 find_package(OpenCV REQUIRED)
 
-if (HAVE_CXX_FILESYSTEM)
-  set(SPAGHETTI_FILESYSTEM_IMPLEMENTATION SPAGHETTI_FS_STD_FILESYSTEM)
-elseif (HAVE_CXX_EXPERIMENTAL_FILESYSTEM)
-  set(SPAGHETTI_FILESYSTEM_IMPLEMENTATION SPAGHETTI_FS_STD_EXPERIMENTAL_FILESYSTEM)
-elseif (HAVE_BOOST_FILESYSTEM)
-  set(SPAGHETTI_FILESYSTEM_IMPLEMENTATION SPAGHETTI_FS_BOOST_FILESYSTEM)
-endif ()
-
-configure_file(source/filesystem.h.in include/filesystem.h)
 configure_file(include/spaghetti/version.h.in include/spaghetti/version.h)
 
 set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
@@ -32,7 +23,6 @@ set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
 
 set(LIBSPAGHETTI_GENERATED_SOURCES
   ${CMAKE_CURRENT_BINARY_DIR}/include/spaghetti/version.h
-  ${CMAKE_CURRENT_BINARY_DIR}/include/filesystem.h
   )
 
 set(LIBSPAGHETTI_SOURCES
@@ -46,7 +36,6 @@ set(LIBSPAGHETTI_SOURCES
   source/registry.cc
   source/shared_library.cc
   source/shared_library.h
-  source/filesystem.h.in
   )
 
 set(LIBSPAGHETTI_ALL_SOURCES
@@ -55,7 +44,6 @@ set(LIBSPAGHETTI_ALL_SOURCES
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${LIBSPAGHETTI_SOURCES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${LIBSPAGHETTI_CHARTS_SOURCES})
 source_group(TREE ${CMAKE_CURRENT_BINARY_DIR} FILES ${LIBSPAGHETTI_GENERATED_SOURCES})
 
 add_library(Spaghetti SHARED ${LIBSPAGHETTI_ALL_SOURCES})
@@ -89,7 +77,6 @@ target_include_directories(Spaghetti SYSTEM PRIVATE
 
 target_link_libraries(Spaghetti
   PUBLIC ${CMAKE_THREAD_LIBS_INIT} opencv_core
-  PRIVATE ${CMAKE_DL_LIBS} ${CXX_FILESYSTEM_LIBS}
 )
 if (CLANG)
   target_link_libraries(Spaghetti PUBLIC -stdlib=libc++)

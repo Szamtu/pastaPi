@@ -34,7 +34,6 @@
 #include <algorithm>
 #include <vector>
 
-#include "filesystem.h"
 #include "shared_library.h"
 
 #include <spaghetti/logger.h>

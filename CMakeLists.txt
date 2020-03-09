@@ -12,7 +12,6 @@ include(BuildDirectories)
 include(BuildType)
 include(CompilerType)
 include(CompilerFlags)
-include(DetectCxxFilesystem)
 include(GetRepoInfo)
 include(VendorHeaders)
 
