@@ -24,9 +24,9 @@
 #ifndef UI_LINK_ITEM_H
 #define UI_LINK_ITEM_H
 
+#include <spaghetti/element.h>
 #include <QGraphicsPathItem>
 #include <QPainter>
-#include "spaghetti/element.h"
 
 class QGraphicsDropShadowEffect;
 

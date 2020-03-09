@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "ui/package_view.h"
+#include <spaghettiui/package_view.h>
 
 #include <QDebug>
 #include <QDragEnterEvent>
@@ -40,12 +40,12 @@
 #endif
 // clang-format on
 
-#include "editor.h"
-#include "source/node.h"
+#include <spaghettiui/editor_package.h>
+#include <spaghettiui/node.h>
 #include "spaghetti/package.h"
 #include "spaghetti/registry.h"
-#include "ui/link_item.h"
-#include "source/package.h"
+#include <spaghettiui/link_item.h>
+#include <spaghettiui/package.h>
 
 namespace spaghetti {
 
@@ -105,7 +105,7 @@ Node *NodesListModel::nodeFor(QModelIndex const &a_index)
   return m_nodes[ROW];
 }
 
-PackageView::PackageView(Editor *const a_editor, Package *const a_package)
+PackageView::PackageView(EditorPackage *const a_editor, Package *const a_package)
   : QGraphicsView{ new QGraphicsScene }
   , m_editor{ a_editor }
   , m_elements{ a_editor->elementsList() }

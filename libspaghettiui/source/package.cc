@@ -22,12 +22,13 @@
 
 #include <QDebug>
 #include <QLineEdit>
+#include <QString>
 #include <QTableWidget>
 
-#include "package.h"
-#include "spaghetti/package.h"
-#include "ui/editor.h"
-#include "ui/package_view.h"
+#include <spaghetti/package.h>
+#include <spaghettiui/editor_package.h>
+#include <spaghettiui/package.h>
+#include <spaghettiui/package_view.h>
 
 namespace spaghetti::nodes {
 

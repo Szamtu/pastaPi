@@ -24,9 +24,11 @@
 #ifndef UI_PACKAGE_VIEW_H
 #define UI_PACKAGE_VIEW_H
 
+#include <spaghetti/api.h>
 #include <QAbstractListModel>
 #include <QGraphicsView>
 #include <QHash>
+#include <QString>
 #include <QTimer>
 
 class QTableWidget;
@@ -42,7 +44,7 @@ class Package;
 class Package;
 class Node;
 class LinkItem;
-class Editor;
+class EditorPackage;
 
 class NodesListModel : public QAbstractListModel {
   Q_OBJECT
@@ -63,13 +65,13 @@ class NodesListModel : public QAbstractListModel {
   QList<Node *> m_nodes{};
 };
 
-class PackageView final : public QGraphicsView {
+class SPAGHETTI_API PackageView final : public QGraphicsView {
   Q_OBJECT
 
  public:
   using Nodes = QHash<size_t, Node *>;
 
-  explicit PackageView(Editor *const a_editor, Package *const a_package);
+  explicit PackageView(EditorPackage *const a_editor, Package *const a_package);
   ~PackageView() override;
 
   void open();
@@ -89,8 +91,8 @@ class PackageView final : public QGraphicsView {
   void acceptDragLink() { m_dragLink = nullptr; }
   void cancelDragLink();
 
-  Editor const *editor() const { return m_editor; }
-  Editor *editor() { return m_editor; }
+  EditorPackage const *editor() const { return m_editor; }
+  EditorPackage *editor() { return m_editor; }
   Package const *package() const { return m_package; }
   Package *package() { return m_package; }
 
@@ -125,7 +127,7 @@ class PackageView final : public QGraphicsView {
   void updateGrid(qreal const a_scale);
 
  private:
-  Editor *const m_editor{};
+  EditorPackage *const m_editor{};
   QListView *const m_elements{};
   QTableWidget *const m_properties{};
   NodesListModel *const m_nodesModel{};

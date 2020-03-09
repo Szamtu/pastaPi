@@ -78,9 +78,6 @@ target_include_directories(Spaghetti SYSTEM PRIVATE
 target_link_libraries(Spaghetti
   PUBLIC ${CMAKE_THREAD_LIBS_INIT} opencv_core
 )
-if (CLANG)
-  target_link_libraries(Spaghetti PUBLIC -stdlib=libc++)
-endif ()
 
 install(TARGETS Spaghetti
   COMPONENT SDK

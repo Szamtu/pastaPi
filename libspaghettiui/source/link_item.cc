@@ -20,14 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "ui/link_item.h"
-
-#include <cmath>
-
+#include <spaghettiui/colors.h>
+#include <spaghettiui/link_item.h>
+#include <spaghettiui/socket_item.h>
 #include <QStyleOptionGraphicsItem>
-
-#include "colors.h"
-#include "socket_item.h"
+#include <cmath>
 
 namespace spaghetti {
 

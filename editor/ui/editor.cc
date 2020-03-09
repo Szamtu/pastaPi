@@ -48,15 +48,15 @@
 #include <spaghetti/package.h>
 #include <spaghetti/registry.h>
 #include <spaghetti/version.h>
-#include "colors.h"
+#include <spaghettiui/colors.h>
+#include <spaghettiui/link_item.h>
+#include <spaghettiui/node.h>
+#include <spaghettiui/package.h>
+#include <spaghettiui/package_view.h>
+#include <spaghettiui/socket_item.h>
 #include "editor.h"
 #include "elementstree.h"
-#include "source/node.h"
-#include "source/package.h"
 #include "ui/aboutpastapi.h"
-#include "ui/link_item.h"
-#include "ui/package_view.h"
-#include "ui/socket_item.h"
 #include "ui_editor.h"
 
 QString const PACKAGES_DIR{ "../packages" };

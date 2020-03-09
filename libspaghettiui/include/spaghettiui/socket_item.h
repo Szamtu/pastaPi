@@ -37,7 +37,7 @@ class LinkItem;
 
 constexpr int SOCKET_TYPE{ QGraphicsItem::UserType + 3 };
 
-class SocketItem final : public QGraphicsItem {
+class SPAGHETTI_API SocketItem final : public QGraphicsItem {
  public:
   enum class Type { eInput, eOutput };
 

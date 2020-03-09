@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "colors.h"
+#include <spaghettiui/colors.h>
 #include <array>
 
 // https://www.materialpalette.com/

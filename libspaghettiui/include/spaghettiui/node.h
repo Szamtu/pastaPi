@@ -30,7 +30,9 @@
 
 #include <spaghetti/api.h>
 #include <spaghetti/element.h>
-#include "ui/socket_item.h"
+#include <spaghettiui/socket_item.h>
+
+#include <QString>
 
 class QTableWidget;
 
