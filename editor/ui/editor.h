@@ -27,7 +27,6 @@
 #include <QMainWindow>
 #include <QMap>
 
-#include <spaghetti/api.h>
 #include <spaghettiui/editor_package.h>
 
 namespace Ui {
@@ -43,7 +42,7 @@ namespace spaghetti {
 class Package;
 class PackageView;
 
-class SPAGHETTI_API Editor final : public QMainWindow, public EditorPackage {
+class Editor final : public QMainWindow, public EditorPackage {
   Q_OBJECT
 
  public:
