@@ -14,6 +14,9 @@ set(UI
   ui/elementstree.cc
   ui/elementstree.h
   ui/editor_resources.qrc
+  ui/recentchangesdialog.cc
+  ui/recentchangesdialog.h
+  ui/recentchangesdialog.ui
 )
 
 set(SOURCES

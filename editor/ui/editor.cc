@@ -57,6 +57,7 @@
 #include "editor.h"
 #include "elementstree.h"
 #include "ui/aboutpastapi.h"
+#include "ui/recentchangesdialog.h"
 #include "ui_editor.h"
 
 QString const PACKAGES_DIR{ "../packages" };
@@ -444,8 +445,15 @@ void Editor::showProperties(bool a_checked)
 
 void Editor::recentChanges()
 {
-  QUrl const url{ QString("https://github.com/aljen/spaghetti/compare/%1...master").arg(version::COMMIT_HASH) };
-  QDesktopServices::openUrl(url);
+  QFile changelogFile{ ":/changelog.txt" };
+  if (changelogFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    auto const TEXT = QString(changelogFile.readAll());
+
+    RecentChangesDialog dialog{ TEXT };
+    dialog.exec();
+  } else {
+    QMessageBox::warning(this, "PastaPi", "Changelog file not found!");
+  }
 }
 
 void Editor::about()

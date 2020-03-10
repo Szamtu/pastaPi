@@ -4,5 +4,6 @@
         <file alias="escortLogo.png">icons/escortLogo.png</file>
         <file alias="unknown.png">icons/unknown.png</file>
         <file alias="package.png">icons/package.png</file>
+		<file alias="changelog.txt">../../changelog.txt</file>
     </qresource>
 </RCC>
