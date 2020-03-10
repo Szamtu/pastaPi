@@ -28,7 +28,7 @@
 
 namespace spaghetti::nodes {
 
-class SPAGHETTI_API Package : public Node {
+class SPAGHETTI_API_UI Package : public Node {
  public:
   Package();
 

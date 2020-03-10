@@ -24,7 +24,7 @@
 #ifndef UI_PACKAGE_VIEW_H
 #define UI_PACKAGE_VIEW_H
 
-#include <spaghetti/api.h>
+#include <spaghettiui/api_ui.h>
 #include <QAbstractListModel>
 #include <QGraphicsView>
 #include <QHash>
@@ -46,7 +46,7 @@ class Node;
 class LinkItem;
 class EditorPackage;
 
-class NodesListModel : public QAbstractListModel {
+class SPAGHETTI_API_UI NodesListModel : public QAbstractListModel {
   Q_OBJECT
 
  public:
@@ -65,7 +65,7 @@ class NodesListModel : public QAbstractListModel {
   QList<Node *> m_nodes{};
 };
 
-class SPAGHETTI_API PackageView final : public QGraphicsView {
+class SPAGHETTI_API_UI PackageView final : public QGraphicsView {
   Q_OBJECT
 
  public:

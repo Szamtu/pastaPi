@@ -28,8 +28,8 @@
 #include <QPainter>
 #include <QVector>
 
-#include <spaghetti/api.h>
 #include <spaghetti/element.h>
+#include <spaghettiui/api_ui.h>
 #include <spaghettiui/socket_item.h>
 
 #include <QString>
@@ -42,7 +42,7 @@ constexpr int NODE_TYPE{ QGraphicsItem::UserType + 1 };
 
 class PackageView;
 
-class SPAGHETTI_API Node : public QGraphicsItem {
+class SPAGHETTI_API_UI Node : public QGraphicsItem {
  public:
   using Sockets = QVector<SocketItem *>;
 

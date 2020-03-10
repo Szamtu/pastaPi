@@ -21,29 +21,23 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_EDITOR_PACKAGE_H
-#define SPAGHETTI_EDITOR_PACKAGE_H
+#ifndef SPAGHETTI_API_UI_H
+#define SPAGHETTI_API_UI_H
 
-#include <spaghettiui/api_ui.h>
+// clang-format off
+#if defined(_WIN64) || defined(_WIN32)
+# if defined(SPAGHETTIUI_SHARED)
+#  if defined(SPAGHETTIUI_EXPORTS)
+#   define SPAGHETTI_API_UI __declspec(dllexport)
+#  else
+#   define SPAGHETTI_API_UI __declspec(dllimport)
+#  endif
+# else
+#  define SPAGHETTI_API_UI
+# endif
+#else
+# define SPAGHETTI_API_UI __attribute__((visibility("default")))
+#endif
+// clang-format on
 
-class QString;
-class QTableWidget;
-class QListView;
-
-namespace spaghetti {
-
-class Package;
-class PackageView;
-
-class SPAGHETTI_API_UI EditorPackage {
- public:
-  virtual ~EditorPackage() {}
-  virtual void openOrCreatePackageView(Package *const a_package) = 0;
-  virtual void setPackageViewTabName(int const a_index, QString const &a_name) = 0;
-  virtual int indexForPackageView(PackageView *const a_packageView) const = 0;
-  virtual QTableWidget *propertiesTable() = 0;
-  virtual QListView *elementsList() = 0;
-};
-} // namespace spaghetti
-
-#endif // SPAGHETTI_EDITOR_PACKAGE_H
+#endif // SPAGHETTI_API_UI_H

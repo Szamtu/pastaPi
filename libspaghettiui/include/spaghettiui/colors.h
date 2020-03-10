@@ -24,6 +24,7 @@
 #ifndef UI_COLORS_H
 #define UI_COLORS_H
 
+#include <spaghettiui/api_ui.h>
 #include <QColor>
 
 enum class Color {
@@ -42,6 +43,6 @@ enum class Color {
   eCount
 };
 
-QColor get_color(Color const a_color);
+SPAGHETTI_API_UI QColor get_color(Color const a_color);
 
 #endif // UI_COLORS_H

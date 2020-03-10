@@ -8,6 +8,7 @@ project(libSpaghettiUI
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
 set(LIBSPAGHETTIUI_PUBLIC_COMMON_HEADERS
+  include/spaghettiui/api_ui.h
   include/spaghettiui/node.h
   include/spaghettiui/colors.h
   include/spaghettiui/package_view.h

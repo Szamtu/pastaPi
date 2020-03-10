@@ -24,6 +24,7 @@
 #ifndef SPAGHETTI_SOCKET_ITEM_H
 #define SPAGHETTI_SOCKET_ITEM_H
 
+#include <spaghettiui/api_ui.h>
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QVector>
@@ -37,7 +38,7 @@ class LinkItem;
 
 constexpr int SOCKET_TYPE{ QGraphicsItem::UserType + 3 };
 
-class SPAGHETTI_API SocketItem final : public QGraphicsItem {
+class SPAGHETTI_API_UI SocketItem final : public QGraphicsItem {
  public:
   enum class Type { eInput, eOutput };
 
