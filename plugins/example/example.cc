@@ -23,10 +23,15 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "spaghetti/element.h"
-#include "spaghetti/logger.h"
-#include "spaghetti/node.h"
-#include "spaghetti/registry.h"
+#include <spaghetti/element.h>
+#include <spaghetti/logger.h>
+#include <spaghetti/registry.h>
+
+#ifdef BUILD_PLUGIN_GUI
+#include <spaghettiui/node.h>
+#else
+#include <spaghetti/dummynode.h>
+#endif
 
 class Example final : public spaghetti::Element {
  public:

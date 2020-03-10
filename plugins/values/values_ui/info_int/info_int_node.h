@@ -24,7 +24,7 @@
 #ifndef NODES_UI_INFO_INT_H
 #define NODES_UI_INFO_INT_H
 
-#include "spaghetti/node.h"
+#include <spaghettiui/node.h>
 
 namespace spaghetti::nodes {
 

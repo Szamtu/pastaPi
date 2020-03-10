@@ -25,8 +25,13 @@
 
 #include <spaghetti/element.h>
 #include <spaghetti/logger.h>
-#include <spaghetti/node.h>
 #include <spaghetti/registry.h>
+
+#ifdef BUILD_PLUGIN_GUI
+#include <spaghettiui/node.h>
+#else
+#include <spaghetti/dummynode.h>
+#endif
 
 #include "arithmetic/absolute/absolute.h"
 #include "arithmetic/addition/addition.h"

@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,27 +21,23 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef UI_COLORS_H
-#define UI_COLORS_H
+#ifndef SPAGHETTI_API_UI_H
+#define SPAGHETTI_API_UI_H
 
-#include <QColor>
+// clang-format off
+#if defined(_WIN64) || defined(_WIN32)
+# if defined(SPAGHETTIUI_SHARED)
+#  if defined(SPAGHETTIUI_EXPORTS)
+#   define SPAGHETTI_API_UI __declspec(dllexport)
+#  else
+#   define SPAGHETTI_API_UI __declspec(dllimport)
+#  endif
+# else
+#  define SPAGHETTI_API_UI
+# endif
+#else
+# define SPAGHETTI_API_UI __attribute__((visibility("default")))
+#endif
+// clang-format on
 
-enum class Color {
-  eNameBackground,
-  eFontName,
-  eFontType,
-  eNodeHeader,
-  eNodeContent,
-  eSocketBorder,
-  eSocketInput,
-  eSocketOutput,
-  eSocketDrop,
-  eSocketHover,
-  eLink,
-  eSelected,
-  eCount
-};
-
-QColor get_color(Color const a_color);
-
-#endif // UI_COLORS_H
+#endif // SPAGHETTI_API_UI_H

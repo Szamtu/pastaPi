@@ -20,14 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "spaghetti/editor.h"
-#include "ui_editor.h"
-
-#include "elementstree.h"
-#include "spaghetti/socket_item.h"
-#include "ui/colors.h"
-#include "ui/link_item.h"
-
 #include <QAction>
 #include <QDebug>
 #include <QDesktopServices>
@@ -53,13 +45,20 @@
 #include <typeinfo>
 #include <vector>
 
-#include "filesystem.h"
-#include "spaghetti/node.h"
-#include "spaghetti/package.h"
-#include "spaghetti/registry.h"
-#include "spaghetti/version.h"
+#include <spaghetti/package.h>
+#include <spaghetti/registry.h>
+#include <spaghetti/version.h>
+#include <spaghettiui/colors.h>
+#include <spaghettiui/link_item.h>
+#include <spaghettiui/node.h>
+#include <spaghettiui/package.h>
+#include <spaghettiui/package_view.h>
+#include <spaghettiui/socket_item.h>
+#include "editor.h"
+#include "elementstree.h"
 #include "ui/aboutpastapi.h"
-#include "ui/package_view.h"
+#include "ui/recentchangesdialog.h"
+#include "ui_editor.h"
 
 QString const PACKAGES_DIR{ "../packages" };
 
@@ -89,7 +88,6 @@ Editor::Editor(QWidget *const a_parent)
   connect(m_ui->actionShowLibrary, &QAction::triggered, this, &Editor::showLibrary);
   connect(m_ui->actionShowProperties, &QAction::triggered, this, &Editor::showProperties);
 
-  connect(m_ui->actionBuildCommit, &QAction::triggered, this, &Editor::buildCommit);
   connect(m_ui->actionRecentChanges, &QAction::triggered, this, &Editor::recentChanges);
   connect(m_ui->actionAbout, &QAction::triggered, this, &Editor::about);
   connect(m_ui->actionAboutQt, &QAction::triggered, this, &Editor::aboutQt);
@@ -131,6 +129,9 @@ Editor::Editor(QWidget *const a_parent)
 
   QDir packagesDir{ PACKAGES_DIR };
   if (!packagesDir.exists()) packagesDir.mkpath(".");
+
+  auto &elementRegister = Registry::get();
+  elementRegister.registerElement<Package, nodes::Package>("Package", ":package.png");
 
   populateLibrary();
 }
@@ -442,16 +443,17 @@ void Editor::showProperties(bool a_checked)
   m_ui->properties->setVisible(a_checked);
 }
 
-void Editor::buildCommit()
-{
-  QUrl const url{ QString("https://github.com/aljen/spaghetti/tree/%1").arg(version::COMMIT_HASH) };
-  QDesktopServices::openUrl(url);
-}
-
 void Editor::recentChanges()
 {
-  QUrl const url{ QString("https://github.com/aljen/spaghetti/compare/%1...master").arg(version::COMMIT_HASH) };
-  QDesktopServices::openUrl(url);
+  QFile changelogFile{ ":/changelog.txt" };
+  if (changelogFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    auto const TEXT = QString(changelogFile.readAll());
+
+    RecentChangesDialog dialog{ TEXT };
+    dialog.exec();
+  } else {
+    QMessageBox::warning(this, "PastaPi", "Changelog file not found!");
+  }
 }
 
 void Editor::about()

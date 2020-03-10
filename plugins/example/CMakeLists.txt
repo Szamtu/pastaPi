@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(ExamplePlugin VERSION 17.09.06 LANGUAGES C CXX)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-
 set(EXAMPLE_SOURCES
   example.cc
   )
@@ -28,7 +26,13 @@ target_compile_options(Example
 set_target_properties(Example PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
 set_target_properties(Example PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
 
-target_link_libraries(Example Spaghetti)
+if (BUILD_PLUGINS_GUI)
+  add_compile_definitions(BUILD_PLUGIN_GUI)
+  target_link_libraries(Example Spaghetti SpaghettiUI)
+else()
+  target_link_libraries(Example Spaghetti)
+endif ()
+
 
 install(TARGETS Example
   COMPONENT ExamplePlugin

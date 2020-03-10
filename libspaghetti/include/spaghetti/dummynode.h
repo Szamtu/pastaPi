@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,25 +21,14 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef NODES_VALUES_CONST_INT_H
-#define NODES_VALUES_CONST_INT_H
+#ifndef SPAGHETTI_NODE_H
+#define SPAGHETTI_NODE_H
 
-#include <spaghettiui/node.h>
+#include <spaghetti/api.h>
 
-namespace spaghetti::nodes {
-
-class ConstInt : public Node {
- public:
-  ConstInt();
-
- private:
-  void refreshCentralWidget() override;
-  void showProperties() override;
-
- private:
-  QGraphicsSimpleTextItem *m_info{};
+namespace spaghetti {
+class SPAGHETTI_API Node {
 };
+} // namespace spaghetti
 
-} // namespace spaghetti::nodes
-
-#endif // NODES_VALUES_CONST_INT_H
+#endif // SPAGHETTI_NODE_H

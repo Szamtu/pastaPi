@@ -4,7 +4,26 @@ project(PastaPiEditor VERSION ${PastaPi_VERSION} LANGUAGES C CXX)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
-add_executable(${PROJECT_NAME} main.cc)
+set(UI
+  ui/aboutpastapi.cc
+  ui/aboutpastapi.h
+  ui/aboutpastapi.ui
+  ui/editor.cc
+  ui/editor.h
+  ui/editor.ui
+  ui/elementstree.cc
+  ui/elementstree.h
+  ui/editor_resources.qrc
+  ui/recentchangesdialog.cc
+  ui/recentchangesdialog.h
+  ui/recentchangesdialog.ui
+)
+
+set(SOURCES
+  source/main.cc
+)
+
+add_executable(${PROJECT_NAME} ${UI} ${SOURCES})
 target_compile_definitions(${PROJECT_NAME}
   PRIVATE ${SPAGHETTI_DEFINITIONS}
   PRIVATE $<$<CONFIG:Debug>:${SPAGHETTI_DEFINITIONS_DEBUG}>
@@ -19,7 +38,8 @@ target_compile_options(${PROJECT_NAME}
   PRIVATE $<$<CONFIG:Debug>:${SPAGHETTI_WARNINGS}>
   PRIVATE $<$<CONFIG:Release>:${SPAGHETTI_FLAGS_RELEASE}>
   )
-target_link_libraries(${PROJECT_NAME} Spaghetti)
+
+target_link_libraries(${PROJECT_NAME} Spaghetti SpaghettiUI Qt5::Widgets)
 
 install(TARGETS ${PROJECT_NAME}
   COMPONENT Editor

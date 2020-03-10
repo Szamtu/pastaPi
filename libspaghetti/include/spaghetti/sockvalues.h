@@ -25,8 +25,6 @@
 #define SPAGHETTI_SOCKVALUES_H
 
 #include <spaghetti/api.h>
-#include <QColor>
-#include <QString>
 #include <opencv2/core/mat.hpp>
 #include <variant>
 
@@ -57,24 +55,32 @@ struct IOSocketFlags {
   };
 };
 
+struct ElementColor {
+  int r{};
+  int g{};
+  int b{};
+  int a{};
+};
+
 struct ValueTypeDescription {
   ValueTypeDescription(ValueType const a_type, IOSocketFlags::Flags const a_holdType, std::string const a_typeString,
-                       QString const a_typeQstring, std::pair<QColor, QColor> const a_colors, Value const a_value);
+                       std::string const a_typeQstring, std::pair<ElementColor, ElementColor> const a_colors,
+                       Value const a_value);
   ValueType const type{};
   IOSocketFlags::Flags const holdType{};
   std::string const typeString{};
-  QString const typeQstring{};
-  std::pair<QColor, QColor> const colors{};
+  std::string const typeQstring{};
+  std::pair<ElementColor, ElementColor> const colors{};
   Value const value{};
 };
 
 class SPAGHETTI_API ValueDescription {
  public:
-  static QString typeQstring(ValueType const a_type);
+  static std::string typeStdString(ValueType const a_type);
   static const char *typeCString(ValueType const a_type);
   static bool isTypeAlowed(ValueType const a_type, IOSocketFlags::Flags const a_flags);
   static ValueType firstAvailableTypeForFlags(IOSocketFlags::Flags const a_flags);
-  static std::pair<QColor, QColor> typeColors(ValueType const a_type);
+  static std::pair<ElementColor, ElementColor> typeColors(ValueType const a_type);
   static ValueType stringViewToType(std::string_view const a_type);
   static std::vector<ValueType> heldedValues(IOSocketFlags::Flags const a_flags);
   static Value defaultValue(ValueType const a_valueType);

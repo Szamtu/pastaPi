@@ -25,47 +25,53 @@
 
 #include <spaghetti/element.h>
 #include <spaghetti/logger.h>
-#include <spaghetti/node.h>
 #include <spaghetti/registry.h>
 
-#include "bool/const_bool/const_bool.h"
+#ifdef BUILD_PLUGIN_GUI
+#include <spaghettiui/node.h>
+
 #include "bool/const_bool/const_bool_node.h"
+#include "double/const_double/const_double_node.h"
+#include "double/random_double/random_double_node.h"
+#include "integer/const_int/const_int_node.h"
+#include "integer/random_int/random_int_node.h"
+#include "string/const_string/const_string_node.h"
+#include "values_ui/info_double/info_double_node.h"
+#include "values_ui/info_int/info_int_node.h"
+#include "values_ui/info_string/info_string_node.h"
+#include "values_ui/push_button/push_button_node.h"
+#include "values_ui/seven_segment_display/seven_segment_display_node.h"
+#include "values_ui/toggle_button/toggle_button_node.h"
+#else
+#include <spaghetti/dummynode.h>
+#endif
+
+#include "bool/const_bool/const_bool.h"
 #include "bool/random_bool/random_bool.h"
 
 #include "double/const_double/const_double.h"
-#include "double/const_double/const_double_node.h"
 #include "double/max_double/max_double.h"
 #include "double/min_double/min_double.h"
 #include "double/random_double/random_double.h"
-#include "double/random_double/random_double_node.h"
 
 #include "integer/const_int/const_int.h"
-#include "integer/const_int/const_int_node.h"
 #include "integer/max_int/max_int.h"
 #include "integer/min_int/min_int.h"
 #include "integer/random_int/random_int.h"
-#include "integer/random_int/random_int_node.h"
 
 #include "string/concat_string/concat_string.h"
 #include "string/const_string/const_string.h"
-#include "string/const_string/const_string_node.h"
 
 #include "convert/convert_value/convert_value.h"
 #include "convert/degree_to_radian/degree_to_radian.h"
 #include "convert/radian_to_degree/radian_to_degree.h"
 
 #include "values_ui/info_double/info_double.h"
-#include "values_ui/info_double/info_double_node.h"
 #include "values_ui/info_int/info_int.h"
-#include "values_ui/info_int/info_int_node.h"
 #include "values_ui/info_string/info_string.h"
-#include "values_ui/info_string/info_string_node.h"
 #include "values_ui/push_button/push_button.h"
-#include "values_ui/push_button/push_button_node.h"
 #include "values_ui/seven_segment_display/seven_segment_display.h"
-#include "values_ui/seven_segment_display/seven_segment_display_node.h"
 #include "values_ui/toggle_button/toggle_button.h"
-#include "values_ui/toggle_button/toggle_button_node.h"
 
 using namespace spaghetti;
 
@@ -73,25 +79,16 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 {
   spaghetti::log::init_from_plugin();
 
+#ifdef BUILD_PLUGIN_GUI
   a_registry.registerElement<elements::ConstBool, nodes::ConstBool>("Const bool", ":/unknown.png");
-  a_registry.registerElement<elements::RandomBool>("Random bool", ":/unknown.png");
 
   a_registry.registerElement<elements::ConstDouble, nodes::ConstDouble>("Const float", ":/unknown.png");
   a_registry.registerElement<elements::RandomDouble, nodes::RandomDouble>("Random float", ":/unknown.png");
-  a_registry.registerElement<elements::MinDouble>("Minimum float", ":/unknown.png");
-  a_registry.registerElement<elements::MaxDouble>("Maximum float", ":/unknown.png");
 
   a_registry.registerElement<elements::ConstInt, nodes::ConstInt>("Const int", ":/unknown.png");
-  a_registry.registerElement<elements::MinInt>("Minimum int", ":/unknown.png");
-  a_registry.registerElement<elements::MaxInt>("Maximum int", ":/unknown.png");
   a_registry.registerElement<elements::RandomInt, nodes::RandomInt>("Random int", ":/unknown.png");
 
   a_registry.registerElement<elements::ConstString, nodes::ConstString>("Const string", ":/unknown.png");
-  a_registry.registerElement<elements::ConCat>("Concat string", ":/unknown.png");
-
-  a_registry.registerElement<elements::ConvertValue>("Convert value", ":/unknown.png");
-  a_registry.registerElement<elements::Degree2Radian>("Rad2Deg", ":/unknown.png");
-  a_registry.registerElement<elements::Radian2Degree>("Deg2Rad", ":/unknown.png");
 
   a_registry.registerElement<elements::InfoDouble, nodes::InfoDouble>("Info float", ":/unknown.png");
   a_registry.registerElement<elements::InfoInt, nodes::InfoInt>("Info int", ":/unknown.png");
@@ -100,4 +97,36 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::SevenSegmentDisplay, nodes::SevenSegmentDisplay>("Seven segment display",
                                                                                         ":/unknown.png");
   a_registry.registerElement<elements::ToggleButton, nodes::ToggleButton>("Toggle button", ":/unknown.png");
+#else
+  a_registry.registerElement<elements::ConstBool>("Const bool", ":/unknown.png");
+
+  a_registry.registerElement<elements::ConstDouble>("Const float", ":/unknown.png");
+  a_registry.registerElement<elements::RandomDouble>("Random float", ":/unknown.png");
+
+  a_registry.registerElement<elements::ConstInt>("Const int", ":/unknown.png");
+  a_registry.registerElement<elements::RandomInt>("Random int", ":/unknown.png");
+
+  a_registry.registerElement<elements::ConstString>("Const string", ":/unknown.png");
+
+  a_registry.registerElement<elements::InfoDouble>("Info float", ":/unknown.png");
+  a_registry.registerElement<elements::InfoInt>("Info int", ":/unknown.png");
+  a_registry.registerElement<elements::InfoString>("Info string", ":/unknown.png");
+  a_registry.registerElement<elements::PushButton>("Push button", ":/unknown.png");
+  a_registry.registerElement<elements::SevenSegmentDisplay>("Seven segment display", ":/unknown.png");
+  a_registry.registerElement<elements::ToggleButton>("Toggle button", ":/unknown.png");
+#endif
+
+  a_registry.registerElement<elements::RandomBool>("Random bool", ":/unknown.png");
+
+  a_registry.registerElement<elements::MinDouble>("Minimum float", ":/unknown.png");
+  a_registry.registerElement<elements::MaxDouble>("Maximum float", ":/unknown.png");
+
+  a_registry.registerElement<elements::MinInt>("Minimum int", ":/unknown.png");
+  a_registry.registerElement<elements::MaxInt>("Maximum int", ":/unknown.png");
+
+  a_registry.registerElement<elements::ConCat>("Concat string", ":/unknown.png");
+
+  a_registry.registerElement<elements::ConvertValue>("Convert value", ":/unknown.png");
+  a_registry.registerElement<elements::Degree2Radian>("Rad2Deg", ":/unknown.png");
+  a_registry.registerElement<elements::Radian2Degree>("Deg2Rad", ":/unknown.png");
 }

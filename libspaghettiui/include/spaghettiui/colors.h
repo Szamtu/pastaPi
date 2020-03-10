@@ -21,35 +21,28 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef NODES_PACKAGE_H
-#define NODES_PACKAGE_H
+#ifndef UI_COLORS_H
+#define UI_COLORS_H
 
-#include "spaghetti/node.h"
+#include <spaghettiui/api_ui.h>
+#include <QColor>
 
-namespace spaghetti::nodes {
-
-class Package : public Node {
- public:
-  Package();
-
-  void setInputsNode(Node *const a_node) { m_inputsNode = a_node; }
-  Node *inputsNode() { return m_inputsNode; }
-  Node const *inputsNode() const { return m_inputsNode; }
-
-  void setOutputsNode(Node *const a_node) { m_outputsNode = a_node; }
-  Node *outputsNode() { return m_outputsNode; }
-  Node const *outputsNode() const { return m_outputsNode; }
-
- private:
-  void showProperties() override;
-  void handleEvent(Event const &a_event) override;
-  bool open() override;
-
- private:
-  Node *m_inputsNode{};
-  Node *m_outputsNode{};
+enum class Color {
+  eNameBackground,
+  eFontName,
+  eFontType,
+  eNodeHeader,
+  eNodeContent,
+  eSocketBorder,
+  eSocketInput,
+  eSocketOutput,
+  eSocketDrop,
+  eSocketHover,
+  eLink,
+  eSelected,
+  eCount
 };
 
-} // namespace spaghetti::nodes
+SPAGHETTI_API_UI QColor get_color(Color const a_color);
 
-#endif // NODES_PACKAGE_H
+#endif // UI_COLORS_H

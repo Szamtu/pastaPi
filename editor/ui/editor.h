@@ -27,7 +27,7 @@
 #include <QMainWindow>
 #include <QMap>
 
-#include <spaghetti/api.h>
+#include <spaghettiui/editor_package.h>
 
 namespace Ui {
 class Editor;
@@ -42,7 +42,7 @@ namespace spaghetti {
 class Package;
 class PackageView;
 
-class SPAGHETTI_API Editor final : public QMainWindow {
+class Editor final : public QMainWindow, public EditorPackage {
   Q_OBJECT
 
  public:
@@ -59,14 +59,14 @@ class SPAGHETTI_API Editor final : public QMainWindow {
   void aboutToQuit();
 
   void openPackageFile(QString const &a_filename);
-  void openOrCreatePackageView(Package *const a_package);
+  void openOrCreatePackageView(Package *const a_package) override;
   PackageView *packageView() const { return packageViewForIndex(m_packageViewIndex); }
   int packageViewIndex() const { return m_packageViewIndex; }
-  int indexForPackageView(PackageView *const a_packageView) const;
-  void setPackageViewTabName(int const a_index, QString const &a_name);
+  int indexForPackageView(PackageView *const a_packageView) const override;
+  void setPackageViewTabName(int const a_index, QString const &a_name) override;
 
-  QListView *elementsList();
-  QTableWidget *propertiesTable();
+  QListView *elementsList() override;
+  QTableWidget *propertiesTable() override;
 
  protected:
   void showEvent(QShowEvent *a_event) override;
@@ -89,7 +89,6 @@ class SPAGHETTI_API Editor final : public QMainWindow {
   void showLibrary(bool a_checked);
   void showProperties(bool a_checked);
 
-  void buildCommit();
   void recentChanges();
   void about();
   void aboutQt();

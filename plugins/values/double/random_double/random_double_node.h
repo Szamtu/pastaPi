@@ -24,7 +24,7 @@
 #ifndef NODES_VALUES_RANDOM_DOUBLE_H
 #define NODES_VALUES_RANDOM_FLOAT_H
 
-#include "spaghetti/node.h"
+#include <spaghettiui/node.h>
 
 namespace spaghetti::nodes {
 

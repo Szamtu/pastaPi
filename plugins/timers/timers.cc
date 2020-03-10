@@ -25,11 +25,17 @@
 
 #include <spaghetti/element.h>
 #include <spaghetti/logger.h>
-#include <spaghetti/node.h>
 #include <spaghetti/registry.h>
 
-#include "clock/clock.h"
+#ifdef BUILD_PLUGIN_GUI
+#include <spaghettiui/node.h>
+
 #include "clock/clock_node.h"
+#else
+#include <spaghetti/dummynode.h>
+#endif
+
+#include "clock/clock.h"
 #include "delta_time/delta_time.h"
 #include "t_off/t_off.h"
 #include "t_on/t_on.h"
@@ -41,7 +47,12 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 {
   spaghetti::log::init_from_plugin();
 
+#ifdef BUILD_PLUGIN_GUI
   a_registry.registerElement<elements::Clock, nodes::Clock>("Clock", ":/unknown.png");
+#else
+  a_registry.registerElement<elements::Clock>("Clock", ":/unknown.png");
+#endif
+
   a_registry.registerElement<elements::DeltaTime>("Delta time", ":/unknown.png");
   a_registry.registerElement<elements::TimerOff>("Timer OFF", ":/unknown.png");
   a_registry.registerElement<elements::TimerOn>("Timer ON", ":/unknown.png");

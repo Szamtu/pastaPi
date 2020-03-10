@@ -24,9 +24,10 @@
 #ifndef UI_LINK_ITEM_H
 #define UI_LINK_ITEM_H
 
+#include <spaghetti/element.h>
+#include <spaghettiui/api_ui.h>
 #include <QGraphicsPathItem>
 #include <QPainter>
-#include "spaghetti/element.h"
 
 class QGraphicsDropShadowEffect;
 
@@ -36,7 +37,7 @@ constexpr int LINK_TYPE{ QGraphicsItem::UserType + 2 };
 
 class SocketItem;
 
-class LinkItem final : public QGraphicsPathItem {
+class SPAGHETTI_API_UI LinkItem final : public QGraphicsPathItem {
  public:
   LinkItem(QGraphicsItem *a_parent = nullptr);
 

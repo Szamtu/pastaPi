@@ -24,10 +24,11 @@
 #ifndef SPAGHETTI_SHARED_LIBRARY_H
 #define SPAGHETTI_SHARED_LIBRARY_H
 
+#include <filesystem>
 #include <system_error>
-#include "filesystem.h"
 
 namespace spaghetti {
+namespace fs = std::filesystem;
 
 class SharedLibrary final {
  public:

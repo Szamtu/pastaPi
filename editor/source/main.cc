@@ -25,8 +25,8 @@
 #include <QStyleFactory>
 #include <iostream>
 
-#include <spaghetti/editor.h>
 #include <spaghetti/registry.h>
+#include "ui/editor.h"
 
 int main(int argc, char **argv)
 {
@@ -60,7 +60,6 @@ int main(int argc, char **argv)
   spaghetti::Editor editor{};
   QObject::connect(&app, &QApplication::aboutToQuit, &editor, &spaghetti::Editor::aboutToQuit);
   editor.show();
-  // editor.showMaximized();
 
   return app.exec();
 }

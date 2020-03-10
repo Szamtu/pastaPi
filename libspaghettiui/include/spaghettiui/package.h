@@ -21,29 +21,35 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef SPAGHETTI_FILESYSTEM_H
-#define SPAGHETTI_FILESYSTEM_H
+#ifndef NODES_PACKAGE_H
+#define NODES_PACKAGE_H
 
-#define SPAGHETTI_FS_STD_FILESYSTEM               1
-#define SPAGHETTI_FS_STD_EXPERIMENTAL_FILESYSTEM  2
-#define SPAGHETTI_FS_BOOST_FILESYSTEM             3
-#define SPAGHETTI_FS_IMPLEMENTATION               @SPAGHETTI_FILESYSTEM_IMPLEMENTATION@
+#include <spaghettiui/node.h>
 
-#if SPAGHETTI_FS_IMPLEMENTATION == SPAGHETTI_FS_STD_FILESYSTEM
-#include <filesystem>
-namespace spaghetti {
-namespace fs = std::filesystem;
-}
-#elif SPAGHETTI_FS_IMPLEMENTATION == SPAGHETTI_FS_STD_EXPERIMENTAL_FILESYSTEM
-#include <experimental/filesystem>
-namespace spaghetti {
-namespace fs = std::experimental::filesystem;
-}
-#elif SPAGHETTI_FS_IMPLEMENTATION == SPAGHETTI_FS_BOOST_FILESYSTEM
-#include <boost/filesystem.hpp>
-namespace spaghetti {
-namespace fs = boost::filesystem;
-}
-#endif
+namespace spaghetti::nodes {
 
-#endif // SPAGHETTI_FILESYSTEM_H
+class SPAGHETTI_API_UI Package : public Node {
+ public:
+  Package();
+
+  void setInputsNode(Node *const a_node) { m_inputsNode = a_node; }
+  Node *inputsNode() { return m_inputsNode; }
+  Node const *inputsNode() const { return m_inputsNode; }
+
+  void setOutputsNode(Node *const a_node) { m_outputsNode = a_node; }
+  Node *outputsNode() { return m_outputsNode; }
+  Node const *outputsNode() const { return m_outputsNode; }
+
+ private:
+  void showProperties() override;
+  void handleEvent(Event const &a_event) override;
+  bool open() override;
+
+ private:
+  Node *m_inputsNode{};
+  Node *m_outputsNode{};
+};
+
+} // namespace spaghetti::nodes
+
+#endif // NODES_PACKAGE_H

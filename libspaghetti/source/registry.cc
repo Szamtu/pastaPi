@@ -34,18 +34,11 @@
 #include <algorithm>
 #include <vector>
 
-#include "filesystem.h"
 #include "shared_library.h"
 
-#include "nodes/all.h"
 #include <spaghetti/logger.h>
 #include <spaghetti/version.h>
 #include <spaghetti/package.h>
-
-inline void init_resources()
-{
-  Q_INIT_RESOURCE(icons);
-}
 
 static std::string get_application_path()
 {
@@ -111,7 +104,7 @@ Registry::Registry()
 #else
   fs::path const HOME_PATH{ getenv("HOME") };
 
-  fs::path const LIB_PATH{ fs::canonical(fs::path{ APP_PATH.string() + "/../lib" }) };
+  fs::path const LIB_PATH{ fs::canonical(fs::path{ APP_PATH.string() + "/../plugins" }) };
   fs::path const PACKAGES_PATH{ fs::canonical(fs::path{ APP_PATH.string() + "/../packages" }) };
   fs::path const SYSTEM_PLUGINS_PATH{ LIB_PATH };
   fs::path const SYSTEM_PACKAGES_PATH{ PACKAGES_PATH };
@@ -130,12 +123,7 @@ Registry::Registry()
   m_pimpl->user_packages_path = USER_PACKAGES_PATH;
 }
 
-void Registry::registerInternalElements()
-{
-  init_resources();
-
-  registerElement<Package, nodes::Package>("Package", ":package.png");
-}
+void Registry::registerInternalElements() {}
 
 void Registry::loadPlugins()
 {

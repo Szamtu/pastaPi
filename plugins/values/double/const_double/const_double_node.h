@@ -24,7 +24,7 @@
 #ifndef NODES_VALUES_CONST_DOUBLE_H
 #define NODES_VALUES_CONST_DOUBLE_H
 
-#include "spaghetti/node.h"
+#include <spaghettiui/node.h>
 
 namespace spaghetti::nodes {
 
