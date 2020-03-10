@@ -25,15 +25,21 @@
 
 #include <spaghetti/element.h>
 #include <spaghetti/logger.h>
-#include <spaghetti/node.h>
 #include <spaghetti/registry.h>
+
+#ifdef BUILD_PLUGIN_GUI
+#include <spaghettiui/node.h>
+
+#include "ui/video_display/video_display_node.h"
+#else
+#include <spaghetti/dummynode.h>
+#endif
 
 #include "videoio/video_capture/video_capture.h"
 #include "videoio/video_writer/video_writer.h"
 
 #include "ui/draw_contours/draw_contours.h"
 #include "ui/video_display/video_display.h"
-#include "ui/video_display/video_display_node.h"
 
 #include "video/mog2/mog2.h"
 
@@ -54,7 +60,11 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::VideoCapture>("Video capture", ":/unknown.png");
   a_registry.registerElement<elements::VideoWriter>("Video writer", ":/unknown.png");
 
+#ifdef BUILD_PLUGIN_GUI
   a_registry.registerElement<elements::VideoDisplay, nodes::VideoDisplay>("Video display", ":/unknown.png");
+#else
+  a_registry.registerElement<elements::VideoDisplay>("Video display", ":/unknown.png");
+#endif
   a_registry.registerElement<elements::DrawContours>("Draw contours", ":/unknown.png");
 
   a_registry.registerElement<elements::Mog2>("MOG2", ":/unknown.png");

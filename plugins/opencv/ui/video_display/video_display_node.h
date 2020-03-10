@@ -24,7 +24,7 @@
 #ifndef NODES_OPENCV_VIDEO_DISPLAY_H
 #define NODES_OPENCV_VIDEO_DISPLAY_H
 
-#include "spaghetti/node.h"
+#include <spaghettiui/node.h>
 
 namespace spaghetti::nodes {
 
