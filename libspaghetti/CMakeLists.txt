@@ -19,6 +19,7 @@ set(LIBSPAGHETTI_PUBLIC_COMMON_HEADERS
   include/spaghetti/registry.h
   include/spaghetti/strings.h
   include/spaghetti/utils.h
+  include/spaghetti/dummynode.h
   )
 
 set(LIBSPAGHETTI_GENERATED_SOURCES

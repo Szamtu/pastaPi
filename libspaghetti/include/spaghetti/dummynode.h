@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,36 +20,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef SPAGHETTI_NODE_H
+#define SPAGHETTI_NODE_H
 
-#include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/registry.h>
+#include <spaghetti/api.h>
 
-#ifdef BUILD_PLUGIN_GUI
-#include <spaghettiui/node.h>
-#else
-#include <spaghetti/dummynode.h>
-#endif
-
-class Example final : public spaghetti::Element {
- public:
-  static constexpr char const *const TYPE{ "plugins/example" };
-  static constexpr spaghetti::string::hash_t const HASH{ spaghetti::string::hash(TYPE) };
-
-  Example()
-    : spaghetti::Element{}
-  {
-  }
-
-  char const *type() const noexcept override { return TYPE; }
-  spaghetti::string::hash_t hash() const noexcept override { return HASH; }
+namespace spaghetti {
+class SPAGHETTI_API Node {
 };
+} // namespace spaghetti
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
-
-  a_registry.registerElement<Example>("Example (Bool)", ":/unknown.png");
-}
+#endif // SPAGHETTI_NODE_H
