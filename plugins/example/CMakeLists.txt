@@ -4,10 +4,6 @@ project(ExamplePlugin VERSION 17.09.06 LANGUAGES C CXX)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-if (BUILD_PLUGINS_GUI)
-    add_compile_definitions(BUILD_PLUGIN_GUI)
-endif ()
-
 set(EXAMPLE_SOURCES
   example.cc
   )
@@ -33,6 +29,7 @@ set_target_properties(Example PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINAR
 set_target_properties(Example PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
 
 if (BUILD_PLUGINS_GUI)
+  add_compile_definitions(BUILD_PLUGIN_GUI)
   target_link_libraries(Example Spaghetti SpaghettiUI)
 else()
   target_link_libraries(Example Spaghetti)
