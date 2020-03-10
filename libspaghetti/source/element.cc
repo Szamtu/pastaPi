@@ -25,7 +25,7 @@
 #include <cassert>
 #include <iostream>
 
-#include <opencv4/opencv2/core/mat.hpp>
+#include <opencv2/core/mat.hpp>
 #include "spaghetti/package.h"
 
 namespace spaghetti {
