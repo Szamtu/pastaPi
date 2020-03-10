@@ -7,8 +7,6 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 set(SOURCES
     clock/clock.cc
     clock/clock.h
-    clock/clock_node.cc
-    clock/clock_node.h
 
     delta_time/delta_time.cc
     delta_time/delta_time.h
@@ -25,8 +23,19 @@ set(SOURCES
     timers.cc
 )
 
-add_library(${PROJECT_NAME} MODULE ${SOURCES})
-target_include_directories(Example PRIVATE ${PROJECT_ROOT})
+set(GUI_SOURCES
+    clock/clock_node.cc
+    clock/clock_node.h
+    )
+
+if (BUILD_PLUGINS_GUI)
+    set(TIMERS_SOURCES ${SOURCES} ${GUI_SOURCES})
+else()
+    set(TIMERS_SOURCES ${SOURCES})
+endif ()
+
+add_library(${PROJECT_NAME} MODULE ${TIMERS_SOURCES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_ROOT})
 target_compile_definitions(${PROJECT_NAME}
   PUBLIC SPAGHETTI_SHARED
   PRIVATE SPAGHETTI_EXPORTS ${SPAGHETTI_DEFINITIONS}
@@ -42,10 +51,15 @@ target_compile_options(${PROJECT_NAME}
   PRIVATE $<$<CONFIG:Debug>:${SPAGHETTI_WARNINGS}>
   PRIVATE $<$<CONFIG:Release>:${SPAGHETTI_FLAGS_RELEASE}>
   )
-set_target_properties(Example PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
-set_target_properties(Example PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
+set_target_properties(${PROJECT_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
 
-target_link_libraries(${PROJECT_NAME} Spaghetti)
+if (BUILD_PLUGINS_GUI)
+  add_compile_definitions(BUILD_PLUGIN_GUI)
+  target_link_libraries(${PROJECT_NAME} Spaghetti SpaghettiUI)
+else()
+  target_link_libraries(${PROJECT_NAME} Spaghetti)
+endif ()
 
 install(TARGETS ${PROJECT_NAME}
   COMPONENT ${PROJECT_NAME}Plugin

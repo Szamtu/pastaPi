@@ -24,7 +24,7 @@
 #ifndef NODES_TIMERS_CLOCK_H
 #define NODES_TIMERS_CLOCK_H
 
-#include "spaghetti/node.h"
+#include <spaghettiui/node.h>
 
 namespace spaghetti::nodes {
 
