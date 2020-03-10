@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(ExamplePlugin VERSION 17.09.06 LANGUAGES C CXX)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-
 set(EXAMPLE_SOURCES
   example.cc
   )
