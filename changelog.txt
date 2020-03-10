@@ -1,3 +1,17 @@
+Version 0.10.0
+Separated libSpaghetti into: Editor, libSpaghetti and libSpaghettiUI. 
+Now it is possible to build libSpaghetti and plugins without GUI.
+
+Changes:
+* Removed all gui stuff from libSpaghetti.
+* Added libSpaghettiUI that contains UI stuff like node, links, package_view, etc.
+* Moved editor specific stuff from libSpaghetti to editor.
+* Added non-ui build definitions for plugins.
+* Removed filesystem detection, now it uses only std::filesystem.
+* Changed system plugins path from lib to plugins
+* Removed build comit from editor.
+* Added changelog to editor. 
+
 Version 0.9.10
 This is the first version of PastaPI - Graphical multi-purpose editor / simulator
 We start here at version 0.9.10.

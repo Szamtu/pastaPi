@@ -16,45 +16,21 @@
 **[escort-technology.com](https://escort-technology.com/)**
 
 
-**Last changes:**
+**Last changes:**  
 
-Version 0.9.10
-This is the first version of PastaPI - Graphical multi-purpose editor / simulator
-We start here at version 0.9.10.
+**Version 0.10.0**
+Separated libSpaghetti into: Editor, libSpaghetti and libSpaghettiUI. 
+Now it is possible to build libSpaghetti and plugins without GUI.
 
-Changes (from oryginal Spaghetti):  
-**New things:**  
-*   Added support of new data types:
-  *  String
-  *  Matrix
-  *  Point
-  *  Shape
-  *  Shape vector
-*  Added new OpenCV elements:
-  *  VideoIO - capture
-  *  VideoIO - writer
-  *  Video - MOG2
-  *  UI - video display
-  *  UI - draw contours
-  *  Improc - color to gray
-  *  Improc - crop image
-  *  Improc - find contours
-  *  Improc - median blur
-  *  Improc - resize image
-  *  Imcodecs - image write
-*  Added new generic elements 
-  *  convert (from bool/int/float/string to bool/int/float/string)
-  *  concat strings
-*  Moved elements from libSpaghetti to plugins
-*  Added subcategories to elements panel
-*  Added searchbar to elements panel  
-**BugFixes:**  
-*  Crash on delete input/output element of package - now it's non deletable
-*  Crash on decrease number of inputs/outputs when they are connected - now they are automatically disconnected
-*  Bad bool input color when touched with ON connection, now it's displays right state
-*  Bad bool input color when disconnected ON connection,  now it's displays right state  
-**Removed:**  
-*  Some elements that we think that will be never used like: Pneumatic - tank
+**Changes:**  
+*  Removed all gui stuff from libSpaghetti.
+*  Added libSpaghettiUI that contains UI stuff like node, links, package_view, etc.
+*  Moved editor specific stuff from libSpaghetti to editor.
+*  Added non-ui build definitions for plugins.
+*  Removed filesystem detection, now it uses only std::filesystem.
+*  Changed system plugins path from lib to plugins
+*  Removed build comit from editor.
+*  Added changelog to editor. 
 
 **Forked from:**  
 **[Spaghetti](https://github.com/aljen/spaghetti)** - by Aljen
