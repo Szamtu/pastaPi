@@ -18,7 +18,7 @@
 
 **Last changes:**  
 
-**Version 0.10.0**
+**Version 0.10.0**  
 Separated libSpaghetti into: Editor, libSpaghetti and libSpaghettiUI. 
 Now it is possible to build libSpaghetti and plugins without GUI.
 
