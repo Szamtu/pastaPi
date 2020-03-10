@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="pastapi_logo.png">icons/pastapi_logo.png</file>
+        <file alias="escortLogo.png">icons/escortLogo.png</file>
+        <file alias="unknown.png">icons/unknown.png</file>
+        <file alias="package.png">icons/package.png</file>
+    </qresource>
+</RCC>

@@ -13,7 +13,7 @@ set(UI
   ui/editor.ui
   ui/elementstree.cc
   ui/elementstree.h
-  ui/icons/icons.qrc
+  ui/editor_resources.qrc
 )
 
 set(SOURCES
