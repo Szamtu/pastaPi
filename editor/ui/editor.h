@@ -90,7 +90,6 @@ class SPAGHETTI_API Editor final : public QMainWindow, public EditorPackage {
   void showLibrary(bool a_checked);
   void showProperties(bool a_checked);
 
-  void buildCommit();
   void recentChanges();
   void about();
   void aboutQt();

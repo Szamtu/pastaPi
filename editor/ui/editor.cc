@@ -87,7 +87,6 @@ Editor::Editor(QWidget *const a_parent)
   connect(m_ui->actionShowLibrary, &QAction::triggered, this, &Editor::showLibrary);
   connect(m_ui->actionShowProperties, &QAction::triggered, this, &Editor::showProperties);
 
-  connect(m_ui->actionBuildCommit, &QAction::triggered, this, &Editor::buildCommit);
   connect(m_ui->actionRecentChanges, &QAction::triggered, this, &Editor::recentChanges);
   connect(m_ui->actionAbout, &QAction::triggered, this, &Editor::about);
   connect(m_ui->actionAboutQt, &QAction::triggered, this, &Editor::aboutQt);
@@ -441,12 +440,6 @@ void Editor::showLibrary(bool a_checked)
 void Editor::showProperties(bool a_checked)
 {
   m_ui->properties->setVisible(a_checked);
-}
-
-void Editor::buildCommit()
-{
-  QUrl const url{ QString("https://github.com/aljen/spaghetti/tree/%1").arg(version::COMMIT_HASH) };
-  QDesktopServices::openUrl(url);
 }
 
 void Editor::recentChanges()

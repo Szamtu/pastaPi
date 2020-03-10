@@ -71,7 +71,6 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionBuildCommit"/>
     <addaction name="actionRecentChanges"/>
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
@@ -291,7 +290,13 @@
   </action>
   <action name="actionRecentChanges">
    <property name="text">
-    <string>&amp;Recent changes on GitHub…</string>
+    <string>&amp;Recent changes</string>
+   </property>
+   <property name="iconText">
+    <string>Recent changes</string>
+   </property>
+   <property name="toolTip">
+    <string>Recent changes</string>
    </property>
   </action>
   <action name="actionClose">
