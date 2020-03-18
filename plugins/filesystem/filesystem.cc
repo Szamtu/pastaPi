@@ -20,26 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef NODES_VALUES_CONST_STRING_H
-#define NODES_VALUES_CONST_STRING_H
+#include <cstdlib>
+#include <iostream>
 
+#include <spaghetti/element.h>
+#include <spaghetti/logger.h>
+#include <spaghetti/registry.h>
+
+#ifdef BUILD_PLUGIN_GUI
 #include <spaghettiui/node.h>
+#include "dir_select/dir_select_node.h"
+#else
+#include <spaghetti/dummynode.h>
+#endif
 
-namespace spaghetti::nodes {
+#include "dir_select/dir_select.h"
 
-class ConstString : public Node {
- public:
-  ConstString();
+using namespace spaghetti;
 
- private:
-  void refreshCentralWidget() override;
-  void showProperties() override;
+extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
+{
+  spaghetti::log::init_from_plugin();
 
- private:
-  QGraphicsSimpleTextItem *m_info{};
-};
-
-} // namespace spaghetti::nodes
-
-#endif // NODES_VALUES_CONST_STRING_H
+#ifdef BUILD_PLUGIN_GUI
+  a_registry.registerElement<elements::DirSelect, nodes::DirSelect>("Dir Select", ":/unknown.png");
+#else
+  a_registry.registerElement<elements::DirSelect>("Dir Select", ":/unknown.png");
+#endif
+}

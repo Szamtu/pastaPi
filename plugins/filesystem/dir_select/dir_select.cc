@@ -20,26 +20,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef NODES_VALUES_CONST_STRING_H
-#define NODES_VALUES_CONST_STRING_H
+#include "dir_select.h"
+#include <qmath.h>
+#include <QVariant>
 
-#include <spaghettiui/node.h>
+namespace spaghetti::elements {
 
-namespace spaghetti::nodes {
+DirSelect::DirSelect()
+  : Element{}
+{
+  setMinInputs(0);
+  setMaxInputs(0);
+  setMinOutputs(1);
+  setMaxOutputs(1);
 
-class ConstString : public Node {
- public:
-  ConstString();
+  addOutput(ValueType::eString, "Value", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
+}
 
- private:
-  void refreshCentralWidget() override;
-  void showProperties() override;
+void DirSelect::serialize(Json &a_json)
+{
+  Element::serialize(a_json);
 
- private:
-  QGraphicsSimpleTextItem *m_info{};
-};
+  auto &properties = a_json["properties"];
+  properties["value"] = m_currentValue;
+}
 
-} // namespace spaghetti::nodes
+void DirSelect::deserialize(Json const &a_json)
+{
+  Element::deserialize(a_json);
 
-#endif // NODES_VALUES_CONST_STRING_H
+  auto const &PROPERTIES = a_json["properties"];
+  m_currentValue = PROPERTIES["value"].get<std::string>();
+
+  m_outputs[0].setValue(m_currentValue);
+}
+
+void DirSelect::set(std::string const a_value)
+{
+  m_currentValue = a_value;
+  m_outputs[0].setValue(m_currentValue);
+}
+
+} // namespace spaghetti::elements

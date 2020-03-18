@@ -21,25 +21,34 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef NODES_VALUES_CONST_STRING_H
-#define NODES_VALUES_CONST_STRING_H
+#ifndef SPAGHETTI_ELEMENTS_FILESYSTEM_DIR_SELECT_H
+#define SPAGHETTI_ELEMENTS_FILESYSTEM_DIR_SELECT_H
 
-#include <spaghettiui/node.h>
+#include <spaghetti/element.h>
 
-namespace spaghetti::nodes {
+namespace spaghetti::elements {
 
-class ConstString : public Node {
+class DirSelect final : public Element {
  public:
-  ConstString();
+  static constexpr char const *const TYPE{ "Filesystem/dir_select" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
+
+  DirSelect();
+
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void serialize(Json &a_json) override;
+  void deserialize(Json const &a_json) override;
+
+  void set(std::string const a_value);
+
+  std::string currentValue() const { return m_currentValue; }
 
  private:
-  void refreshCentralWidget() override;
-  void showProperties() override;
-
- private:
-  QGraphicsSimpleTextItem *m_info{};
+  std::string m_currentValue{};
 };
 
-} // namespace spaghetti::nodes
+} // namespace spaghetti::elements
 
-#endif // NODES_VALUES_CONST_STRING_H
+#endif // SPAGHETTI_ELEMENTS
