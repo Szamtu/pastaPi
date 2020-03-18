@@ -2,40 +2,8 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(ExamplePlugin VERSION ${PastaPi_VERSION} LANGUAGES C CXX)
 
-set(EXAMPLE_SOURCES
+set(SOURCES
   example.cc
   )
 
-add_library(Example MODULE ${EXAMPLE_SOURCES})
-target_include_directories(Example PRIVATE ${PROJECT_ROOT})
-target_compile_definitions(Example
-  PUBLIC SPAGHETTI_SHARED
-  PRIVATE SPAGHETTI_EXPORTS ${SPAGHETTI_DEFINITIONS}
-  PRIVATE $<$<CONFIG:Debug>:${SPAGHETTI_DEFINITIONS_DEBUG}>
-  PRIVATE $<$<CONFIG:Release>:${SPAGHETTI_DEFINITIONS_RELEASE}>
-  )
-target_compile_options(Example
-  PRIVATE ${SPAGHETTI_FLAGS}
-  PRIVATE ${SPAGHETTI_FLAGS_C}
-  PRIVATE ${SPAGHETTI_FLAGS_CXX}
-  PRIVATE ${SPAGHETTI_FLAGS_LINKER}
-  PRIVATE $<$<CONFIG:Debug>:${SPAGHETTI_FLAGS_DEBUG}>
-  PRIVATE $<$<CONFIG:Debug>:${SPAGHETTI_WARNINGS}>
-  PRIVATE $<$<CONFIG:Release>:${SPAGHETTI_FLAGS_RELEASE}>
-  )
-set_target_properties(Example PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
-set_target_properties(Example PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins")
-
-if (BUILD_PLUGINS_GUI)
-  add_compile_definitions(BUILD_PLUGIN_GUI)
-  target_link_libraries(Example Spaghetti SpaghettiUI)
-else()
-  target_link_libraries(Example Spaghetti)
-endif ()
-
-
-install(TARGETS Example
-  COMPONENT ExamplePlugin
-  EXPORT Example
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/spaghetti
-  )
+include(PluginBuild)
