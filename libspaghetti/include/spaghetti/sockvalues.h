@@ -29,12 +29,13 @@
 #include <variant>
 
 namespace spaghetti {
-enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, ePoint, eShape, eShapeVector };
+enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, ePoint, eShape, eShapeVector, eStringVector };
 
 using Shape = std::vector<cv::Point>;
 using ShapeVector = std::vector<std::vector<cv::Point>>;
+using StringVector = std::vector<std::string>;
 
-using Value = std::variant<bool, int32_t, double, std::string, cv::Mat, cv::Point, Shape, ShapeVector>;
+using Value = std::variant<bool, int32_t, double, std::string, cv::Mat, cv::Point, Shape, ShapeVector, StringVector>;
 
 struct IOSocketFlags {
   enum Flags {
@@ -46,12 +47,13 @@ struct IOSocketFlags {
     eCanHoldPoint = 1 << 5,
     eCanHoldShape = 1 << 6,
     eCanHoldShapeVector = 1 << 7,
-    eCanChangeName = 1 << 8,
+    eCacHoldStringVector = 1 << 8,
+    eCanChangeName = 1 << 9,
     eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString | eCanHoldMatrix | eCanHoldPoint |
-                        eCanHoldShape | eCanHoldShapeVector,
+                        eCanHoldShape | eCanHoldShapeVector | eCacHoldStringVector,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
-    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector,
-    eTimeStampedValues = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector
+    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCacHoldStringVector,
+    eTimeStampedValues = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCacHoldStringVector
   };
 };
 

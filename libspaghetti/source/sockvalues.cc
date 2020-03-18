@@ -68,6 +68,14 @@ ValueTypeDescription{
     "ShapeVector",
     { { 207, 237, 57, 255 }, { 207, 237, 57, 255 } },
     ShapeVector()
+},
+ValueTypeDescription{
+    ValueType::eStringVector,
+    IOSocketFlags::eCacHoldStringVector,
+    "string_vector",
+    "StringVector",
+    { { 162, 189, 245, 255 }, { 162, 189, 245, 255 } },
+    ShapeVector()
 }
   // clang-format on
 };
