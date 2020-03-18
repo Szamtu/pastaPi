@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(Timers VERSION 17.09.06 LANGUAGES C CXX)
+project(Timers VERSION ${PastaPi_VERSION} LANGUAGES C CXX)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
