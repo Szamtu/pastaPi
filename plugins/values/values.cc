@@ -39,6 +39,7 @@
 #include "values_ui/info_double/info_double_node.h"
 #include "values_ui/info_int/info_int_node.h"
 #include "values_ui/info_string/info_string_node.h"
+#include "values_ui/info_string_vector/info_string_vector_node.h"
 #include "values_ui/push_button/push_button_node.h"
 #include "values_ui/seven_segment_display/seven_segment_display_node.h"
 #include "values_ui/toggle_button/toggle_button_node.h"
@@ -64,11 +65,13 @@
 
 #include "convert/convert_value/convert_value.h"
 #include "convert/degree_to_radian/degree_to_radian.h"
+#include "convert/extract_string/extract_string.h"
 #include "convert/radian_to_degree/radian_to_degree.h"
 
 #include "values_ui/info_double/info_double.h"
 #include "values_ui/info_int/info_int.h"
 #include "values_ui/info_string/info_string.h"
+#include "values_ui/info_string_vector/info_string_vector.h"
 #include "values_ui/push_button/push_button.h"
 #include "values_ui/seven_segment_display/seven_segment_display.h"
 #include "values_ui/toggle_button/toggle_button.h"
@@ -97,6 +100,8 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::SevenSegmentDisplay, nodes::SevenSegmentDisplay>("Seven segment display",
                                                                                         ":/unknown.png");
   a_registry.registerElement<elements::ToggleButton, nodes::ToggleButton>("Toggle button", ":/unknown.png");
+  a_registry.registerElement<elements::InfoStringVector, nodes::InfoStringVector>("Info string vector",
+                                                                                  ":/unknown.png");
 #else
   a_registry.registerElement<elements::ConstBool>("Const bool", ":/unknown.png");
 
@@ -114,6 +119,7 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::PushButton>("Push button", ":/unknown.png");
   a_registry.registerElement<elements::SevenSegmentDisplay>("Seven segment display", ":/unknown.png");
   a_registry.registerElement<elements::ToggleButton>("Toggle button", ":/unknown.png");
+  a_registry.registerElement<elements::InfoStringVector>("Info string vector", ":/unknown.png");
 #endif
 
   a_registry.registerElement<elements::RandomBool>("Random bool", ":/unknown.png");
@@ -129,4 +135,5 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::ConvertValue>("Convert value", ":/unknown.png");
   a_registry.registerElement<elements::Degree2Radian>("Rad2Deg", ":/unknown.png");
   a_registry.registerElement<elements::Radian2Degree>("Deg2Rad", ":/unknown.png");
+  a_registry.registerElement<elements::ExtractString>("Extract String", ":/unknown.png");
 }

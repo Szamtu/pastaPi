@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,36 +29,30 @@
 
 #ifdef BUILD_PLUGIN_GUI
 #include <spaghettiui/node.h>
+#include "dir_list/dir_list_node.h"
+#include "dir_select/dir_select_node.h"
+#include "file_select/file_select_node.h"
 #else
 #include <spaghetti/dummynode.h>
 #endif
 
-class Example final : public spaghetti::Element {
- public:
-  static constexpr char const *const TYPE{ "plugins/example" };
-  static constexpr spaghetti::string::hash_t const HASH{ spaghetti::string::hash(TYPE) };
+#include "dir_list/dir_list.h"
+#include "dir_select/dir_select.h"
+#include "file_select/file_select.h"
 
-  Example()
-    : spaghetti::Element{}
-  {
-    setMinInputs(1);
-    setMaxInputs(1);
-    setMinOutputs(1);
-    setMaxOutputs(1);
-
-    addInput(spaghetti::ValueType::eBool, "In", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
-    addOutput(spaghetti::ValueType::eBool, "Out", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
-  }
-
-  void calculate() override { m_outputs[0].setValue<bool>(m_inputs[0].getValue<bool>()); }
-
-  char const *type() const noexcept override { return TYPE; }
-  spaghetti::string::hash_t hash() const noexcept override { return HASH; }
-};
+using namespace spaghetti;
 
 extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 {
   spaghetti::log::init_from_plugin();
 
-  a_registry.registerElement<Example>("Example (Bool)", ":/unknown.png");
+#ifdef BUILD_PLUGIN_GUI
+  a_registry.registerElement<elements::DirSelect, nodes::DirSelect>("Dir Select", ":/unknown.png");
+  a_registry.registerElement<elements::DirList, nodes::DirList>("Dir List", ":/unknown.png");
+  a_registry.registerElement<elements::FileSelect, nodes::FileSelect>("File Select", ":/unknown.png");
+#else
+  a_registry.registerElement<elements::DirSelect>("Dir Select", ":/unknown.png");
+  a_registry.registerElement<elements::DirList>("Dir List", ":/unknown.png");
+  a_registry.registerElement<elements::FileSelect>("File Select", ":/unknown.png");
+#endif
 }

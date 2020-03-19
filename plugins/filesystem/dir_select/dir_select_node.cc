@@ -20,17 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "const_string_node.h"
-#include "const_string.h"
+#include "dir_select_node.h"
+#include "dir_select.h"
 
-#include <QDebug>
+#include <QFileDialog>
 #include <QGraphicsSimpleTextItem>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QTableWidget>
 
 namespace spaghetti::nodes {
 
-ConstString::ConstString()
+DirSelect::DirSelect()
 {
   QFont font{};
   font.setFamily("Consolas");
@@ -47,7 +48,7 @@ ConstString::ConstString()
   m_info = widget;
 }
 
-void ConstString::refreshCentralWidget()
+void DirSelect::refreshCentralWidget()
 {
   if (!m_element) return;
 
@@ -57,7 +58,7 @@ void ConstString::refreshCentralWidget()
   calculateBoundingRect();
 }
 
-void ConstString::showProperties()
+void DirSelect::showProperties()
 {
   showCommonProperties();
   showIOProperties(IOSocketsType::eOutputs);
@@ -73,15 +74,16 @@ void ConstString::showProperties()
   item->setFlags(item->flags() & ~Qt::ItemIsEditable);
   m_properties->setItem(row, 0, item);
 
-  auto const CONST_STRING = static_cast<elements::ConstString *>(m_element);
-  std::string const CURRENT = CONST_STRING->currentValue();
+  QPushButton *selectButton = new QPushButton{ "Select dir" };
+  m_properties->setCellWidget(row, 1, selectButton);
 
-  QLineEdit *const value = new QLineEdit{};
-  value->setText(QString::fromStdString(CURRENT));
-  m_properties->setCellWidget(row, 1, value);
-
-  QObject::connect(value, static_cast<void (QLineEdit::*)(QString const &)>(&QLineEdit::textChanged),
-                   [CONST_STRING](QString a_value) { CONST_STRING->set(a_value.toStdString()); });
+  auto const CONST_DIR = static_cast<elements::DirSelect *>(m_element);
+  QObject::connect(selectButton, &QPushButton::clicked, [CONST_DIR]() {
+    auto const currentDir = QString::fromStdString(CONST_DIR->currentValue());
+    QString dir = QFileDialog::getExistingDirectory(nullptr, "Open Directory", currentDir,
+                                                    QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    CONST_DIR->set(dir.toStdString());
+  });
 }
 
 } // namespace spaghetti::nodes

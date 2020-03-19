@@ -20,26 +20,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef NODES_VALUES_CONST_STRING_H
-#define NODES_VALUES_CONST_STRING_H
+#include "extract_string.h"
+#include <QVariant>
 
-#include <spaghettiui/node.h>
+namespace spaghetti::elements {
+ExtractString::ExtractString()
+  : Element{}
+{
+  setMinInputs(2);
+  setMaxInputs(2);
+  setMinOutputs(1);
+  setMaxOutputs(1);
 
-namespace spaghetti::nodes {
+  addInput(ValueType::eStringVector, "String vector", IOSocket::eCanHoldStringVector | IOSocket::eCanChangeName);
+  addInput(ValueType::eInt, "Index", IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
+  addOutput(ValueType::eString, "String", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
+}
 
-class ConstString : public Node {
- public:
-  ConstString();
+void ExtractString::calculate()
+{
+  auto const STRING_VECTOR = m_inputs[0].getValue<StringVector>();
+  auto const INDEX = static_cast<size_t>(m_inputs[1].getValue<int>());
 
- private:
-  void refreshCentralWidget() override;
-  void showProperties() override;
+  if (INDEX < STRING_VECTOR.size()) {
+    m_outputs[0].setValue(STRING_VECTOR[INDEX]);
+  } else {
+    m_outputs[0].setValue(std::string());
+  }
+}
 
- private:
-  QGraphicsSimpleTextItem *m_info{};
-};
-
-} // namespace spaghetti::nodes
-
-#endif // NODES_VALUES_CONST_STRING_H
+} // namespace spaghetti::elements

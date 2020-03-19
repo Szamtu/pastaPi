@@ -21,16 +21,16 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef NODES_VALUES_CONST_STRING_H
-#define NODES_VALUES_CONST_STRING_H
+#ifndef NODES_UI_INFO_STRING_VECTOR_H
+#define NODES_UI_INFO_STRING_VECTOR_H
 
 #include <spaghettiui/node.h>
 
 namespace spaghetti::nodes {
 
-class ConstString : public Node {
+class InfoStringVector : public Node {
  public:
-  ConstString();
+  InfoStringVector();
 
  private:
   void refreshCentralWidget() override;
@@ -42,4 +42,4 @@ class ConstString : public Node {
 
 } // namespace spaghetti::nodes
 
-#endif // NODES_VALUES_CONST_STRING_H
+#endif // NODES_UI_INFO_STRING_VECTOR_H

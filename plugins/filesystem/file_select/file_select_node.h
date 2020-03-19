@@ -21,16 +21,16 @@
 // SOFTWARE.
 
 #pragma once
-#ifndef NODES_VALUES_CONST_STRING_H
-#define NODES_VALUES_CONST_STRING_H
+#ifndef NODES_FILESYSTEM_FILE_SELECT_H
+#define NODES_FILESYSTEM_FILE_SELECT_H
 
 #include <spaghettiui/node.h>
 
 namespace spaghetti::nodes {
 
-class ConstString : public Node {
+class FileSelect : public Node {
  public:
-  ConstString();
+  FileSelect();
 
  private:
   void refreshCentralWidget() override;
@@ -42,4 +42,4 @@ class ConstString : public Node {
 
 } // namespace spaghetti::nodes
 
-#endif // NODES_VALUES_CONST_STRING_H
+#endif // NODES_FILESYSTEM_FILE_SELECT_H

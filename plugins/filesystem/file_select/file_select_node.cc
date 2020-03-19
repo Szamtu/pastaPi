@@ -20,17 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "const_string_node.h"
-#include "const_string.h"
+#include "file_select_node.h"
+#include "file_select.h"
 
-#include <QDebug>
+#include <QFileDialog>
 #include <QGraphicsSimpleTextItem>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QTableWidget>
 
 namespace spaghetti::nodes {
 
-ConstString::ConstString()
+FileSelect::FileSelect()
 {
   QFont font{};
   font.setFamily("Consolas");
@@ -47,7 +48,7 @@ ConstString::ConstString()
   m_info = widget;
 }
 
-void ConstString::refreshCentralWidget()
+void FileSelect::refreshCentralWidget()
 {
   if (!m_element) return;
 
@@ -57,7 +58,7 @@ void ConstString::refreshCentralWidget()
   calculateBoundingRect();
 }
 
-void ConstString::showProperties()
+void FileSelect::showProperties()
 {
   showCommonProperties();
   showIOProperties(IOSocketsType::eOutputs);
@@ -73,15 +74,15 @@ void ConstString::showProperties()
   item->setFlags(item->flags() & ~Qt::ItemIsEditable);
   m_properties->setItem(row, 0, item);
 
-  auto const CONST_STRING = static_cast<elements::ConstString *>(m_element);
-  std::string const CURRENT = CONST_STRING->currentValue();
+  QPushButton *selectButton = new QPushButton{ "Select file" };
+  m_properties->setCellWidget(row, 1, selectButton);
 
-  QLineEdit *const value = new QLineEdit{};
-  value->setText(QString::fromStdString(CURRENT));
-  m_properties->setCellWidget(row, 1, value);
-
-  QObject::connect(value, static_cast<void (QLineEdit::*)(QString const &)>(&QLineEdit::textChanged),
-                   [CONST_STRING](QString a_value) { CONST_STRING->set(a_value.toStdString()); });
+  auto const CONST_FILE = static_cast<elements::FileSelect *>(m_element);
+  QObject::connect(selectButton, &QPushButton::clicked, [CONST_FILE]() {
+    auto const currentFile = QString::fromStdString(CONST_FILE->currentValue());
+    QString dir = QFileDialog::getOpenFileName(nullptr, "Select File", currentFile);
+    CONST_FILE->set(dir.toStdString());
+  });
 }
 
 } // namespace spaghetti::nodes

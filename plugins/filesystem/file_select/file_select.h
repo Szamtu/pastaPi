@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,45 +20,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_FILESYSTEM_FILE_SELECT_H
+#define SPAGHETTI_ELEMENTS_FILESYSTEM_FILE_SELECT_H
 
 #include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/registry.h>
 
-#ifdef BUILD_PLUGIN_GUI
-#include <spaghettiui/node.h>
-#else
-#include <spaghetti/dummynode.h>
-#endif
+namespace spaghetti::elements {
 
-class Example final : public spaghetti::Element {
+class FileSelect final : public Element {
  public:
-  static constexpr char const *const TYPE{ "plugins/example" };
-  static constexpr spaghetti::string::hash_t const HASH{ spaghetti::string::hash(TYPE) };
+  static constexpr char const *const TYPE{ "Filesystem/file_select" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-  Example()
-    : spaghetti::Element{}
-  {
-    setMinInputs(1);
-    setMaxInputs(1);
-    setMinOutputs(1);
-    setMaxOutputs(1);
-
-    addInput(spaghetti::ValueType::eBool, "In", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
-    addOutput(spaghetti::ValueType::eBool, "Out", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
-  }
-
-  void calculate() override { m_outputs[0].setValue<bool>(m_inputs[0].getValue<bool>()); }
+  FileSelect();
 
   char const *type() const noexcept override { return TYPE; }
-  spaghetti::string::hash_t hash() const noexcept override { return HASH; }
+  string::hash_t hash() const noexcept override { return HASH; }
+
+  void serialize(Json &a_json) override;
+  void deserialize(Json const &a_json) override;
+
+  void set(std::string const a_value);
+
+  std::string currentValue() const { return m_currentValue; }
+
+ private:
+  std::string m_currentValue{};
 };
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+} // namespace spaghetti::elements
 
-  a_registry.registerElement<Example>("Example (Bool)", ":/unknown.png");
-}
+#endif // SPAGHETTI_ELEMENTS

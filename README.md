@@ -18,19 +18,18 @@
 
 **Last changes:**  
 
-**Version 0.10.0**  
-Separated libSpaghetti into: Editor, libSpaghetti and libSpaghettiUI. 
-Now it is possible to build libSpaghetti and plugins without GUI.
-
+**Version 0.10.1**  
+Added few filesystem features.  
+  
 **Changes:**  
-*  Removed all gui stuff from libSpaghetti.
-*  Added libSpaghettiUI that contains UI stuff like node, links, package_view, etc.
-*  Moved editor specific stuff from libSpaghetti to editor.
-*  Added non-ui build definitions for plugins.
-*  Removed filesystem detection, now it uses only std::filesystem.
-*  Changed system plugins path from lib to plugins
-*  Removed build comit from editor.
-*  Added changelog to editor. 
+*  Added directory select elem.
+*  Added directory list elem.
+*  Added file select elem.
+*  Added new data type: StringVector
+*  Added StringVector info elem.
+*  Added Extract String elem.
+*  Simplified cmake for plugin build
+*  Fixed example plugin
 
 **Forked from:**  
 **[Spaghetti](https://github.com/aljen/spaghetti)** - by Aljen

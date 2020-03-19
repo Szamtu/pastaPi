@@ -20,26 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
-#ifndef NODES_VALUES_CONST_STRING_H
-#define NODES_VALUES_CONST_STRING_H
+#include "info_string_vector.h"
 
-#include <spaghettiui/node.h>
+namespace spaghetti::elements {
 
-namespace spaghetti::nodes {
+InfoStringVector::InfoStringVector()
+{
+  setMinInputs(1);
+  setMaxInputs(1);
+  setMinOutputs(0);
+  setMaxOutputs(0);
 
-class ConstString : public Node {
- public:
-  ConstString();
+  addInput(ValueType::eStringVector, "String Vector", IOSocket::eCanHoldStringVector | IOSocket::eCanChangeName);
+}
 
- private:
-  void refreshCentralWidget() override;
-  void showProperties() override;
-
- private:
-  QGraphicsSimpleTextItem *m_info{};
-};
-
-} // namespace spaghetti::nodes
-
-#endif // NODES_VALUES_CONST_STRING_H
+} // namespace spaghetti::elements

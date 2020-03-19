@@ -20,22 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "const_string_node.h"
-#include "const_string.h"
+#include "info_string_vector_node.h"
+#include "info_string_vector.h"
 
-#include <QDebug>
 #include <QGraphicsSimpleTextItem>
-#include <QLineEdit>
 #include <QTableWidget>
 
 namespace spaghetti::nodes {
 
-ConstString::ConstString()
+InfoStringVector::InfoStringVector()
 {
   QFont font{};
   font.setFamily("Consolas");
   font.setPointSize(10);
-  auto widget = new QGraphicsSimpleTextItem();
+  auto widget = new QGraphicsSimpleTextItem("0");
   widget->setFont(font);
 
   auto brush = widget->brush();
@@ -47,41 +45,29 @@ ConstString::ConstString()
   m_info = widget;
 }
 
-void ConstString::refreshCentralWidget()
+void InfoStringVector::refreshCentralWidget()
 {
   if (!m_element) return;
+  auto const stringVector{ m_element->inputs()[0].getValue<StringVector>() };
 
-  std::string const VALUE{ m_element->outputs()[0].getValue<std::string>() };
-  m_info->setText(QString(VALUE.c_str()));
+  QString text{};
+  text = QString("Strings count: %1\nContent:\n").arg(QString::number(stringVector.size()));
 
+  for (size_t i = 0; i < stringVector.size(); i++) {
+    text += QString("%1: ").arg(i);
+    text += QString::fromStdString(stringVector[i]);
+    text += "\n";
+  }
+
+  m_info->setText(text);
   calculateBoundingRect();
 }
 
-void ConstString::showProperties()
+void InfoStringVector::showProperties()
 {
   showCommonProperties();
+  showIOProperties(IOSocketsType::eInputs);
   showIOProperties(IOSocketsType::eOutputs);
-
-  propertiesInsertTitle("Const String");
-
-  int row = m_properties->rowCount();
-  m_properties->insertRow(row);
-
-  QTableWidgetItem *item{};
-
-  item = new QTableWidgetItem{ "Value" };
-  item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-  m_properties->setItem(row, 0, item);
-
-  auto const CONST_STRING = static_cast<elements::ConstString *>(m_element);
-  std::string const CURRENT = CONST_STRING->currentValue();
-
-  QLineEdit *const value = new QLineEdit{};
-  value->setText(QString::fromStdString(CURRENT));
-  m_properties->setCellWidget(row, 1, value);
-
-  QObject::connect(value, static_cast<void (QLineEdit::*)(QString const &)>(&QLineEdit::textChanged),
-                   [CONST_STRING](QString a_value) { CONST_STRING->set(a_value.toStdString()); });
 }
 
 } // namespace spaghetti::nodes
