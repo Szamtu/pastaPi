@@ -34,7 +34,8 @@ VideoCapture::VideoCapture()
   setMinOutputs(2);
   setMaxOutputs(2);
 
-  addInput(ValueType::eString, "Source", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
+  addInput(ValueType::eString, "Source", IOSocket::eCanHoldString | IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
+  m_sourceType = ValueType::eString;
   addInput(ValueType::eBool, "Reopen", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
 
   addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
@@ -45,11 +46,29 @@ VideoCapture::VideoCapture()
 
 void VideoCapture::calculate()
 {
-  auto source = m_inputs[0].getValue<std::string>();
-  if (source != m_sourceStr) {
-    m_cap.release();
-    m_sourceStr = source;
-    if (!m_sourceStr.empty()) m_cap.open(m_sourceStr);
+  bool inputTypeChanged{ false };
+  auto const inputType = m_inputs[0].type;
+  if (inputType != m_sourceType) {
+    m_sourceType = inputType;
+    inputTypeChanged = true;
+  }
+
+  if (m_sourceType == ValueType::eString) {
+    auto source = m_inputs[0].getValue<std::string>();
+    if (source != m_sourceStr || inputTypeChanged) {
+      m_cap.release();
+      m_sourceStr = source;
+      if (!m_sourceStr.empty()) m_cap.open(m_sourceStr);
+    }
+  }
+
+  if (m_sourceType == ValueType::eInt) {
+    auto source = m_inputs[0].getValue<int>();
+    if (source != m_sourceID || inputTypeChanged) {
+      m_cap.release();
+      m_sourceID = source;
+      m_cap.open(m_sourceID);
+    }
   }
 
   if (m_cap.isOpened()) {
@@ -93,9 +112,20 @@ bool CapAsync::open(std::string const a_name)
   if (!m_isOpened) {
     m_cap.open(a_name);
     if (m_cap.isOpened()) {
-      m_isOpened = true;
-      m_killThread = false;
-      m_captureThread = std::thread(capture, this);
+      runCapture();
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool CapAsync::open(int const a_camID)
+{
+  if (!m_isOpened) {
+    m_cap.open(a_camID);
+    if (m_cap.isOpened()) {
+      runCapture();
       return true;
     }
   }
@@ -117,6 +147,13 @@ cv::Mat CapAsync::grabFrame()
 {
   m_hasNewFrame = false;
   return m_frame.clone();
+}
+
+void CapAsync::runCapture()
+{
+  m_isOpened = true;
+  m_killThread = false;
+  m_captureThread = std::thread(capture, this);
 }
 
 void CapAsync::capture(CapAsync *a_context)
