@@ -21,17 +21,21 @@
 // SOFTWARE.
 
 #include "video_capture.h"
+#include <chrono>
+
+auto constexpr UNUSED_TIME{ std::chrono::microseconds(200) };
 
 namespace spaghetti::elements {
 VideoCapture::VideoCapture()
   : Element{}
 {
-  setMinInputs(1);
-  setMaxInputs(1);
+  setMinInputs(2);
+  setMaxInputs(2);
   setMinOutputs(2);
   setMaxOutputs(2);
 
   addInput(ValueType::eString, "Source", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
+  addInput(ValueType::eBool, "Reopen", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
 
   addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
   addOutput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
@@ -53,10 +57,12 @@ void VideoCapture::calculate()
     if (m_cap.hasNewFrame()) {
       m_outputs[1].setValue(m_cap.grabFrame());
     }
-
   } else {
     m_outputs[0].setValue(false);
-    if (!m_sourceStr.empty()) m_cap.open(m_sourceStr);
+    auto const REOPEN = m_inputs[1].getValue<bool>();
+    if (REOPEN && !m_sourceStr.empty()) {
+      m_cap.open(m_sourceStr);
+    }
   }
 }
 
@@ -99,7 +105,7 @@ bool CapAsync::open(std::string const a_name)
 
 bool CapAsync::isOpened()
 {
-  return m_isOpened && m_captureThread.joinable();
+  return m_isOpened && !m_killThread;
 }
 
 bool CapAsync::hasNewFrame()
@@ -115,16 +121,24 @@ cv::Mat CapAsync::grabFrame()
 
 void CapAsync::capture(CapAsync *a_context)
 {
+  cv::Mat image{};
+  bool result{ false };
+
   while (!a_context->m_killThread) {
-    cv::Mat image{};
-    if (a_context->m_cap.isOpened()) {
-      a_context->m_cap.read(image);
-      if (!a_context->m_hasNewFrame) {
-        a_context->m_frame = image.clone();
-        a_context->m_hasNewFrame = true;
+    if (!a_context->m_hasNewFrame) {
+      if (a_context->m_cap.isOpened()) {
+        result = a_context->m_cap.read(image);
+        if (result) {
+          a_context->m_frame = image.clone();
+          a_context->m_hasNewFrame = true;
+        } else {
+          a_context->m_killThread = true;
+        }
+      } else {
+        a_context->m_killThread = true;
       }
     } else {
-      return;
+      std::this_thread::sleep_for(UNUSED_TIME);
     }
   }
 }
