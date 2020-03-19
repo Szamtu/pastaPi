@@ -47,13 +47,13 @@ struct IOSocketFlags {
     eCanHoldPoint = 1 << 5,
     eCanHoldShape = 1 << 6,
     eCanHoldShapeVector = 1 << 7,
-    eCacHoldStringVector = 1 << 8,
+    eCanHoldStringVector = 1 << 8,
     eCanChangeName = 1 << 9,
     eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString | eCanHoldMatrix | eCanHoldPoint |
-                        eCanHoldShape | eCanHoldShapeVector | eCacHoldStringVector,
+                        eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
-    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCacHoldStringVector,
-    eTimeStampedValues = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCacHoldStringVector
+    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector,
+    eTimeStampedValues = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector
   };
 };
 

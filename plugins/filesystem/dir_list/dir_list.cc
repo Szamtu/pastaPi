@@ -36,7 +36,7 @@ DirList::DirList()
   addInput(ValueType::eString, "Dir", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
   addInput(ValueType::eString, "Filter", IOSocket::eCanHoldString | IOSocket::eCanChangeName);
 
-  addOutput(ValueType::eStringVector, "Content", IOSocket::eCacHoldStringVector | IOSocket::eCanChangeName);
+  addOutput(ValueType::eStringVector, "Content", IOSocket::eCanHoldStringVector | IOSocket::eCanChangeName);
 
   setDefaultNewInputFlags(IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
 }

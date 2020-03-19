@@ -71,7 +71,7 @@ ValueTypeDescription{
 },
 ValueTypeDescription{
     ValueType::eStringVector,
-    IOSocketFlags::eCacHoldStringVector,
+    IOSocketFlags::eCanHoldStringVector,
     "string_vector",
     "StringVector",
     { { 162, 189, 245, 255 }, { 162, 189, 245, 255 } },
