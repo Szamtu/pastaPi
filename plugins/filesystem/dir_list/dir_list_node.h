@@ -20,35 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef NODES_FILESYSTEM_DIR_LIST_H
+#define NODES_FILESYSTEM_DIR_LIST_H
 
-#include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/registry.h>
-
-#ifdef BUILD_PLUGIN_GUI
 #include <spaghettiui/node.h>
-#include "dir_list/dir_list_node.h"
-#include "dir_select/dir_select_node.h"
-#else
-#include <spaghetti/dummynode.h>
-#endif
 
-#include "dir_list/dir_list.h"
-#include "dir_select/dir_select.h"
+namespace spaghetti::nodes {
 
-using namespace spaghetti;
+class DirList : public Node {
+ public:
+  DirList();
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+ private:
+  void refreshCentralWidget() override;
+  void showProperties() override;
 
-#ifdef BUILD_PLUGIN_GUI
-  a_registry.registerElement<elements::DirSelect, nodes::DirSelect>("Dir Select", ":/unknown.png");
-  a_registry.registerElement<elements::DirList, nodes::DirList>("Dir List", ":/unknown.png");
-#else
-  a_registry.registerElement<elements::DirSelect>("Dir Select", ":/unknown.png");
-  a_registry.registerElement<elements::DirList>("Dir List", ":/unknown.png");
-#endif
-}
+ private:
+  QGraphicsSimpleTextItem *m_info{};
+};
+
+} // namespace spaghetti::nodes
+
+#endif // NODES_FILESYSTEM_DIR_LIST_H
