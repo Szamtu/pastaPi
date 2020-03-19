@@ -65,6 +65,7 @@
 
 #include "convert/convert_value/convert_value.h"
 #include "convert/degree_to_radian/degree_to_radian.h"
+#include "convert/extract_string/extract_string.h"
 #include "convert/radian_to_degree/radian_to_degree.h"
 
 #include "values_ui/info_double/info_double.h"
@@ -134,4 +135,5 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::ConvertValue>("Convert value", ":/unknown.png");
   a_registry.registerElement<elements::Degree2Radian>("Rad2Deg", ":/unknown.png");
   a_registry.registerElement<elements::Radian2Degree>("Deg2Rad", ":/unknown.png");
+  a_registry.registerElement<elements::ExtractString>("Extract String", ":/unknown.png");
 }

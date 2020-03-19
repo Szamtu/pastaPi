@@ -35,6 +35,8 @@ set(SOURCES
     convert/degree_to_radian/degree_to_radian.h
     convert/radian_to_degree/radian_to_degree.cc
     convert/radian_to_degree/radian_to_degree.h
+    convert/extract_string/extract_string.cc
+    convert/extract_string/extract_string.h
 
     values_ui/info_double/info_double.cc
     values_ui/info_double/info_double.h
