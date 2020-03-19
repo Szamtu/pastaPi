@@ -75,7 +75,7 @@ ValueTypeDescription{
     "string_vector",
     "StringVector",
     { { 162, 189, 245, 255 }, { 162, 189, 245, 255 } },
-    ShapeVector()
+    StringVector()
 }
   // clang-format on
 };

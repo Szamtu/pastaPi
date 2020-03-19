@@ -48,6 +48,8 @@ set(SOURCES
     values_ui/seven_segment_display/seven_segment_display.h
     values_ui/toggle_button/toggle_button.cc
     values_ui/toggle_button/toggle_button.h
+    values_ui/info_string_vector/info_string_vector.cc
+    values_ui/info_string_vector/info_string_vector.h
 
     values.cc
 )
@@ -55,16 +57,20 @@ set(SOURCES
 set(GUI_SOURCES
     bool/const_bool/const_bool_node.cc
     bool/const_bool/const_bool_node.h
+
     double/const_double/const_double_node.cc
     double/const_double/const_double_node.h
     double/random_double/random_double_node.cc
     double/random_double/random_double_node.h
+
     integer/const_int/const_int_node.cc
     integer/const_int/const_int_node.h
     integer/random_int/random_int_node.cc
     integer/random_int/random_int_node.h
+
     string/const_string/const_string_node.cc
     string/const_string/const_string_node.h
+
     values_ui/info_double/info_double_node.cc
     values_ui/info_double/info_double_node.h
     values_ui/info_int/info_int_node.cc
@@ -77,6 +83,8 @@ set(GUI_SOURCES
     values_ui/seven_segment_display/seven_segment_display_node.h
     values_ui/toggle_button/toggle_button_node.cc
     values_ui/toggle_button/toggle_button_node.h
+    values_ui/info_string_vector/info_string_vector_node.cc
+    values_ui/info_string_vector/info_string_vector_node.h
     )
 
 include(PluginBuild)
