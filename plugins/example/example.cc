@@ -41,7 +41,16 @@ class Example final : public spaghetti::Element {
   Example()
     : spaghetti::Element{}
   {
+    setMinInputs(1);
+    setMaxInputs(1);
+    setMinOutputs(1);
+    setMaxOutputs(1);
+
+    addInput(spaghetti::ValueType::eBool, "In", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+    addOutput(spaghetti::ValueType::eBool, "Out", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
   }
+
+  void calculate() override { m_outputs[0].setValue<bool>(m_inputs[0].getValue<bool>()); }
 
   char const *type() const noexcept override { return TYPE; }
   spaghetti::string::hash_t hash() const noexcept override { return HASH; }
