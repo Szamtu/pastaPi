@@ -20,39 +20,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_FILESYSTEM_FILE_SELECT_H
+#define SPAGHETTI_ELEMENTS_FILESYSTEM_FILE_SELECT_H
 
 #include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/registry.h>
 
-#ifdef BUILD_PLUGIN_GUI
-#include <spaghettiui/node.h>
-#include "dir_list/dir_list_node.h"
-#include "dir_select/dir_select_node.h"
-#include "file_select/file_select_node.h"
-#else
-#include <spaghetti/dummynode.h>
-#endif
+namespace spaghetti::elements {
 
-#include "dir_list/dir_list.h"
-#include "dir_select/dir_select.h"
-#include "file_select/file_select.h"
+class FileSelect final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "Filesystem/file_select" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-using namespace spaghetti;
+  FileSelect();
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
 
-#ifdef BUILD_PLUGIN_GUI
-  a_registry.registerElement<elements::DirSelect, nodes::DirSelect>("Dir Select", ":/unknown.png");
-  a_registry.registerElement<elements::DirList, nodes::DirList>("Dir List", ":/unknown.png");
-  a_registry.registerElement<elements::FileSelect, nodes::FileSelect>("File Select", ":/unknown.png");
-#else
-  a_registry.registerElement<elements::DirSelect>("Dir Select", ":/unknown.png");
-  a_registry.registerElement<elements::DirList>("Dir List", ":/unknown.png");
-  a_registry.registerElement<elements::FileSelect>("File Select", ":/unknown.png");
-#endif
-}
+  void serialize(Json &a_json) override;
+  void deserialize(Json const &a_json) override;
+
+  void set(std::string const a_value);
+
+  std::string currentValue() const { return m_currentValue; }
+
+ private:
+  std::string m_currentValue{};
+};
+
+} // namespace spaghetti::elements
+
+#endif // SPAGHETTI_ELEMENTS
