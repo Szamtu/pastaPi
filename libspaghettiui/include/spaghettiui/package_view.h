@@ -100,7 +100,7 @@ class SPAGHETTI_API_UI PackageView final : public QGraphicsView {
   void center();
   bool snapToGrid() const { return m_snapToGrid; }
 
-  void setFilename(QString const a_filename) { m_filename = a_filename; }
+  void setFilename(QString const a_filename);
   QString filename() const { return m_filename; }
 
   void showProperties();

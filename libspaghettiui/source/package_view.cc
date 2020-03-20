@@ -458,6 +458,12 @@ void PackageView::center()
   centerOn(0.0, 0.0);
 }
 
+void PackageView::setFilename(QString const a_filename)
+{
+  m_filename = a_filename;
+  m_package->setPackagePath(a_filename.toStdString());
+}
+
 void PackageView::showProperties()
 {
   m_properties->clear();
