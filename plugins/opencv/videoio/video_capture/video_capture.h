@@ -34,6 +34,7 @@ class CapAsync {
 
   void release();
   bool open(std::string const a_name);
+  bool open(int const a_camID);
   bool isOpened();
   bool hasNewFrame();
   cv::Mat grabFrame();
@@ -46,6 +47,7 @@ class CapAsync {
   bool m_isOpened{};
   bool m_killThread{};
 
+  void runCapture();
   static void capture(CapAsync *a_context);
 };
 
@@ -64,7 +66,10 @@ class VideoCapture final : public Element {
 
  private:
   CapAsync m_cap{};
+
   std::string m_sourceStr{};
+  int m_sourceID{};
+  ValueType m_sourceType{};
 };
 
 } // namespace spaghetti::elements
