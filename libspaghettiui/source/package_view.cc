@@ -176,6 +176,7 @@ PackageView::PackageView(EditorPackage *const a_editor, Package *const a_package
   m_packageNode->setInputsNode(m_inputs);
   m_packageNode->setOutputsNode(m_outputs);
   m_packageNode->setElement(m_package);
+  m_packageNode->setPackageView(this);
 
   if (m_package->name().empty()) {
     auto &registry = Registry::get();
