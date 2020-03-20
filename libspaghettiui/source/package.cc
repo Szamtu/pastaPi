@@ -127,6 +127,7 @@ void Package::handleEvent(Event const &a_event)
       break;
     }
     case EventType::eInputRemoved: {
+      m_inputsNode->outputs().last()->disconnectAll();
       m_inputsNode->removeSocket(SocketType::eOutput);
       m_inputsNode->calculateBoundingRect();
       break;
@@ -144,6 +145,7 @@ void Package::handleEvent(Event const &a_event)
       break;
     }
     case EventType::eOutputRemoved: {
+      m_outputsNode->inputs().last()->disconnectAll();
       m_outputsNode->removeSocket(SocketType::eInput);
       m_outputsNode->calculateBoundingRect();
       break;
