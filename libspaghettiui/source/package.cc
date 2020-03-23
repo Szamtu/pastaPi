@@ -34,6 +34,18 @@ namespace spaghetti::nodes {
 
 Package::Package() {}
 
+void Package::setInputsNode(Node *const a_node)
+{
+  m_inputsNode = a_node;
+  setDedicatedInput(a_node);
+}
+
+void Package::setOutputsNode(Node *const a_node)
+{
+  m_outputsNode = a_node;
+  setDedicatedOutput(a_node);
+}
+
 void Package::showProperties()
 {
   showCommonProperties();
@@ -127,7 +139,6 @@ void Package::handleEvent(Event const &a_event)
       break;
     }
     case EventType::eInputRemoved: {
-      if (m_inputsNode->outputs().size()) m_inputsNode->outputs().last()->disconnectAll();
       m_inputsNode->removeSocket(SocketType::eOutput);
       m_inputsNode->calculateBoundingRect();
       break;
@@ -145,7 +156,6 @@ void Package::handleEvent(Event const &a_event)
       break;
     }
     case EventType::eOutputRemoved: {
-      if (m_outputsNode->inputs().size()) m_outputsNode->inputs().last()->disconnectAll();
       m_outputsNode->removeSocket(SocketType::eInput);
       m_outputsNode->calculateBoundingRect();
       break;

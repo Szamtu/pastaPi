@@ -91,6 +91,9 @@ class SPAGHETTI_API_UI Node : public QGraphicsItem {
   Sockets const &inputs() const { return m_inputs; }
   Sockets const &outputs() const { return m_outputs; }
 
+  void setDedicatedInput(Node *a_node) { m_dedicatedInput = a_node; }
+  void setDedicatedOutput(Node *a_node) { m_dedicatedOutput = a_node; }
+
   void setPropertiesTable(QTableWidget *const a_properties);
 
   void paintBorder(QPainter *const a_painter);
@@ -149,6 +152,9 @@ class SPAGHETTI_API_UI Node : public QGraphicsItem {
 
   Sockets m_inputs{};
   Sockets m_outputs{};
+
+  Node *m_dedicatedInput{};
+  Node *m_dedicatedOutput{};
 
   QFont m_nameFont{};
 };

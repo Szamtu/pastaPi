@@ -616,6 +616,7 @@ void Node::removeInput()
       break;
     case Type::eElement:
       if (m_inputs.size()) m_inputs.last()->disconnectAll();
+      if (m_dedicatedInput && m_dedicatedInput->outputs().size()) m_dedicatedInput->outputs().last()->disconnectAll();
       break;
   }
 
@@ -647,13 +648,14 @@ void Node::removeOutput()
 {
   switch (m_type) {
     case Type::eInputs:
-      if (m_inputs.size()) m_inputs.last()->disconnectAll();
+      if (m_outputs.size()) m_outputs.last()->disconnectAll();
       break;
     case Type::eOutputs:
-      if (m_outputs.size()) m_outputs.last()->disconnectAll();
+      if (m_inputs.size()) m_inputs.last()->disconnectAll();
       break;
     case Type::eElement:
       if (m_outputs.size()) m_outputs.last()->disconnectAll();
+      if (m_dedicatedOutput && m_dedicatedOutput->inputs().size()) m_dedicatedOutput->inputs().last()->disconnectAll();
       break;
   }
 
