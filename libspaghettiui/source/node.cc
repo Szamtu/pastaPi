@@ -607,7 +607,18 @@ void Node::addInput()
 
 void Node::removeInput()
 {
-  m_inputs.last()->disconnectAll();
+  switch (m_type) {
+    case Type::eInputs:
+      if (m_outputs.size()) m_outputs.last()->disconnectAll();
+      break;
+    case Type::eOutputs:
+      if (m_inputs.size()) m_inputs.last()->disconnectAll();
+      break;
+    case Type::eElement:
+      if (m_inputs.size()) m_inputs.last()->disconnectAll();
+      break;
+  }
+
   m_element->removeInput();
   m_packageView->showProperties();
 }
@@ -634,7 +645,18 @@ void Node::addOutput()
 
 void Node::removeOutput()
 {
-  m_outputs.last()->disconnectAll();
+  switch (m_type) {
+    case Type::eInputs:
+      if (m_inputs.size()) m_inputs.last()->disconnectAll();
+      break;
+    case Type::eOutputs:
+      if (m_outputs.size()) m_outputs.last()->disconnectAll();
+      break;
+    case Type::eElement:
+      if (m_outputs.size()) m_outputs.last()->disconnectAll();
+      break;
+  }
+
   m_element->removeOutput();
   m_packageView->showProperties();
 }
