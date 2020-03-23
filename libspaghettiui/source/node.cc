@@ -407,7 +407,7 @@ void Node::showCommonProperties()
   QObject::connect(nameEdit, &QLineEdit::textChanged, [this](QString const &a_text) { setName(a_text); });
 }
 
-void Node::showIOProperties(IOSocketsType const a_type)
+void Node::showIOProperties(IOSocketsType const a_type, bool const a_enabled)
 {
   bool const INPUTS{ a_type == IOSocketsType::eInputs };
   auto &ios = INPUTS ? m_element->inputs() : m_element->outputs();
@@ -440,6 +440,7 @@ void Node::showIOProperties(IOSocketsType const a_type)
       INPUTS ? removeInput() : removeOutput();
   });
   count->setDisabled(ADDING_DISABLED);
+  count->setEnabled(a_enabled);
 
   for (int i = 0; i < IOS_SIZE; ++i) {
     row = m_properties->rowCount();
@@ -473,6 +474,7 @@ void Node::showIOProperties(IOSocketsType const a_type)
                        ValueType const VALUE_TYPE{ static_cast<ValueType>(comboBox->itemData(a_index).toInt()) };
                        setSocketType(a_type, static_cast<uint64_t>(i), VALUE_TYPE);
                      });
+    comboBox->setEnabled(a_enabled);
   }
 }
 

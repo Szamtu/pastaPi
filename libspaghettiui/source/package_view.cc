@@ -339,6 +339,9 @@ void PackageView::dropEvent(QDropEvent *a_event)
     if (isPackage) {
       auto const package = static_cast<Package *>(element);
       package->open(QString{ file }.toStdString());
+
+      auto const packageNode = static_cast<spaghetti::nodes::Package *>(m_dragNode);
+      packageNode->setIOLocked(true);
     }
     m_dragNode->setElement(element);
     m_dragNode->iconify();

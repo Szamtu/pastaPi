@@ -40,6 +40,8 @@ class SPAGHETTI_API_UI Package : public Node {
   Node *outputsNode() { return m_outputsNode; }
   Node const *outputsNode() const { return m_outputsNode; }
 
+  void setIOLocked(bool const a_enabled) { m_IOLocked = a_enabled; }
+
  private:
   void showProperties() override;
   void handleEvent(Event const &a_event) override;
@@ -48,6 +50,8 @@ class SPAGHETTI_API_UI Package : public Node {
  private:
   Node *m_inputsNode{};
   Node *m_outputsNode{};
+
+  bool m_IOLocked{};
 };
 
 } // namespace spaghetti::nodes

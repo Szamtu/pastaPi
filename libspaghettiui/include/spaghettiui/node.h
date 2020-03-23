@@ -106,7 +106,7 @@ class SPAGHETTI_API_UI Node : public QGraphicsItem {
   virtual bool open() { return false; }
 
   void showCommonProperties();
-  void showIOProperties(IOSocketsType const a_type);
+  void showIOProperties(IOSocketsType const a_type, bool const a_enabled = true);
 
   void calculateBoundingRect();
 
