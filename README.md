@@ -18,19 +18,17 @@
 
 **Last changes:**  
 
-**Version 0.10.1**  
-Added few filesystem features.  
-  
-**Changes:**  
-*  Added directory select elem.
-*  Added directory list elem.
-*  Added file select elem.
-*  Added new data type: StringVector
-*  Added StringVector info elem.
-*  Added Extract String elem.
-*  Simplified cmake for plugin build
-*  Fixed example plugin
+**Version 0.10.2**  
+Fixed major package bugs  
 
+**Changes:**  
+* Fixed missing filepath when saving package
+* Fixed invalid connections after IO removed
+* Locked IO for package inside package view
+* Fixed bug with mog2 
+* Added opening camera by ID to video cap
+* Fixed video cap, now it waits with the frame until it's readed.
+  
 **Forked from:**  
 **[Spaghetti](https://github.com/aljen/spaghetti)** - by Aljen
 
