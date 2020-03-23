@@ -20,28 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_COUNTERS_COUNT_DOWN_H
+#define SPAGHETTI_ELEMENTS_COUNTERS_COUNT_DOWN_H
 
 #include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/registry.h>
 
-#ifdef BUILD_PLUGIN_GUI
-#include <spaghettiui/node.h>
-#else
-#include <spaghetti/dummynode.h>
-#endif
+namespace spaghetti::elements {
 
-#include "count_down/count_down.h"
-#include "count_up/count_up.h"
+class CountDown final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "Logic/Counters/count_down" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-using namespace spaghetti;
+  CountDown();
 
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
-{
-  spaghetti::log::init_from_plugin();
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
 
-  a_registry.registerElement<elements::CountUp>("Count Up", ":/unknown.png");
-  a_registry.registerElement<elements::CountDown>("Count Down", ":/unknown.png");
-}
+  void calculate() override;
+
+ private:
+  int m_value{};
+  bool m_lastState{};
+};
+
+} // namespace spaghetti::elements
+
+#endif // SPAGHETTI_ELEMENTS

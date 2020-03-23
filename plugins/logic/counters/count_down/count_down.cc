@@ -20,28 +20,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <cstdlib>
-#include <iostream>
+#include "count_down.h"
 
-#include <spaghetti/element.h>
-#include <spaghetti/logger.h>
-#include <spaghetti/registry.h>
+namespace spaghetti::elements {
 
-#ifdef BUILD_PLUGIN_GUI
-#include <spaghettiui/node.h>
-#else
-#include <spaghetti/dummynode.h>
-#endif
-
-#include "count_down/count_down.h"
-#include "count_up/count_up.h"
-
-using namespace spaghetti;
-
-extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
+CountDown::CountDown()
+  : Element{}
 {
-  spaghetti::log::init_from_plugin();
+  setMinInputs(2);
+  setMinOutputs(1);
+  setMaxOutputs(1);
 
-  a_registry.registerElement<elements::CountUp>("Count Up", ":/unknown.png");
-  a_registry.registerElement<elements::CountDown>("Count Down", ":/unknown.png");
+  addInput(ValueType::eBool, "Count", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+  addInput(ValueType::eBool, "Reset", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+
+  addOutput(ValueType::eInt, "Value", IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
+
+  setDefaultNewInputFlags(IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
 }
+
+void CountDown::calculate()
+{
+  auto const COUNT = m_inputs[0].getValue<bool>();
+  auto const RESET = m_inputs[1].getValue<bool>();
+
+  if (COUNT && !m_lastState) {
+    m_value--;
+  }
+
+  m_lastState = COUNT;
+  if (RESET) m_value = 0;
+
+  m_outputs[0].setValue(m_value);
+}
+
+} // namespace spaghetti::elements
