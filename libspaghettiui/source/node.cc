@@ -407,7 +407,7 @@ void Node::showCommonProperties()
   QObject::connect(nameEdit, &QLineEdit::textChanged, [this](QString const &a_text) { setName(a_text); });
 }
 
-void Node::showIOProperties(IOSocketsType const a_type)
+void Node::showIOProperties(IOSocketsType const a_type, bool const a_enabled)
 {
   bool const INPUTS{ a_type == IOSocketsType::eInputs };
   auto &ios = INPUTS ? m_element->inputs() : m_element->outputs();
@@ -440,6 +440,7 @@ void Node::showIOProperties(IOSocketsType const a_type)
       INPUTS ? removeInput() : removeOutput();
   });
   count->setDisabled(ADDING_DISABLED);
+  count->setEnabled(a_enabled);
 
   for (int i = 0; i < IOS_SIZE; ++i) {
     row = m_properties->rowCount();
@@ -473,6 +474,7 @@ void Node::showIOProperties(IOSocketsType const a_type)
                        ValueType const VALUE_TYPE{ static_cast<ValueType>(comboBox->itemData(a_index).toInt()) };
                        setSocketType(a_type, static_cast<uint64_t>(i), VALUE_TYPE);
                      });
+    comboBox->setEnabled(a_enabled);
   }
 }
 
@@ -607,7 +609,19 @@ void Node::addInput()
 
 void Node::removeInput()
 {
-  m_inputs.last()->disconnectAll();
+  switch (m_type) {
+    case Type::eInputs:
+      if (m_outputs.size()) m_outputs.last()->disconnectAll();
+      break;
+    case Type::eOutputs:
+      if (m_inputs.size()) m_inputs.last()->disconnectAll();
+      break;
+    case Type::eElement:
+      if (m_inputs.size()) m_inputs.last()->disconnectAll();
+      if (m_dedicatedInput && m_dedicatedInput->outputs().size()) m_dedicatedInput->outputs().last()->disconnectAll();
+      break;
+  }
+
   m_element->removeInput();
   m_packageView->showProperties();
 }
@@ -634,7 +648,19 @@ void Node::addOutput()
 
 void Node::removeOutput()
 {
-  m_outputs.last()->disconnectAll();
+  switch (m_type) {
+    case Type::eInputs:
+      if (m_outputs.size()) m_outputs.last()->disconnectAll();
+      break;
+    case Type::eOutputs:
+      if (m_inputs.size()) m_inputs.last()->disconnectAll();
+      break;
+    case Type::eElement:
+      if (m_outputs.size()) m_outputs.last()->disconnectAll();
+      if (m_dedicatedOutput && m_dedicatedOutput->inputs().size()) m_dedicatedOutput->inputs().last()->disconnectAll();
+      break;
+  }
+
   m_element->removeOutput();
   m_packageView->showProperties();
 }

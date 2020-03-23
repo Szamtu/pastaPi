@@ -63,7 +63,6 @@ void Package::serialize(Element::Json &a_json)
 
   if (!m_isExternal) {
     auto jsonElements = Json::array();
-    // TODO(aljen): fix holes
     size_t const DATA_SIZE{ m_elements.size() };
     for (size_t i = 1; i < DATA_SIZE; ++i) {
       auto const element = m_elements[i];

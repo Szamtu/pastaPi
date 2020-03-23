@@ -176,6 +176,7 @@ PackageView::PackageView(EditorPackage *const a_editor, Package *const a_package
   m_packageNode->setInputsNode(m_inputs);
   m_packageNode->setOutputsNode(m_outputs);
   m_packageNode->setElement(m_package);
+  m_packageNode->setPackageView(this);
 
   if (m_package->name().empty()) {
     auto &registry = Registry::get();
@@ -338,6 +339,9 @@ void PackageView::dropEvent(QDropEvent *a_event)
     if (isPackage) {
       auto const package = static_cast<Package *>(element);
       package->open(QString{ file }.toStdString());
+
+      auto const packageNode = static_cast<spaghetti::nodes::Package *>(m_dragNode);
+      packageNode->setIOLocked(true);
     }
     m_dragNode->setElement(element);
     m_dragNode->iconify();
@@ -456,6 +460,12 @@ bool PackageView::canClose()
 void PackageView::center()
 {
   centerOn(0.0, 0.0);
+}
+
+void PackageView::setFilename(QString const a_filename)
+{
+  m_filename = a_filename;
+  m_package->setPackagePath(a_filename.toStdString());
 }
 
 void PackageView::showProperties()

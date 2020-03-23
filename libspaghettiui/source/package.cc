@@ -34,6 +34,18 @@ namespace spaghetti::nodes {
 
 Package::Package() {}
 
+void Package::setInputsNode(Node *const a_node)
+{
+  m_inputsNode = a_node;
+  setDedicatedInput(a_node);
+}
+
+void Package::setOutputsNode(Node *const a_node)
+{
+  m_outputsNode = a_node;
+  setDedicatedOutput(a_node);
+}
+
 void Package::showProperties()
 {
   showCommonProperties();
@@ -73,8 +85,8 @@ void Package::showProperties()
     /* TODO */
   });
 
-  showIOProperties(IOSocketsType::eInputs);
-  showIOProperties(IOSocketsType::eOutputs);
+  showIOProperties(IOSocketsType::eInputs, !m_IOLocked);
+  showIOProperties(IOSocketsType::eOutputs, !m_IOLocked);
 }
 
 void Package::handleEvent(Event const &a_event)

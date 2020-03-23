@@ -1,3 +1,14 @@
+Version 0.10.2
+Fixed major package bugs
+
+Changes:
+* Fixed missing filepath when saving package
+* Fixed invalid connections after IO removed
+* Locked IO for package inside package view
+* Fixed bug with mog2 
+* Added opening camera by ID to video cap
+* Fixed video cap, now it waits with the frame until it's readed.
+
 Version 0.10.1
 Added few filesystem features.
 
