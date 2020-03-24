@@ -28,6 +28,7 @@ CountUp::CountUp()
   : Element{}
 {
   setMinInputs(2);
+  setMaxInputs(2);
   setMinOutputs(1);
   setMaxOutputs(1);
 

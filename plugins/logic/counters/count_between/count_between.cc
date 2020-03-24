@@ -29,7 +29,8 @@ CountBetween::CountBetween()
   : Element{}
 {
   setMinInputs(5);
-  setMinOutputs(5);
+  setMaxInputs(5);
+  setMinOutputs(1);
   setMaxOutputs(1);
 
   addInput(ValueType::eBool, "Count", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
