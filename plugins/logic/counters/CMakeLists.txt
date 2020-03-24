@@ -7,6 +7,8 @@ set(SOURCES
     count_up/count_up.h
     count_down/count_down.cc
     count_down/count_down.h
+    count_between/count_between.cc
+    count_between/count_between.h
 
     counters.cc
 )
