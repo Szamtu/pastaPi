@@ -18,16 +18,16 @@
 
 **Last changes:**  
 
-**Version 0.10.2**  
-Fixed major package bugs  
+**Version 0.10.3**  
+Added Logic/counters  
 
-**Changes:**  
-* Fixed missing filepath when saving package
-* Fixed invalid connections after IO removed
-* Locked IO for package inside package view
-* Fixed bug with mog2 
-* Added opening camera by ID to video cap
-* Fixed video cap, now it waits with the frame until it's readed.
+**Changes:**
+* Added count up
+* Added count down
+* Added count between
+* Fixed toggle button save
+  
+**For more please check changelog.txt file**  
   
 **Forked from:**  
 **[Spaghetti](https://github.com/aljen/spaghetti)** - by Aljen

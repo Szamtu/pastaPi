@@ -1,3 +1,12 @@
+Version 0.10.3
+Added Logic/counters
+
+Changes:
+* Added count up
+* Added count down
+* Added count between
+* Fixed toggle button save
+
 Version 0.10.2
 Fixed major package bugs
 
