@@ -34,6 +34,24 @@ ToggleButton::ToggleButton()
   addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
 }
 
+void ToggleButton::serialize(Json &a_json)
+{
+  Element::serialize(a_json);
+
+  auto &properties = a_json["properties"];
+  properties["value"] = m_currentValue;
+}
+
+void ToggleButton::deserialize(Json const &a_json)
+{
+  Element::deserialize(a_json);
+
+  auto const &PROPERTIES = a_json["properties"];
+  m_currentValue = PROPERTIES["value"].get<bool>();
+
+  m_outputs[0].setValue(m_currentValue);
+}
+
 void ToggleButton::toggle()
 {
   m_currentValue = !m_currentValue;
