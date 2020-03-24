@@ -640,7 +640,7 @@ void Node::addOutput()
   QString const OUTPUT_NAME{ QString("#%1").arg(SIZE + 1) };
 
   ValueType const TYPE{ ValueDescription::firstAvailableTypeForFlags(
-      static_cast<IOSocketFlags::Flags>(m_element->defaultNewInputFlags())) };
+      static_cast<IOSocketFlags::Flags>(m_element->defaultNewOutputFlags())) };
   m_element->addOutput(TYPE, OUTPUT_NAME.toStdString(), m_element->defaultNewOutputFlags());
 
   m_packageView->showProperties();

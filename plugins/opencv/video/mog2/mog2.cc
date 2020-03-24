@@ -39,7 +39,6 @@ Mog2::Mog2()
 
   addOutput(ValueType::eMatrix, "ForegroundMask", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
 
-  setDefaultNewInputFlags(IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
   setDefaultNewOutputFlags(IOSocket::eCanChangeName | IOSocket::eCanHoldMatrix);
 
   m_subtractor = cv::createBackgroundSubtractorMOG2(m_history, static_cast<double>(m_threshold), m_detectShadows);
