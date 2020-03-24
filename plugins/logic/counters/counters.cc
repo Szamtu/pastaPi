@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,48 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "toggle_button.h"
+#include <cstdlib>
+#include <iostream>
 
-namespace spaghetti::elements {
+#include <spaghetti/element.h>
+#include <spaghetti/logger.h>
+#include <spaghetti/registry.h>
 
-ToggleButton::ToggleButton()
+#ifdef BUILD_PLUGIN_GUI
+#include <spaghettiui/node.h>
+#else
+#include <spaghetti/dummynode.h>
+#endif
+
+#include "count_between/count_between.h"
+#include "count_down/count_down.h"
+#include "count_up/count_up.h"
+
+using namespace spaghetti;
+
+extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 {
-  setMinInputs(0);
-  setMaxInputs(0);
-  setMinOutputs(1);
-  setMaxOutputs(1);
+  spaghetti::log::init_from_plugin();
 
-  addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+  a_registry.registerElement<elements::CountUp>("Count Up", ":/unknown.png");
+  a_registry.registerElement<elements::CountDown>("Count Down", ":/unknown.png");
+  a_registry.registerElement<elements::CountBetween>("Count Between", ":/unknown.png");
 }
-
-void ToggleButton::serialize(Json &a_json)
-{
-  Element::serialize(a_json);
-
-  auto &properties = a_json["properties"];
-  properties["value"] = m_currentValue;
-}
-
-void ToggleButton::deserialize(Json const &a_json)
-{
-  Element::deserialize(a_json);
-
-  auto const &PROPERTIES = a_json["properties"];
-  m_currentValue = PROPERTIES["value"].get<bool>();
-
-  m_outputs[0].setValue(m_currentValue);
-}
-
-void ToggleButton::toggle()
-{
-  m_currentValue = !m_currentValue;
-  m_outputs[0].setValue(m_currentValue);
-}
-
-void ToggleButton::set(bool a_state)
-{
-  m_currentValue = a_state;
-  m_outputs[0].setValue(m_currentValue);
-}
-
-} // namespace spaghetti::elements

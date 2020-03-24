@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,48 +20,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "toggle_button.h"
+#include "count_up.h"
 
 namespace spaghetti::elements {
 
-ToggleButton::ToggleButton()
+CountUp::CountUp()
+  : Element{}
 {
-  setMinInputs(0);
-  setMaxInputs(0);
+  setMinInputs(2);
+  setMaxInputs(2);
   setMinOutputs(1);
   setMaxOutputs(1);
 
-  addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+  addInput(ValueType::eBool, "Count", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+  addInput(ValueType::eBool, "Reset", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
+
+  addOutput(ValueType::eInt, "Value", IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
+
+  setDefaultNewInputFlags(IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
 }
 
-void ToggleButton::serialize(Json &a_json)
+void CountUp::calculate()
 {
-  Element::serialize(a_json);
+  auto const COUNT = m_inputs[0].getValue<bool>();
+  auto const RESET = m_inputs[1].getValue<bool>();
 
-  auto &properties = a_json["properties"];
-  properties["value"] = m_currentValue;
-}
+  if (COUNT && !m_lastState) {
+    m_value++;
+  }
 
-void ToggleButton::deserialize(Json const &a_json)
-{
-  Element::deserialize(a_json);
+  m_lastState = COUNT;
+  if (RESET) m_value = 0;
 
-  auto const &PROPERTIES = a_json["properties"];
-  m_currentValue = PROPERTIES["value"].get<bool>();
-
-  m_outputs[0].setValue(m_currentValue);
-}
-
-void ToggleButton::toggle()
-{
-  m_currentValue = !m_currentValue;
-  m_outputs[0].setValue(m_currentValue);
-}
-
-void ToggleButton::set(bool a_state)
-{
-  m_currentValue = a_state;
-  m_outputs[0].setValue(m_currentValue);
+  m_outputs[0].setValue(m_value);
 }
 
 } // namespace spaghetti::elements

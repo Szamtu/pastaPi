@@ -68,6 +68,8 @@ class ToggleButtonWidget : public QGraphicsItem {
 
   void setToggleButton(elements::ToggleButton *const a_toggleButton) { m_toggleButton = a_toggleButton; }
 
+  void setState(bool const a_state) { m_state = a_state; }
+
  private:
   bool m_state{};
   QRectF m_boundingRect{ 0, 0, 80, 20 };
@@ -118,6 +120,9 @@ void ToggleButton::elementSet()
 {
   auto const widget = static_cast<ToggleButtonWidget *>(m_centralWidget);
   widget->setToggleButton(static_cast<elements::ToggleButton *>(m_element));
+
+  auto const element = static_cast<elements::ToggleButton *>(m_element);
+  widget->setState(element->currentValue());
 }
 
 } // namespace spaghetti::nodes

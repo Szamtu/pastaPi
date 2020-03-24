@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) 2020 Paweł Adamski
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,48 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "toggle_button.h"
+#pragma once
+#ifndef SPAGHETTI_ELEMENTS_COUNTERS_COUNT_BETWEEN_H
+#define SPAGHETTI_ELEMENTS_COUNTERS_COUNT_BETWEEN_H
+
+#include <spaghetti/element.h>
 
 namespace spaghetti::elements {
 
-ToggleButton::ToggleButton()
-{
-  setMinInputs(0);
-  setMaxInputs(0);
-  setMinOutputs(1);
-  setMaxOutputs(1);
+class CountBetween final : public Element {
+ public:
+  static constexpr char const *const TYPE{ "Logic/Counters/count_between" };
+  static constexpr string::hash_t const HASH{ string::hash(TYPE) };
 
-  addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
-}
+  CountBetween();
 
-void ToggleButton::serialize(Json &a_json)
-{
-  Element::serialize(a_json);
+  char const *type() const noexcept override { return TYPE; }
+  string::hash_t hash() const noexcept override { return HASH; }
 
-  auto &properties = a_json["properties"];
-  properties["value"] = m_currentValue;
-}
+  void calculate() override;
 
-void ToggleButton::deserialize(Json const &a_json)
-{
-  Element::deserialize(a_json);
-
-  auto const &PROPERTIES = a_json["properties"];
-  m_currentValue = PROPERTIES["value"].get<bool>();
-
-  m_outputs[0].setValue(m_currentValue);
-}
-
-void ToggleButton::toggle()
-{
-  m_currentValue = !m_currentValue;
-  m_outputs[0].setValue(m_currentValue);
-}
-
-void ToggleButton::set(bool a_state)
-{
-  m_currentValue = a_state;
-  m_outputs[0].setValue(m_currentValue);
-}
+ private:
+  int m_value{};
+  bool m_lastState{};
+};
 
 } // namespace spaghetti::elements
+
+#endif // SPAGHETTI_ELEMENTS
