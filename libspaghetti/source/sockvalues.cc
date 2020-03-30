@@ -76,6 +76,14 @@ ValueTypeDescription{
     "StringVector",
     { { 162, 189, 245, 255 }, { 162, 189, 245, 255 } },
     StringVector()
+},
+ValueTypeDescription{
+    ValueType::eDNNOutput,
+    IOSocketFlags::eCanHoldDNNOutput,
+    "dnn_output",
+    "DNNOutput",
+    { { 14, 204, 160, 255 }, { 14, 204, 160, 255 } },
+    DNNOutput()
 }
   // clang-format on
 };
