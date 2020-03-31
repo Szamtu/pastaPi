@@ -33,12 +33,17 @@ set(SOURCES
     improc/resize/resize.cc
     improc/resize/resize.h
 
+    dnn/yolo/yolo.cc
+    dnn/yolo/yolo.h
+
     opencv.cc
 )
 
 set(GUI_SOURCES
     ui/video_display/video_display_node.cc
     ui/video_display/video_display_node.h
+    dnn/yolo/yolo_node.cc
+    dnn/yolo/yolo_node.h
     )
 
 set(LIB_GUI

@@ -30,6 +30,7 @@
 #ifdef BUILD_PLUGIN_GUI
 #include <spaghettiui/node.h>
 
+#include "dnn/yolo/yolo_node.h"
 #include "ui/video_display/video_display_node.h"
 #else
 #include <spaghetti/dummynode.h>
@@ -51,6 +52,8 @@
 #include "improc/medianblur/medianblur.h"
 #include "improc/resize/resize.h"
 
+#include "dnn/yolo/yolo.h"
+
 using namespace spaghetti;
 
 extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
@@ -62,8 +65,10 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 
 #ifdef BUILD_PLUGIN_GUI
   a_registry.registerElement<elements::VideoDisplay, nodes::VideoDisplay>("Video display", ":/unknown.png");
+  a_registry.registerElement<elements::Yolo, nodes::Yolo>("YOLOv3", ":/unknown.png");
 #else
   a_registry.registerElement<elements::VideoDisplay>("Video display", ":/unknown.png");
+  a_registry.registerElement<elements::Yolo>("YOLOv3", ":/unknown.png");
 #endif
   a_registry.registerElement<elements::DrawContours>("Draw contours", ":/unknown.png");
 
