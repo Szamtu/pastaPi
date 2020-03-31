@@ -52,6 +52,7 @@
 #include "improc/medianblur/medianblur.h"
 #include "improc/resize/resize.h"
 
+#include "dnn/dnn_threshold/dnn_threshold.h"
 #include "dnn/yolo/yolo.h"
 
 using namespace spaghetti;
@@ -81,4 +82,6 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::FindConturs>("Find contours", ":/unknown.png");
   a_registry.registerElement<elements::MedianBlur>("Median blur", ":/unknown.png");
   a_registry.registerElement<elements::Resize>("Resize image", ":/unknown.png");
+
+  a_registry.registerElement<elements::DnnThreshold>("DNN threshold", ":/unknown.png");
 }

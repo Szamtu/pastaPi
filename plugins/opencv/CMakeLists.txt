@@ -35,6 +35,8 @@ set(SOURCES
 
     dnn/yolo/yolo.cc
     dnn/yolo/yolo.h
+    dnn/dnn_threshold/dnn_threshold.cc
+    dnn/dnn_threshold/dnn_threshold.h
 
     opencv.cc
 )
