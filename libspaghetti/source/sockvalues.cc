@@ -80,10 +80,26 @@ ValueTypeDescription{
 ValueTypeDescription{
     ValueType::eDNNData,
     IOSocketFlags::eCanHoldDNNData,
-    "dnn_output",
-    "DNNOutput",
+    "dnn_data",
+    "DNNData",
     { { 14, 204, 160, 255 }, { 14, 204, 160, 255 } },
     DNNData()
+},
+ValueTypeDescription{
+    ValueType::eDNNRect,
+    IOSocketFlags::eCanHoldDNNRect,
+    "dnn_rect",
+    "DNNRect",
+    { { 179, 135, 230, 255 }, { 179, 135, 230, 255 } },
+    DNNRect()
+},
+ValueTypeDescription{
+    ValueType::eDNNRectVector,
+    IOSocketFlags::eCanHoldDNNRectVector,
+    "dnn_rect_vector",
+    "DNNRectVector",
+    { { 203, 135, 230, 255 }, { 179, 135, 230, 255 } },
+    DNNRectVector()
 }
   // clang-format on
 };
