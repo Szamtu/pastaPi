@@ -144,15 +144,15 @@ bool Yolo::isCudaAvailable()
 
 bool Yolo::loadInputSizes(std::string const a_path)
 {
-  std::ifstream classesFileStream(a_path);
+  std::ifstream netConfigFileStream(a_path);
   std::string line{};
 
-  if (!classesFileStream.is_open()) return false;
+  if (!netConfigFileStream.is_open()) return false;
 
   bool inputWidthIsSet{};
   bool inputHeightIsSet{};
 
-  while (getline(classesFileStream, line)) {
+  while (getline(netConfigFileStream, line)) {
     auto separatorPos = line.find('=');
 
     if (separatorPos == std::string::npos || separatorPos + 1 >= line.size()) continue;

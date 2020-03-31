@@ -52,6 +52,7 @@
 #include "improc/medianblur/medianblur.h"
 #include "improc/resize/resize.h"
 
+#include "dnn/dnn_draw_labels/dnn_draw_labels.h"
 #include "dnn/dnn_threshold/dnn_threshold.h"
 #include "dnn/yolo/yolo.h"
 
@@ -84,4 +85,5 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::Resize>("Resize image", ":/unknown.png");
 
   a_registry.registerElement<elements::DnnThreshold>("DNN threshold", ":/unknown.png");
+  a_registry.registerElement<elements::ReadClassnames>("Read classnames", ":/unknown.png");
 }
