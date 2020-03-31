@@ -78,12 +78,12 @@ ValueTypeDescription{
     StringVector()
 },
 ValueTypeDescription{
-    ValueType::eDNNOutput,
-    IOSocketFlags::eCanHoldDNNOutput,
+    ValueType::eDNNData,
+    IOSocketFlags::eCanHoldDNNData,
     "dnn_output",
     "DNNOutput",
     { { 14, 204, 160, 255 }, { 14, 204, 160, 255 } },
-    DNNOutput()
+    DNNData()
 }
   // clang-format on
 };

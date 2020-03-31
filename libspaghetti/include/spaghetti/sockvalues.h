@@ -29,15 +29,15 @@
 #include <variant>
 
 namespace spaghetti {
-enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, ePoint, eShape, eShapeVector, eStringVector, eDNNOutput };
+enum class ValueType { eBool, eInt, eFloat, eString, eMatrix, ePoint, eShape, eShapeVector, eStringVector, eDNNData };
 
 using Shape = std::vector<cv::Point>;
 using ShapeVector = std::vector<std::vector<cv::Point>>;
 using StringVector = std::vector<std::string>;
-using DNNOutput = std::vector<cv::Mat>;
+using DNNData = std::vector<cv::Mat>;
 
 using Value =
-    std::variant<bool, int32_t, double, std::string, cv::Mat, cv::Point, Shape, ShapeVector, StringVector, DNNOutput>;
+    std::variant<bool, int32_t, double, std::string, cv::Mat, cv::Point, Shape, ShapeVector, StringVector, DNNData>;
 
 struct IOSocketFlags {
   enum Flags {
@@ -50,14 +50,14 @@ struct IOSocketFlags {
     eCanHoldShape = 1 << 6,
     eCanHoldShapeVector = 1 << 7,
     eCanHoldStringVector = 1 << 8,
-    eCanHoldDNNOutput = 1 << 9,
+    eCanHoldDNNData = 1 << 9,
     eCanChangeName = 1 << 10,
     eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString | eCanHoldMatrix | eCanHoldPoint |
-                        eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector | eCanHoldDNNOutput,
+                        eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector | eCanHoldDNNData,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
     eProtectedValuesFlags =
-        eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector | eCanHoldDNNOutput,
-    eTimeStampedValues = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector | eCanHoldDNNOutput
+        eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector | eCanHoldDNNData,
+    eTimeStampedValues = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector | eCanHoldDNNData
   };
 };
 

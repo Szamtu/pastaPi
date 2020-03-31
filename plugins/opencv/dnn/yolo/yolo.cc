@@ -40,7 +40,7 @@ Yolo::Yolo()
   setMaxOutputs(3);
 
   addInput(ValueType::eMatrix, "Image", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
-  addOutput(ValueType::eDNNOutput, "Output", IOSocket::eCanHoldDNNOutput | IOSocket::eCanChangeName);
+  addOutput(ValueType::eDNNData, "Output", IOSocket::eCanHoldDNNData | IOSocket::eCanChangeName);
   addOutput(ValueType::eFloat, "ComputeTime [s]", IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
   addOutput(ValueType::eBool, "Readdy", IOSocket::eCanHoldBool | IOSocket::eCanChangeName);
 }
@@ -53,7 +53,7 @@ void Yolo::calculate()
     auto start = std::chrono::steady_clock::now();
 
     cv::Mat blob;
-    DNNOutput output;
+    DNNData output;
 
     cv::dnn::blobFromImage(frame, blob, 1 / 255.0, cv::Size(m_inputWidth, m_inputHeight), cv::Scalar(0, 0, 0), true,
                            false);
