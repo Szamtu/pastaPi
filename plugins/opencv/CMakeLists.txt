@@ -37,6 +37,10 @@ set(SOURCES
     dnn/yolo/yolo.h
     dnn/dnn_threshold/dnn_threshold.cc
     dnn/dnn_threshold/dnn_threshold.h
+    dnn/read_classnames/read_classnames.cc
+    dnn/read_classnames/read_classnames.h
+    dnn/dnn_draw_labels/dnn_draw_labels.cc
+    dnn/dnn_draw_labels/dnn_draw_labels.h
 
     opencv.cc
 )

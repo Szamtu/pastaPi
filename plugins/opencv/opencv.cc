@@ -54,6 +54,7 @@
 
 #include "dnn/dnn_draw_labels/dnn_draw_labels.h"
 #include "dnn/dnn_threshold/dnn_threshold.h"
+#include "dnn/read_classnames/read_classnames.h"
 #include "dnn/yolo/yolo.h"
 
 using namespace spaghetti;
@@ -86,4 +87,5 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 
   a_registry.registerElement<elements::DnnThreshold>("DNN threshold", ":/unknown.png");
   a_registry.registerElement<elements::ReadClassnames>("Read classnames", ":/unknown.png");
+  a_registry.registerElement<elements::DnnDrawLabels>("DNN draw labels", ":/unknown.png");
 }
