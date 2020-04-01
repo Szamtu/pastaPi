@@ -39,7 +39,7 @@ DnnThreshold::DnnThreshold()
   addInput(ValueType::eDNNData, "DNNData", IOSocket::eCanHoldDNNData | IOSocket::eCanChangeName);
   addInput(ValueType::eMatrix, "Frame", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
   addInput(ValueType::eFloat, "Confidence threshold", IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
-  addInput(ValueType::eFloat, "NMS threshold", IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
+  addInput(ValueType::eFloat, "NMS threshold", IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
 
   addOutput(ValueType::eDNNRectVector, "DNN rects", IOSocket::eCanHoldDNNRectVector | IOSocket::eCanChangeName);
 }
