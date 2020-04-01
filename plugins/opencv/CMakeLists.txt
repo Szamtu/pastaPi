@@ -43,6 +43,8 @@ set(SOURCES
     dnn/read_classnames/read_classnames.h
     dnn/dnn_draw_labels/dnn_draw_labels.cc
     dnn/dnn_draw_labels/dnn_draw_labels.h
+    dnn/find_class/find_class.cc
+    dnn/find_class/find_class.h
 
     opencv.cc
 )
