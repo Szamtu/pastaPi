@@ -58,6 +58,7 @@
 #include "dnn/extract_rect/extract_rect.h"
 #include "dnn/find_class/find_class.h"
 #include "dnn/read_classnames/read_classnames.h"
+#include "dnn/unpack_rect/unpack_rect.h"
 #include "dnn/yolo/yolo.h"
 
 using namespace spaghetti;
@@ -94,4 +95,5 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::DnnDrawLabels>("DNN draw labels", ":/unknown.png");
   a_registry.registerElement<elements::FindClass>("DNN find class", ":/unknown.png");
   a_registry.registerElement<elements::ExtractRect>("DNN extract rect", ":/unknown.png");
+  a_registry.registerElement<elements::UnpackRect>("DNN unpack rect", ":/unknown.png");
 }
