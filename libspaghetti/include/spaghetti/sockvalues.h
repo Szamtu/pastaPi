@@ -35,6 +35,7 @@ enum class ValueType {
   eFloat,
   eString,
   eMatrix,
+  eMatrixVector,
   ePoint,
   eShape,
   eShapeVector,
@@ -44,6 +45,7 @@ enum class ValueType {
   eDNNRectVector
 };
 
+using MatrixVector = std::vector<cv::Mat>;
 using Shape = std::vector<cv::Point>;
 using ShapeVector = std::vector<std::vector<cv::Point>>;
 using StringVector = std::vector<std::string>;
@@ -53,7 +55,7 @@ typedef struct DNNRect {
   cv::Rect boundingBox{};
   int classId{};
   float confidence{};
-};
+} DNNRect;
 
 using DNNRectVector = std::vector<DNNRect>;
 
@@ -67,22 +69,22 @@ struct IOSocketFlags {
     eCanHoldFloat = 1 << 2,
     eCanHoldString = 1 << 3,
     eCanHoldMatrix = 1 << 4,
-    eCanHoldPoint = 1 << 5,
-    eCanHoldShape = 1 << 6,
-    eCanHoldShapeVector = 1 << 7,
-    eCanHoldStringVector = 1 << 8,
-    eCanHoldDNNData = 1 << 9,
-    eCanHoldDNNRect = 1 << 10,
-    eCanHoldDNNRectVector = 1 << 11,
-    eCanChangeName = 1 << 12,
-    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString | eCanHoldMatrix | eCanHoldPoint |
-                        eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector | eCanHoldDNNData | eCanHoldDNNRect |
-                        eCanHoldDNNRectVector,
+    eCanHoldMatrixVector = 1 << 5,
+    eCanHoldPoint = 1 << 6,
+    eCanHoldShape = 1 << 7,
+    eCanHoldShapeVector = 1 << 8,
+    eCanHoldStringVector = 1 << 9,
+    eCanHoldDNNData = 1 << 10,
+    eCanHoldDNNRect = 1 << 11,
+    eCanHoldDNNRectVector = 1 << 12,
+    eCanChangeName = 1 << 13,
+    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldString | eCanHoldMatrix |
+                        eCanHoldMatrixVector | eCanHoldPoint | eCanHoldShape | eCanHoldShapeVector |
+                        eCanHoldStringVector | eCanHoldDNNData | eCanHoldDNNRect | eCanHoldDNNRectVector,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
-    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector |
-                            eCanHoldDNNData | eCanHoldDNNRect | eCanHoldDNNRectVector,
-    eTimeStampedValues = eCanHoldMatrix | eCanHoldShape | eCanHoldShapeVector | eCanHoldStringVector | eCanHoldDNNData |
-                         eCanHoldDNNRect | eCanHoldDNNRectVector
+    eProtectedValuesFlags = eCanHoldMatrix | eCanHoldMatrixVector | eCanHoldShape | eCanHoldShapeVector |
+                            eCanHoldStringVector | eCanHoldDNNData | eCanHoldDNNRect | eCanHoldDNNRectVector,
+    eTimeStampedValues = eProtectedValuesFlags
   };
 };
 

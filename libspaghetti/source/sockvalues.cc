@@ -46,6 +46,14 @@ ValueTypeDescription{
     cv::Mat()
 },
 ValueTypeDescription{
+    ValueType::eMatrixVector,
+    IOSocketFlags::eCanHoldMatrixVector,
+    "matrix_vector",
+    "Matrix_vector",
+    { { 82, 56, 54, 255 }, { 82, 56, 54, 255 } },
+    MatrixVector()
+},
+ValueTypeDescription{
     ValueType::ePoint,
     IOSocketFlags::eCanHoldPoint,
     "point",
