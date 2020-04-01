@@ -49,7 +49,7 @@ ValueTypeDescription{
     ValueType::eMatrixVector,
     IOSocketFlags::eCanHoldMatrixVector,
     "matrix_vector",
-    "Matrix_vector",
+    "MatrixVector",
     { { 82, 56, 54, 255 }, { 82, 56, 54, 255 } },
     MatrixVector()
 },
