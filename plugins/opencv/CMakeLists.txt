@@ -18,6 +18,8 @@ set(SOURCES
 
     video/mog2/mog2.cc
     video/mog2/mog2.h
+    video/video_bufer/video_bufer.cc
+    video/video_bufer/video_bufer.h
 
     imcodecs/imwrite/imwrite.cc
     imcodecs/imwrite/imwrite.h

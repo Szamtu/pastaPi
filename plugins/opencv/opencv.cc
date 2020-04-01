@@ -43,6 +43,7 @@
 #include "ui/video_display/video_display.h"
 
 #include "video/mog2/mog2.h"
+#include "video/video_bufer/video_bufer.h"
 
 #include "imcodecs/imwrite/imwrite.h"
 
@@ -76,6 +77,7 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::DrawContours>("Draw contours", ":/unknown.png");
 
   a_registry.registerElement<elements::Mog2>("MOG2", ":/unknown.png");
+  a_registry.registerElement<elements::VideoBufer>("Video bufer", ":/unknown.png");
 
   a_registry.registerElement<elements::ImWrite>("Image write", ":/unknown.png");
 
