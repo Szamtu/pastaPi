@@ -45,6 +45,8 @@ set(SOURCES
     dnn/dnn_draw_labels/dnn_draw_labels.h
     dnn/find_class/find_class.cc
     dnn/find_class/find_class.h
+    dnn/extract_rect/extract_rect.cc
+    dnn/extract_rect/extract_rect.h
 
     opencv.cc
 )
