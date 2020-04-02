@@ -114,7 +114,7 @@ ValueTypeDescription{
     IOSocketFlags::eCanHoldDNNRectVector,
     "dnn_rect_vector",
     "DNNRectVector",
-    { { 203, 135, 230, 255 }, { 179, 135, 230, 255 } },
+    { { 119, 75, 170, 255 }, { 179, 135, 230, 255 } },
     DNNRectVector()
 }
   // clang-format on
