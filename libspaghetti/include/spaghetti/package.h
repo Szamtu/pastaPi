@@ -78,6 +78,8 @@ class SPAGHETTI_API Package final : public Element {
   void calculate() override;
   void update(duration_t const &a_delta) override { m_delta = a_delta; }
 
+  bool hasInvertedIO() override { return true; }
+
   std::string_view packageDescription() const { return m_packageDescription; }
   void setPackageDescription(std::string const &a_description) { m_packageDescription = a_description; }
 

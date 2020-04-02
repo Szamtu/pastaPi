@@ -309,10 +309,16 @@ bool Package::disconnect(size_t const a_sourceId, uint64_t const a_outputId, siz
   spaghetti::log::debug("Disconnecting source: {}@{} from target: {}@{}", a_sourceId, static_cast<int>(a_outputId),
                         a_targetId, static_cast<int>(a_inputId));
 
-  auto &targetInput = target->m_inputs[a_inputId];
-  targetInput.id = 0;
-  targetInput.slot = 0;
-  resetIOSocketValue(targetInput);
+  IOSocket *targetInput{ nullptr };
+  if (target->hasInvertedIO()) {
+    targetInput = &target->m_outputs[a_inputId];
+  } else {
+    targetInput = &target->m_inputs[a_inputId];
+  }
+
+  targetInput->id = 0;
+  targetInput->slot = 0;
+  resetIOSocketValue(*targetInput);
 
   auto it = std::remove_if(std::begin(m_connections), std::end(m_connections), [=](Connection &a_connection) {
     return a_connection.from_id == a_sourceId && a_connection.from_socket == a_outputId &&

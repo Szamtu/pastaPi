@@ -30,6 +30,7 @@
 #ifdef BUILD_PLUGIN_GUI
 #include <spaghettiui/node.h>
 
+#include "dnn/yolo/yolo_node.h"
 #include "ui/video_display/video_display_node.h"
 #else
 #include <spaghetti/dummynode.h>
@@ -42,6 +43,7 @@
 #include "ui/video_display/video_display.h"
 
 #include "video/mog2/mog2.h"
+#include "video/video_bufer/video_bufer.h"
 
 #include "imcodecs/imwrite/imwrite.h"
 
@@ -50,6 +52,14 @@
 #include "improc/find_conturs/findcontours.h"
 #include "improc/medianblur/medianblur.h"
 #include "improc/resize/resize.h"
+
+#include "dnn/dnn_draw_labels/dnn_draw_labels.h"
+#include "dnn/dnn_threshold/dnn_threshold.h"
+#include "dnn/extract_rect/extract_rect.h"
+#include "dnn/find_class/find_class.h"
+#include "dnn/read_classnames/read_classnames.h"
+#include "dnn/unpack_rect/unpack_rect.h"
+#include "dnn/yolo/yolo.h"
 
 using namespace spaghetti;
 
@@ -62,12 +72,15 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 
 #ifdef BUILD_PLUGIN_GUI
   a_registry.registerElement<elements::VideoDisplay, nodes::VideoDisplay>("Video display", ":/unknown.png");
+  a_registry.registerElement<elements::Yolo, nodes::Yolo>("YOLOv3", ":/unknown.png");
 #else
   a_registry.registerElement<elements::VideoDisplay>("Video display", ":/unknown.png");
+  a_registry.registerElement<elements::Yolo>("YOLOv3", ":/unknown.png");
 #endif
   a_registry.registerElement<elements::DrawContours>("Draw contours", ":/unknown.png");
 
   a_registry.registerElement<elements::Mog2>("MOG2", ":/unknown.png");
+  a_registry.registerElement<elements::VideoBufer>("Video bufer", ":/unknown.png");
 
   a_registry.registerElement<elements::ImWrite>("Image write", ":/unknown.png");
 
@@ -76,4 +89,11 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::FindConturs>("Find contours", ":/unknown.png");
   a_registry.registerElement<elements::MedianBlur>("Median blur", ":/unknown.png");
   a_registry.registerElement<elements::Resize>("Resize image", ":/unknown.png");
+
+  a_registry.registerElement<elements::DnnThreshold>("DNN threshold", ":/unknown.png");
+  a_registry.registerElement<elements::ReadClassnames>("Read classnames", ":/unknown.png");
+  a_registry.registerElement<elements::DnnDrawLabels>("DNN draw labels", ":/unknown.png");
+  a_registry.registerElement<elements::FindClass>("DNN find class", ":/unknown.png");
+  a_registry.registerElement<elements::ExtractRect>("DNN extract rect", ":/unknown.png");
+  a_registry.registerElement<elements::UnpackRect>("DNN unpack rect", ":/unknown.png");
 }

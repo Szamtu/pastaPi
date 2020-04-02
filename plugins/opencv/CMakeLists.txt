@@ -18,6 +18,8 @@ set(SOURCES
 
     video/mog2/mog2.cc
     video/mog2/mog2.h
+    video/video_bufer/video_bufer.cc
+    video/video_bufer/video_bufer.h
 
     imcodecs/imwrite/imwrite.cc
     imcodecs/imwrite/imwrite.h
@@ -33,12 +35,29 @@ set(SOURCES
     improc/resize/resize.cc
     improc/resize/resize.h
 
+    dnn/yolo/yolo.cc
+    dnn/yolo/yolo.h
+    dnn/dnn_threshold/dnn_threshold.cc
+    dnn/dnn_threshold/dnn_threshold.h
+    dnn/read_classnames/read_classnames.cc
+    dnn/read_classnames/read_classnames.h
+    dnn/dnn_draw_labels/dnn_draw_labels.cc
+    dnn/dnn_draw_labels/dnn_draw_labels.h
+    dnn/find_class/find_class.cc
+    dnn/find_class/find_class.h
+    dnn/extract_rect/extract_rect.cc
+    dnn/extract_rect/extract_rect.h
+    dnn/unpack_rect/unpack_rect.cc
+    dnn/unpack_rect/unpack_rect.h
+
     opencv.cc
 )
 
 set(GUI_SOURCES
     ui/video_display/video_display_node.cc
     ui/video_display/video_display_node.h
+    dnn/yolo/yolo_node.cc
+    dnn/yolo/yolo_node.h
     )
 
 set(LIB_GUI

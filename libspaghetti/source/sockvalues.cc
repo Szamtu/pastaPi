@@ -30,6 +30,14 @@ ValueTypeDescription{
     0.0f
 },
 ValueTypeDescription{
+    ValueType::eFloatVector,
+    IOSocketFlags::eCanHoldFloatVector,
+    "float_vector",
+    "FloatVector",
+    { { 168, 117, 50, 255 }, { 168, 117, 50, 255 } },
+    0.0f
+},
+ValueTypeDescription{
     ValueType::eString,
     IOSocketFlags::eCanHoldString,
     "string",
@@ -38,12 +46,28 @@ ValueTypeDescription{
     std::string{}
 },
 ValueTypeDescription{
+    ValueType::eStringVector,
+    IOSocketFlags::eCanHoldStringVector,
+    "string_vector",
+    "StringVector",
+    { { 162, 189, 245, 255 }, { 162, 189, 245, 255 } },
+    StringVector()
+},
+ValueTypeDescription{
     ValueType::eMatrix,
     IOSocketFlags::eCanHoldMatrix,
     "matrix",
     "Matrix",
     { { 169, 169, 169, 255 }, { 169, 169, 169, 255 } },
     cv::Mat()
+},
+ValueTypeDescription{
+    ValueType::eMatrixVector,
+    IOSocketFlags::eCanHoldMatrixVector,
+    "matrix_vector",
+    "MatrixVector",
+    { { 82, 56, 54, 255 }, { 82, 56, 54, 255 } },
+    MatrixVector()
 },
 ValueTypeDescription{
     ValueType::ePoint,
@@ -70,12 +94,28 @@ ValueTypeDescription{
     ShapeVector()
 },
 ValueTypeDescription{
-    ValueType::eStringVector,
-    IOSocketFlags::eCanHoldStringVector,
-    "string_vector",
-    "StringVector",
-    { { 162, 189, 245, 255 }, { 162, 189, 245, 255 } },
-    StringVector()
+    ValueType::eDNNData,
+    IOSocketFlags::eCanHoldDNNData,
+    "dnn_data",
+    "DNNData",
+    { { 14, 204, 160, 255 }, { 14, 204, 160, 255 } },
+    DNNData()
+},
+ValueTypeDescription{
+    ValueType::eDNNRect,
+    IOSocketFlags::eCanHoldDNNRect,
+    "dnn_rect",
+    "DNNRect",
+    { { 179, 135, 230, 255 }, { 179, 135, 230, 255 } },
+    DNNRect()
+},
+ValueTypeDescription{
+    ValueType::eDNNRectVector,
+    IOSocketFlags::eCanHoldDNNRectVector,
+    "dnn_rect_vector",
+    "DNNRectVector",
+    { { 119, 75, 170, 255 }, { 179, 135, 230, 255 } },
+    DNNRectVector()
 }
   // clang-format on
 };
