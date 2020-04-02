@@ -30,6 +30,14 @@ ValueTypeDescription{
     0.0f
 },
 ValueTypeDescription{
+    ValueType::eFloatVector,
+    IOSocketFlags::eCanHoldFloatVector,
+    "float_vector",
+    "FloatVector",
+    { { 168, 117, 50, 255 }, { 168, 117, 50, 255 } },
+    0.0f
+},
+ValueTypeDescription{
     ValueType::eString,
     IOSocketFlags::eCanHoldString,
     "string",
