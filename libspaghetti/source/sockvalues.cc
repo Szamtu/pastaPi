@@ -46,6 +46,14 @@ ValueTypeDescription{
     std::string{}
 },
 ValueTypeDescription{
+    ValueType::eStringVector,
+    IOSocketFlags::eCanHoldStringVector,
+    "string_vector",
+    "StringVector",
+    { { 162, 189, 245, 255 }, { 162, 189, 245, 255 } },
+    StringVector()
+},
+ValueTypeDescription{
     ValueType::eMatrix,
     IOSocketFlags::eCanHoldMatrix,
     "matrix",
@@ -84,14 +92,6 @@ ValueTypeDescription{
     "ShapeVector",
     { { 207, 237, 57, 255 }, { 207, 237, 57, 255 } },
     ShapeVector()
-},
-ValueTypeDescription{
-    ValueType::eStringVector,
-    IOSocketFlags::eCanHoldStringVector,
-    "string_vector",
-    "StringVector",
-    { { 162, 189, 245, 255 }, { 162, 189, 245, 255 } },
-    StringVector()
 },
 ValueTypeDescription{
     ValueType::eDNNData,
