@@ -35,7 +35,7 @@ ValueTypeDescription{
     "float_vector",
     "FloatVector",
     { { 168, 117, 50, 255 }, { 168, 117, 50, 255 } },
-    0.0f
+    FloatVector()
 },
 ValueTypeDescription{
     ValueType::eString,
