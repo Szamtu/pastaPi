@@ -210,7 +210,7 @@ bool ValueDescription::compareValues(Value const &a_a, Value const &a_b, ValueTy
   switch (a_type) {
     case ValueType::eBool: return compare<bool>(a_a, a_b);
     case ValueType::eInt: return compare<int>(a_a, a_b);
-    case ValueType::eFloat: return nearly_equal(std::get<double>(a_a), std::get<double>(a_a));
+    case ValueType::eFloat: return nearly_equal(std::get<double>(a_a), std::get<double>(a_b));
     case ValueType::eString: return compare<std::string>(a_a, a_b);
     case ValueType::eMatrix: assert(false);
     case ValueType::ePoint: return compare<cv::Point>(a_a, a_b);
