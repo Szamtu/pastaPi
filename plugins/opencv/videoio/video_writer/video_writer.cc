@@ -122,6 +122,9 @@ void WriterAsync::release()
     m_writer.release();
 
     m_killThread = false;
+
+    for (auto &frame : m_frames) frame.release();
+    m_frames.clear();
   }
   m_isOpened = false;
 }

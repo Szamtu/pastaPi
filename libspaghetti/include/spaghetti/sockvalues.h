@@ -43,7 +43,8 @@ enum class ValueType {
   eShapeVector,
   eDNNData,
   eDNNRect,
-  eDNNRectVector
+  eDNNRectVector,
+  eDataArray
 };
 
 using FloatVector = std::vector<double>;
@@ -52,6 +53,7 @@ using Shape = std::vector<cv::Point>;
 using ShapeVector = std::vector<std::vector<cv::Point>>;
 using StringVector = std::vector<std::string>;
 using DNNData = std::vector<cv::Mat>;
+using DataArray = std::vector<unsigned char>;
 
 typedef struct DNNRect {
   cv::Rect boundingBox{};
@@ -62,7 +64,7 @@ typedef struct DNNRect {
 using DNNRectVector = std::vector<DNNRect>;
 
 using Value = std::variant<bool, int32_t, double, FloatVector, std::string, StringVector, cv::Mat, cv::Point, Shape,
-                           ShapeVector, DNNData, DNNRect, DNNRectVector>;
+                           ShapeVector, DNNData, DNNRect, DNNRectVector, DataArray>;
 
 struct IOSocketFlags {
   enum Flags {
@@ -80,14 +82,16 @@ struct IOSocketFlags {
     eCanHoldDNNData = 1 << 11,
     eCanHoldDNNRect = 1 << 12,
     eCanHoldDNNRectVector = 1 << 13,
-    eCanChangeName = 1 << 14,
+    eCanHoldDataArray = 1 << 14,
+    eCanChangeName = 1 << 15,
     eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldFloatVector | eCanHoldString |
                         eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector | eCanHoldPoint | eCanHoldShape |
-                        eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect | eCanHoldDNNRectVector,
+                        eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect | eCanHoldDNNRectVector |
+                        eCanHoldDataArray,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
     eProtectedValuesFlags = eCanHoldFloatVector | eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector |
                             eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect |
-                            eCanHoldDNNRectVector,
+                            eCanHoldDNNRectVector | eCanHoldDataArray,
     eTimeStampedValues = eProtectedValuesFlags
   };
 };
