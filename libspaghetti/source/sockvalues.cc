@@ -116,6 +116,14 @@ ValueTypeDescription{
     "DNNRectVector",
     { { 119, 75, 170, 255 }, { 179, 135, 230, 255 } },
     DNNRectVector()
+},
+ValueTypeDescription{
+    ValueType::eDataArray,
+    IOSocketFlags::eCanHoldDataArray,
+    "data_array",
+    "DataArray",
+    { { 64, 99, 73, 255 }, { 22, 59, 32, 255 } },
+    DataArray()
 }
   // clang-format on
 };
