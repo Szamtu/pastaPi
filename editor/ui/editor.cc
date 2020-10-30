@@ -204,6 +204,7 @@ void Editor::populateLibrary()
 
     if (!category.empty()) {
       if (auto const it = PATH.find_first_of('/'); it != std::string::npos) category = PATH.substr(0, it);
+
       category[0] = static_cast<char>(std::toupper(category[0]));
     } else
       category = "Invalid packages";
@@ -233,8 +234,8 @@ void Editor::addPackage(QString const &a_category, QString const &a_filename, QS
 {
   auto categoryItem = m_ui->packagesContainer->getCathegory(a_category);
 
-  const bool INVALID = a_path.isEmpty();
-  auto const NAME = INVALID ? a_filename.right(a_filename.length() - a_filename.lastIndexOf('/') - 1) : a_path;
+  auto const NAME =
+      a_filename.mid(a_filename.lastIndexOf('/') + 1, a_filename.lastIndexOf('.') - a_filename.lastIndexOf('/') - 1);
   auto const item = new QTreeWidgetItem{ categoryItem };
   item->setText(0, NAME);
   item->setData(0, ElementsTree::eMetaDataIsPackage, true);
