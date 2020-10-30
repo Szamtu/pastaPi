@@ -200,14 +200,15 @@ void Editor::populateLibrary()
     std::string const FILENAME{ PACKAGE.first };
     std::string const PATH{ PACKAGE.second.path };
     std::string const ICON{ PACKAGE.second.icon };
-    std::string category{ PATH };
 
-    if (!category.empty()) {
-      if (auto const it = PATH.find_first_of('/'); it != std::string::npos) category = PATH.substr(0, it);
+    auto const PACKAGES_INDEX = PATH.find("packages/") + strlen("packages/");
+    auto const CATEGORY_LENG =
+        PATH.find_last_of('/') - PACKAGES_INDEX + 1 > 0 ? PATH.find_last_of('/') - PACKAGES_INDEX : 0;
+    std::string category{ PATH.substr(PACKAGES_INDEX, CATEGORY_LENG) };
 
-      category[0] = static_cast<char>(std::toupper(category[0]));
-    } else
-      category = "Invalid packages";
+    if (category.empty()) {
+      category = "Root";
+    }
 
     addPackage(QString::fromStdString(category), QString::fromStdString(FILENAME), QString::fromStdString(PATH),
                QString::fromStdString(ICON));
