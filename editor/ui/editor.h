@@ -27,6 +27,7 @@
 #include <QMainWindow>
 #include <QMap>
 
+#include <spaghetti/registry.h>
 #include <spaghettiui/editor_package.h>
 
 namespace Ui {
@@ -55,6 +56,7 @@ class Editor final : public QMainWindow, public EditorPackage {
   void populateLibrary();
   void addElement(QString const &a_category, QString const &a_name, QString const &a_type, QString const &a_icon);
   void addPackage(QString const &a_category, QString const &a_filename, QString const &a_path, QString const &a_icon);
+  void addPackage(Registry::PackageInfo const &a_package);
 
   void aboutToQuit();
 
