@@ -145,7 +145,7 @@ bool Element::addInput(ValueType const a_type, std::string const &a_name, uint64
   input.name = a_name;
   input.type = a_type;
   input.flags = a_flags;
-  if (!alwaysCalculate()) input.isMonitored = true;
+  input.isMonitored = true;
 
   resetIOSocketValue(input);
   m_inputs.emplace_back(input);
