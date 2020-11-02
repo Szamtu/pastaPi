@@ -22,6 +22,14 @@ ValueTypeDescription{
     0
 },
 ValueTypeDescription{
+    ValueType::eIntVector,
+    IOSocketFlags::eCanHoldIntVector,
+    "int_vector",
+    "IntVector",
+    { { 0, 120, 208, 255 }, { 0, 120, 208, 255 } },
+    IntVector()
+},
+ValueTypeDescription{
     ValueType::eFloat,
     IOSocketFlags::eCanHoldFloat,
     "float",

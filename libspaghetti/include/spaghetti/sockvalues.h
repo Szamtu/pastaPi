@@ -32,6 +32,7 @@ namespace spaghetti {
 enum class ValueType {
   eBool,
   eInt,
+  eIntVector,
   eFloat,
   eFloatVector,
   eString,
@@ -47,6 +48,7 @@ enum class ValueType {
   eDataArray
 };
 
+using IntVector = std::vector<int>;
 using FloatVector = std::vector<double>;
 using MatrixVector = std::vector<cv::Mat>;
 using Shape = std::vector<cv::Point>;
@@ -63,35 +65,36 @@ typedef struct DNNRect {
 
 using DNNRectVector = std::vector<DNNRect>;
 
-using Value = std::variant<bool, int32_t, double, FloatVector, std::string, StringVector, cv::Mat, cv::Point, Shape,
-                           ShapeVector, DNNData, DNNRect, DNNRectVector, DataArray>;
+using Value = std::variant<bool, int, IntVector, double, FloatVector, std::string, StringVector, cv::Mat, cv::Point,
+                           Shape, ShapeVector, DNNData, DNNRect, DNNRectVector, DataArray>;
 
 struct IOSocketFlags {
   enum Flags {
     eCanHoldBool = 1 << 0,
     eCanHoldInt = 1 << 1,
-    eCanHoldFloat = 1 << 2,
-    eCanHoldFloatVector = 1 << 3,
-    eCanHoldString = 1 << 4,
-    eCanHoldStringVector = 1 << 5,
-    eCanHoldMatrix = 1 << 6,
-    eCanHoldMatrixVector = 1 << 7,
-    eCanHoldPoint = 1 << 8,
-    eCanHoldShape = 1 << 9,
-    eCanHoldShapeVector = 1 << 10,
-    eCanHoldDNNData = 1 << 11,
-    eCanHoldDNNRect = 1 << 12,
-    eCanHoldDNNRectVector = 1 << 13,
-    eCanHoldDataArray = 1 << 14,
-    eCanChangeName = 1 << 15,
-    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldFloatVector | eCanHoldString |
-                        eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector | eCanHoldPoint | eCanHoldShape |
-                        eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect | eCanHoldDNNRectVector |
-                        eCanHoldDataArray,
+    eCanHoldIntVector = 1 << 2,
+    eCanHoldFloat = 1 << 3,
+    eCanHoldFloatVector = 1 << 4,
+    eCanHoldString = 1 << 5,
+    eCanHoldStringVector = 1 << 6,
+    eCanHoldMatrix = 1 << 7,
+    eCanHoldMatrixVector = 1 << 8,
+    eCanHoldPoint = 1 << 9,
+    eCanHoldShape = 1 << 10,
+    eCanHoldShapeVector = 1 << 11,
+    eCanHoldDNNData = 1 << 12,
+    eCanHoldDNNRect = 1 << 13,
+    eCanHoldDNNRectVector = 1 << 14,
+    eCanHoldDataArray = 1 << 15,
+    eCanChangeName = 1 << 16,
+    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldIntVector | eCanHoldFloat | eCanHoldFloatVector |
+                        eCanHoldString | eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector | eCanHoldPoint |
+                        eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect |
+                        eCanHoldDNNRectVector | eCanHoldDataArray,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
-    eProtectedValuesFlags = eCanHoldFloatVector | eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector |
-                            eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect |
-                            eCanHoldDNNRectVector | eCanHoldDataArray,
+    eProtectedValuesFlags = eCanHoldIntVector | eCanHoldFloatVector | eCanHoldStringVector | eCanHoldMatrix |
+                            eCanHoldMatrixVector | eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData |
+                            eCanHoldDNNRect | eCanHoldDNNRectVector | eCanHoldDataArray,
     eTimeStampedValues = eProtectedValuesFlags
   };
 };
