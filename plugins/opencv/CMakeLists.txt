@@ -49,6 +49,8 @@ set(SOURCES
     dnn/extract_rect/extract_rect.h
     dnn/unpack_rect/unpack_rect.cc
     dnn/unpack_rect/unpack_rect.h
+    dnn/dnn_simple_tracker/dnn_simple_tracker.cc
+    dnn/dnn_simple_tracker/dnn_simple_tracker.h
 
     opencv.cc
 )
