@@ -53,6 +53,9 @@ set(SOURCES
     values_ui/info_string_vector/info_string_vector.cc
     values_ui/info_string_vector/info_string_vector.h
 
+    values_ui/panel/panel.cc
+    values_ui/panel/panel.h
+
     values.cc
 )
 
