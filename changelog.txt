@@ -4,6 +4,9 @@ Changes:
 *  New Element: DNN simple tracker
 *  New Element: DNN draw tracker labels
 *  New Element: Panel
+*  New Data type: Cable
+*  New Element: Cable Input
+*  New Element: Cable Output
 *  Changed: Decreased ninimum scale level
 *  Bugfix: Displayed package name fix. Now it shows name instead of full path
 *  Bugfix: Package tree fix. Now package tree is generated "okay".

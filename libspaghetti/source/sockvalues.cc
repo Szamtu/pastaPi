@@ -132,6 +132,14 @@ ValueTypeDescription{
     "DataArray",
     { { 64, 99, 73, 255 }, { 22, 59, 32, 255 } },
     DataArray()
+},
+ValueTypeDescription{
+    ValueType::eCable,
+    IOSocketFlags::eCanHoldCable,
+    "cable",
+    "Cable",
+    { { 0, 0, 0, 255 }, { 255, 146, 3, 255 } },
+    Cable()
 }
   // clang-format on
 };

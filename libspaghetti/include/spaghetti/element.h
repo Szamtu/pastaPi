@@ -137,6 +137,23 @@ class SPAGHETTI_API Element {
       return outValue;
     }
 
+    Value getRawValue()
+    {
+      Value outValue;
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        outValue = value;
+        writeLock->unlock();
+      } else {
+        outValue = value;
+      }
+
+      valueChanged = false;
+      return outValue;
+    }
+
+    unsigned getRawValueIndex() const { return value.index(); }
+
     template<typename T>
     T getValueWithoutNotify() const
     {
