@@ -8,6 +8,7 @@ Changes:
 *  New Element: Cable Input
 *  New Element: Cable Output
 *  Changed: Decreased ninimum scale level
+*  Added optional support for TBB
 *  Bugfix: Displayed package name fix. Now it shows name instead of full path
 *  Bugfix: Package tree fix. Now package tree is generated "okay".
 *  Bugfix: Package update on save fix. Now the package list is updating when package is saved.

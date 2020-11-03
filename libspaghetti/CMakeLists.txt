@@ -55,6 +55,9 @@ target_compile_definitions(Spaghetti
   PRIVATE $<$<CONFIG:Debug>:${SPAGHETTI_DEFINITIONS_DEBUG}>
   PRIVATE $<$<CONFIG:Release>:${SPAGHETTI_DEFINITIONS_RELEASE}>
   )
+if(PASTAPI_BUILD_WITH_TBB)
+  add_compile_definitions(BUILD_WITH_TBB)
+endif ()
 target_compile_options(Spaghetti
   PRIVATE ${SPAGHETTI_FLAGS}
   PRIVATE ${SPAGHETTI_FLAGS_C}
@@ -75,6 +78,10 @@ target_include_directories(Spaghetti SYSTEM PRIVATE
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/vendor>
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/vendor/spdlog/include>
   )
+
+if(PASTAPI_BUILD_WITH_TBB)
+    target_link_options( Spaghetti PUBLIC -ltbb )
+endif ()
 
 target_link_libraries(Spaghetti
   PUBLIC ${CMAKE_THREAD_LIBS_INIT} opencv_core
