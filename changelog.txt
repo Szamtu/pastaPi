@@ -4,6 +4,7 @@ Changes:
 *  New Element: DNN simple tracker
 *  New Element: DNN draw tracker labels
 *  New Element: Panel
+*  Changed: Decreased ninimum scale level
 *  Bugfix: Displayed package name fix. Now it shows name instead of full path
 *  Bugfix: Package tree fix. Now package tree is generated "okay".
 *  Bugfix: Package update on save fix. Now the package list is updating when package is saved.
