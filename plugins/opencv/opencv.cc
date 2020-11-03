@@ -54,6 +54,7 @@
 #include "improc/resize/resize.h"
 
 #include "dnn/dnn_draw_labels/dnn_draw_labels.h"
+#include "dnn/dnn_draw_tracker_labels/dnn_draw_tracker_labels.h"
 #include "dnn/dnn_simple_tracker/dnn_simple_tracker.h"
 #include "dnn/dnn_threshold/dnn_threshold.h"
 #include "dnn/extract_rect/extract_rect.h"
@@ -98,4 +99,5 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::ExtractRect>("DNN extract rect", ":/unknown.png");
   a_registry.registerElement<elements::UnpackRect>("DNN unpack rect", ":/unknown.png");
   a_registry.registerElement<elements::DnnSimpleTracker>("DNN simple tracker", ":/unknown.png");
+  a_registry.registerElement<elements::DnnDrawTrackerLabels>("DNN draw tracker labels", ":/unknown.png");
 }

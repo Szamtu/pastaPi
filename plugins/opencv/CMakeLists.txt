@@ -51,6 +51,8 @@ set(SOURCES
     dnn/unpack_rect/unpack_rect.h
     dnn/dnn_simple_tracker/dnn_simple_tracker.cc
     dnn/dnn_simple_tracker/dnn_simple_tracker.h
+    dnn/dnn_draw_tracker_labels/dnn_draw_tracker_labels.cc
+    dnn/dnn_draw_tracker_labels/dnn_draw_tracker_labels.h
 
     opencv.cc
 )
