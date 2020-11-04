@@ -32,6 +32,7 @@ if (PASTAPI_BUILD_EDITOR)
   add_subdirectory(editor)
   add_subdirectory(libspaghettiui)
   set(BUILD_PLUGINS_GUI ON)
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/packages)
 endif ()
 
 if (PASTAPI_BUILD_PLUGINS)
