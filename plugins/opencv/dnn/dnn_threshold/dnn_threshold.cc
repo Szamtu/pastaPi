@@ -31,13 +31,14 @@ using namespace std;
 DnnThreshold::DnnThreshold()
   : Element{}
 {
-  setMinInputs(4);
-  setMaxInputs(4);
+  setMinInputs(5);
+  setMaxInputs(5);
   setMinOutputs(1);
   setMaxOutputs(1);
 
   addInput(ValueType::eDNNData, "DNNData", IOSocket::eCanHoldDNNData | IOSocket::eCanChangeName);
-  addInput(ValueType::eMatrix, "Frame", IOSocket::eCanHoldMatrix | IOSocket::eCanChangeName);
+  addInput(ValueType::eInt, "Frame width", IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
+  addInput(ValueType::eInt, "Frame height", IOSocket::eCanHoldInt | IOSocket::eCanChangeName);
   addInput(ValueType::eFloat, "Confidence threshold", IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
   addInput(ValueType::eFloat, "NMS threshold", IOSocket::eCanHoldFloat | IOSocket::eCanChangeName);
 
@@ -47,11 +48,12 @@ DnnThreshold::DnnThreshold()
 void DnnThreshold::calculate()
 {
   auto dnnData = m_inputs[0].getValue<DNNData>();
-  auto frame = m_inputs[1].getValue<cv::Mat>();
-  auto confidenceThreshold = m_inputs[2].getValue<double>();
-  auto nmsThreshold = m_inputs[3].getValue<double>();
+  auto frameWidth = m_inputs[1].getValue<int>();
+  auto frameHeight = m_inputs[2].getValue<int>();
+  auto confidenceThreshold = m_inputs[3].getValue<double>();
+  auto nmsThreshold = m_inputs[4].getValue<double>();
 
-  if (dnnData.size() && frame.size) {
+  if (dnnData.size() && frameWidth > 0 && frameHeight > 0) {
     vector<int> classIds;
     vector<float> confidences;
     vector<cv::Rect> boxes;
@@ -66,10 +68,10 @@ void DnnThreshold::calculate()
 
         minMaxLoc(scores, nullptr, &confidence, nullptr, &classIdPoint);
         if (confidence > confidenceThreshold) {
-          int centerX = static_cast<int>((data[0] * frame.cols));
-          int centerY = static_cast<int>((data[1] * frame.rows));
-          int width = static_cast<int>((data[2] * frame.cols));
-          int height = static_cast<int>((data[3] * frame.rows));
+          int centerX = static_cast<int>((data[0] * frameWidth));
+          int centerY = static_cast<int>((data[1] * frameHeight));
+          int width = static_cast<int>((data[2] * frameWidth));
+          int height = static_cast<int>((data[3] * frameHeight));
           int left = centerX - width / 2;
           int top = centerY - height / 2;
 

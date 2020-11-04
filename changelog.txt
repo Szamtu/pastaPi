@@ -7,6 +7,7 @@ Changes:
 *  New Data type: Cable
 *  New Element: Cable Input
 *  New Element: Cable Output
+*  Changed: Element DNN threshold now takes image size instead of image
 *  Changed: Decreased ninimum scale level
 *  Added optional support for TBB
 *  Bugfix: Displayed package name fix. Now it shows name instead of full path
