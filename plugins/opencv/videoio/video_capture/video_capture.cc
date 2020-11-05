@@ -23,8 +23,6 @@
 #include "video_capture.h"
 #include <chrono>
 
-auto constexpr UNUSED_TIME{ std::chrono::microseconds(200) };
-
 namespace spaghetti::elements {
 VideoCapture::VideoCapture()
   : Element{}
@@ -174,8 +172,6 @@ void CapAsync::capture(CapAsync *a_context)
       } else {
         a_context->m_killThread = true;
       }
-    } else {
-      std::this_thread::sleep_for(UNUSED_TIME);
     }
   }
 }
