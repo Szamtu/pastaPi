@@ -9,6 +9,7 @@ Changes:
 *  New Element: Cable Output
 *  Changed: Element DNN threshold now takes image size instead of image
 *  Changed: Decreased ninimum scale level
+*  Changed: Copy protected value only when it changed
 *  Added optional support for TBB
 *  Bugfix: Displayed package name fix. Now it shows name instead of full path
 *  Bugfix: Package tree fix. Now package tree is generated "okay".

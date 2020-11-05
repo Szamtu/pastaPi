@@ -199,10 +199,12 @@ class SPAGHETTI_API Element {
       }
 
       if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
-        writeLock->lock();
-        timeStamp = a_from.timeStamp;
-        value = a_from.value;
-        writeLock->unlock();
+        if (valueChanged) {
+          writeLock->lock();
+          timeStamp = a_from.timeStamp;
+          value = a_from.value;
+          writeLock->unlock();
+        }
       } else {
         value = a_from.value;
       }
