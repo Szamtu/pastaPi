@@ -146,7 +146,7 @@ bool CapAsync::hasNewFrame()
 cv::Mat CapAsync::grabFrame()
 {
   m_hasNewFrame = false;
-  return m_frame.clone();
+  return m_frame;
 }
 
 void CapAsync::runCapture()
@@ -166,7 +166,7 @@ void CapAsync::capture(CapAsync *a_context)
       if (a_context->m_cap.isOpened()) {
         result = a_context->m_cap.read(image);
         if (result) {
-          a_context->m_frame = image.clone();
+          a_context->m_frame = image;
           a_context->m_hasNewFrame = true;
         } else {
           a_context->m_killThread = true;
