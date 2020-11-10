@@ -6,6 +6,9 @@ project(libSpaghettiUI
 )
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 set(LIBSPAGHETTIUI_PUBLIC_COMMON_HEADERS
   include/spaghettiui/api_ui.h

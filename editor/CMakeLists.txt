@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(PastaPiEditor VERSION ${PastaPi_VERSION} LANGUAGES C CXX)
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 set(UI
   ui/aboutpastapi.cc
