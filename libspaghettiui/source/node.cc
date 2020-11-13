@@ -25,12 +25,15 @@
 #include <bitset>
 #include <cmath>
 #include <iostream>
+#include <string>
 
 #include <QApplication>
+#include <QCheckBox>
 #include <QComboBox>
 #include <QDebug>
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QString>
 #include <QTableWidget>
 #include <QTreeWidget>
 
@@ -733,6 +736,58 @@ void Node::setSocketType(IOSocketsType const a_socketType, uint64_t const a_sock
   m_element->setIOValueType(INPUTS, a_socketId, a_type);
 
   socket->setValueType(a_type);
+}
+
+void Node::addPropertyString(QString const a_propertyName, std::string *a_destMember)
+{
+  auto const ROW = addPropertyRow(a_propertyName);
+
+  QLineEdit *edit = new QLineEdit{};
+  m_properties->setCellWidget(ROW, 1, edit);
+  QObject::connect(edit, &QLineEdit::textChanged,
+                   [a_destMember](const QString &a_text) { *a_destMember = a_text.toStdString(); });
+  edit->setText(a_destMember->c_str());
+}
+
+void Node::addPropertyInt(QString const a_propertyName, int *a_destMember)
+{
+  auto const ROW = addPropertyRow(a_propertyName);
+
+  QSpinBox *spinbox = new QSpinBox{};
+  m_properties->setCellWidget(ROW, 1, spinbox);
+  QObject::connect(spinbox, QOverload<int>::of(&QSpinBox::valueChanged),
+                   [a_destMember](int a_value) { *a_destMember = a_value; });
+}
+
+void Node::addPropertyBool(QString const a_propertyName, bool *a_destMember)
+{
+  auto const ROW = addPropertyRow(a_propertyName);
+
+  QCheckBox *checkbox = new QCheckBox{};
+  m_properties->setCellWidget(ROW, 1, checkbox);
+  QObject::connect(checkbox, &QCheckBox::toggled, [a_destMember](bool a_value) { *a_destMember = a_value; });
+}
+
+void Node::addPropertyDouble(QString const a_propertyName, double *a_destMember)
+{
+  auto const ROW = addPropertyRow(a_propertyName);
+
+  QDoubleSpinBox *spinbox = new QDoubleSpinBox{};
+  m_properties->setCellWidget(ROW, 1, spinbox);
+  QObject::connect(spinbox, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+                   [a_destMember](double a_value) { *a_destMember = a_value; });
+}
+
+int Node::addPropertyRow(QString const a_propertyName)
+{
+  int row = m_properties->rowCount();
+  m_properties->insertRow(row);
+
+  QTableWidgetItem *item = new QTableWidgetItem{ a_propertyName };
+  item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+  m_properties->setItem(row, 0, item);
+
+  return row;
 }
 
 void Node::updateOutputs()
