@@ -1,5 +1,7 @@
 Version 0.12.0
 Changes:
+*  New Data type: Dnn Path Vector
+*  New Data type: Dnn Path
 *  New Data type: Int Vector
 *  New Element: DNN simple tracker
 *  New Element: DNN draw tracker labels

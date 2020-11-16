@@ -47,6 +47,8 @@ enum class ValueType {
   eDNNRect,
   eDNNRectVector,
   eDataArray,
+  eDNNPath,
+  eDNNPathVector,
   eCable
 };
 
@@ -65,11 +67,17 @@ typedef struct DNNRect {
   int classId{};
   float confidence{};
 } DNNRect;
-
 using DNNRectVector = std::vector<DNNRect>;
 
-using Value = std::variant<bool, int, IntVector, double, FloatVector, std::string, StringVector, cv::Mat, cv::Point,
-                           Shape, ShapeVector, DNNData, DNNRect, DNNRectVector, DataArray, Cable>;
+typedef struct DNNPath {
+  int objectID{};
+  DNNRectVector path{};
+} DNNPath;
+using DNNPathVector = std::vector<DNNPath>;
+
+using Value =
+    std::variant<bool, int, IntVector, double, FloatVector, std::string, StringVector, cv::Mat, cv::Point, Shape,
+                 ShapeVector, DNNData, DNNRect, DNNRectVector, DataArray, DNNPath, DNNPathVector, Cable>;
 
 struct IOSocketFlags {
   enum Flags {
@@ -89,16 +97,19 @@ struct IOSocketFlags {
     eCanHoldDNNRect = 1 << 13,
     eCanHoldDNNRectVector = 1 << 14,
     eCanHoldDataArray = 1 << 15,
-    eCanHoldCable = 1 << 16,
-    eCanChangeName = 1 << 17,
+    eCanHoldDNNPath = 1 << 16,
+    eCanHoldDNNPathVector = 1 << 17,
+    eCanHoldCable = 1 << 18,
+    eCanChangeName = 1 << 19,
     eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldIntVector | eCanHoldFloat | eCanHoldFloatVector |
                         eCanHoldString | eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector | eCanHoldPoint |
                         eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect |
-                        eCanHoldDNNRectVector | eCanHoldDataArray,
+                        eCanHoldDNNRectVector | eCanHoldDataArray | eCanHoldDNNPath | eCanHoldDNNPathVector,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
     eProtectedValuesFlags = eCanHoldIntVector | eCanHoldFloatVector | eCanHoldStringVector | eCanHoldMatrix |
                             eCanHoldMatrixVector | eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData |
-                            eCanHoldDNNRect | eCanHoldDNNRectVector | eCanHoldDataArray | eCanHoldCable,
+                            eCanHoldDNNRect | eCanHoldDNNRectVector | eCanHoldDataArray | eCanHoldDNNPath |
+                            eCanHoldDNNPathVector | eCanHoldCable,
     eTimeStampedValues = eProtectedValuesFlags
   };
 };

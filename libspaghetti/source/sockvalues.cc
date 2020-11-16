@@ -134,6 +134,22 @@ ValueTypeDescription{
     DataArray()
 },
 ValueTypeDescription{
+    ValueType::eDNNPath,
+    IOSocketFlags::eCanHoldDNNPath,
+    "dnn_path",
+    "DNNPath",
+    { { 202, 250, 228, 255 }, { 202, 250, 228, 255 } },
+    DNNPath()
+},
+ValueTypeDescription{
+    ValueType::eDNNPathVector,
+    IOSocketFlags::eCanHoldDNNPathVector,
+    "dnn_path_vector",
+    "DNNPathVector",
+    { { 113, 145, 130, 255 }, { 113, 145, 130, 255 } },
+    DNNPathVector()
+},
+ValueTypeDescription{
     ValueType::eCable,
     IOSocketFlags::eCanHoldCable,
     "cable",
