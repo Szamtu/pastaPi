@@ -150,6 +150,22 @@ ValueTypeDescription{
     DNNPathVector()
 },
 ValueTypeDescription{
+    ValueType::eDNNPathInfo,
+    IOSocketFlags::eCanHoldDNNPathInfo,
+    "dnn_path_info",
+    "DNNPathInfo",
+    { { 199, 142, 28, 255 }, { 199, 142, 28, 255 } },
+    DNNPathInfo()
+},
+ValueTypeDescription{
+    ValueType::eDNNPathInfoVector,
+    IOSocketFlags::eCanHoldDNNPathInfoVector,
+    "dnn_path_info_vector",
+    "DNNPathInfoVector",
+    { { 128, 91, 18, 255 }, { 128, 91, 18, 255 } },
+    DNNPathInfoVector()
+},
+ValueTypeDescription{
     ValueType::eCable,
     IOSocketFlags::eCanHoldCable,
     "cable",
