@@ -78,6 +78,7 @@ typedef struct DNNPath {
 using DNNPathVector = std::vector<DNNPath>;
 
 typedef struct DNNPathInfo {
+  int trackID{};
   int trackLength{};
   double avgSpeed{};
   int minSpeed{};
