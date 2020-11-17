@@ -81,8 +81,8 @@ typedef struct DNNPathInfo {
   int trackID{};
   int trackLength{};
   double avgSpeed{};
-  int minSpeed{};
-  int maxSpeed{};
+  double minSpeed{};
+  double maxSpeed{};
   double avgLength{};
   int minLength{};
   int maxLength{};
