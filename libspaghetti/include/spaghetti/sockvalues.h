@@ -92,7 +92,11 @@ typedef struct DNNPathInfo {
   double avgRatio{};
   double minRatio{};
   double maxRatio{};
+  double avgPropability{};
+  double minPropability{};
+  double maxPropability{};
   int direction{};
+  std::string dest{};
 } DNNPathInfo;
 using DNNPathInfoVector = std::vector<DNNPathInfo>;
 
