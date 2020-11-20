@@ -84,11 +84,11 @@ typedef struct DNNPathInfo {
   double minSpeed{};
   double maxSpeed{};
   double avgLength{};
-  int minLength{};
-  int maxLength{};
+  double minLength{};
+  double maxLength{};
   double avgHeight{};
-  int minHeight{};
-  int maxHeight{};
+  double minHeight{};
+  double maxHeight{};
   double avgRatio{};
   double minRatio{};
   double maxRatio{};
