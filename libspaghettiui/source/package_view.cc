@@ -399,7 +399,7 @@ void PackageView::wheelEvent(QWheelEvent *a_event)
     qreal const factor{ 1.0 + static_cast<qreal>(m_scheduledScalings) / 300.0 };
     QMatrix temp{ matrix() };
     temp.scale(factor, factor);
-    if (temp.m11() >= 0.2 && temp.m11() <= 4.0) scale(factor, factor);
+    if (temp.m11() >= 0.05 && temp.m11() <= 4.0) scale(factor, factor);
   });
   connect(animation, &QTimeLine::finished, [&]() {
     if (m_scheduledScalings > 0)

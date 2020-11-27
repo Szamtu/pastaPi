@@ -23,8 +23,6 @@
 #include "video_capture.h"
 #include <chrono>
 
-auto constexpr UNUSED_TIME{ std::chrono::microseconds(200) };
-
 namespace spaghetti::elements {
 VideoCapture::VideoCapture()
   : Element{}
@@ -146,7 +144,7 @@ bool CapAsync::hasNewFrame()
 cv::Mat CapAsync::grabFrame()
 {
   m_hasNewFrame = false;
-  return m_frame.clone();
+  return m_frame;
 }
 
 void CapAsync::runCapture()
@@ -166,7 +164,7 @@ void CapAsync::capture(CapAsync *a_context)
       if (a_context->m_cap.isOpened()) {
         result = a_context->m_cap.read(image);
         if (result) {
-          a_context->m_frame = image.clone();
+          a_context->m_frame = image;
           a_context->m_hasNewFrame = true;
         } else {
           a_context->m_killThread = true;
@@ -174,8 +172,6 @@ void CapAsync::capture(CapAsync *a_context)
       } else {
         a_context->m_killThread = true;
       }
-    } else {
-      std::this_thread::sleep_for(UNUSED_TIME);
     }
   }
 }

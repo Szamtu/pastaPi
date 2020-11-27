@@ -23,6 +23,10 @@
 #include <fstream>
 #include <iostream>
 #include <string_view>
+#ifdef BUILD_WITH_TBB
+#include <algorithm>
+#include <execution>
+#endif
 
 #include "spaghetti/package.h"
 
@@ -189,6 +193,25 @@ void Package::calculate()
     targetIO[connection.to_socket].copyValue(SOURCE_IO[connection.from_socket]);
   }
 
+#ifdef BUILD_WITH_TBB
+  std::for_each(std::execution::par_unseq, std::begin(m_elements), std::end(m_elements), [&](auto element) {
+    if (element && element != this) {
+      element->update(m_delta);
+      if (element->alwaysCalculate()) {
+        element->calculate();
+      } else {
+        auto IT = std::find_if(
+            std::begin(element->inputs()), std::end(element->inputs()),
+            [](auto &input) -> auto { return input.valueChanged; });
+
+        if (IT != std::end(element->inputs())) {
+          element->calculate();
+          for (auto &input : element->inputs()) input.valueChanged = false;
+        }
+      }
+    }
+  });
+#else
   for (auto &&element : m_elements) {
     if (!element || element == this) continue;
 
@@ -206,6 +229,7 @@ void Package::calculate()
       }
     }
   }
+#endif
 }
 
 Element *Package::add(string::hash_t const a_hash)

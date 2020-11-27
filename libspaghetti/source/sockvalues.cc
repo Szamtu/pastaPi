@@ -22,6 +22,14 @@ ValueTypeDescription{
     0
 },
 ValueTypeDescription{
+    ValueType::eIntVector,
+    IOSocketFlags::eCanHoldIntVector,
+    "int_vector",
+    "IntVector",
+    { { 0, 120, 208, 255 }, { 0, 120, 208, 255 } },
+    IntVector()
+},
+ValueTypeDescription{
     ValueType::eFloat,
     IOSocketFlags::eCanHoldFloat,
     "float",
@@ -124,6 +132,46 @@ ValueTypeDescription{
     "DataArray",
     { { 64, 99, 73, 255 }, { 22, 59, 32, 255 } },
     DataArray()
+},
+ValueTypeDescription{
+    ValueType::eDNNPath,
+    IOSocketFlags::eCanHoldDNNPath,
+    "dnn_path",
+    "DNNPath",
+    { { 202, 250, 228, 255 }, { 202, 250, 228, 255 } },
+    DNNPath()
+},
+ValueTypeDescription{
+    ValueType::eDNNPathVector,
+    IOSocketFlags::eCanHoldDNNPathVector,
+    "dnn_path_vector",
+    "DNNPathVector",
+    { { 113, 145, 130, 255 }, { 113, 145, 130, 255 } },
+    DNNPathVector()
+},
+ValueTypeDescription{
+    ValueType::eDNNPathInfo,
+    IOSocketFlags::eCanHoldDNNPathInfo,
+    "dnn_path_info",
+    "DNNPathInfo",
+    { { 199, 142, 28, 255 }, { 199, 142, 28, 255 } },
+    DNNPathInfo()
+},
+ValueTypeDescription{
+    ValueType::eDNNPathInfoVector,
+    IOSocketFlags::eCanHoldDNNPathInfoVector,
+    "dnn_path_info_vector",
+    "DNNPathInfoVector",
+    { { 128, 91, 18, 255 }, { 128, 91, 18, 255 } },
+    DNNPathInfoVector()
+},
+ValueTypeDescription{
+    ValueType::eCable,
+    IOSocketFlags::eCanHoldCable,
+    "cable",
+    "Cable",
+    { { 0, 0, 0, 255 }, { 255, 146, 3, 255 } },
+    Cable()
 }
   // clang-format on
 };

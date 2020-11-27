@@ -25,6 +25,7 @@
 #define SPAGHETTI_SOCKVALUES_H
 
 #include <spaghetti/api.h>
+#include <any>
 #include <opencv2/core/mat.hpp>
 #include <variant>
 
@@ -32,6 +33,7 @@ namespace spaghetti {
 enum class ValueType {
   eBool,
   eInt,
+  eIntVector,
   eFloat,
   eFloatVector,
   eString,
@@ -44,9 +46,15 @@ enum class ValueType {
   eDNNData,
   eDNNRect,
   eDNNRectVector,
-  eDataArray
+  eDataArray,
+  eDNNPath,
+  eDNNPathVector,
+  eDNNPathInfo,
+  eDNNPathInfoVector,
+  eCable
 };
 
+using IntVector = std::vector<int>;
 using FloatVector = std::vector<double>;
 using MatrixVector = std::vector<cv::Mat>;
 using Shape = std::vector<cv::Point>;
@@ -54,44 +62,82 @@ using ShapeVector = std::vector<std::vector<cv::Point>>;
 using StringVector = std::vector<std::string>;
 using DNNData = std::vector<cv::Mat>;
 using DataArray = std::vector<unsigned char>;
+using Cable = std::vector<std::any>;
 
 typedef struct DNNRect {
   cv::Rect boundingBox{};
   int classId{};
   float confidence{};
 } DNNRect;
-
 using DNNRectVector = std::vector<DNNRect>;
 
-using Value = std::variant<bool, int32_t, double, FloatVector, std::string, StringVector, cv::Mat, cv::Point, Shape,
-                           ShapeVector, DNNData, DNNRect, DNNRectVector, DataArray>;
+typedef struct DNNPath {
+  int objectID{};
+  DNNRectVector path{};
+} DNNPath;
+using DNNPathVector = std::vector<DNNPath>;
+
+typedef struct DNNPathInfo {
+  int trackID{};
+  int trackLength{};
+  double avgSpeed{};
+  double minSpeed{};
+  double maxSpeed{};
+  double avgLength{};
+  double minLength{};
+  double maxLength{};
+  double avgHeight{};
+  double minHeight{};
+  double maxHeight{};
+  double avgRatio{};
+  double minRatio{};
+  double maxRatio{};
+  double avgPropability{};
+  double minPropability{};
+  double maxPropability{};
+  int direction{};
+  std::string dest{};
+} DNNPathInfo;
+using DNNPathInfoVector = std::vector<DNNPathInfo>;
+
+using Value = std::variant<bool, int, IntVector, double, FloatVector, std::string, StringVector, cv::Mat, cv::Point,
+                           Shape, ShapeVector, DNNData, DNNRect, DNNRectVector, DataArray, DNNPath, DNNPathVector,
+                           DNNPathInfo, DNNPathInfoVector, Cable>;
 
 struct IOSocketFlags {
   enum Flags {
     eCanHoldBool = 1 << 0,
     eCanHoldInt = 1 << 1,
-    eCanHoldFloat = 1 << 2,
-    eCanHoldFloatVector = 1 << 3,
-    eCanHoldString = 1 << 4,
-    eCanHoldStringVector = 1 << 5,
-    eCanHoldMatrix = 1 << 6,
-    eCanHoldMatrixVector = 1 << 7,
-    eCanHoldPoint = 1 << 8,
-    eCanHoldShape = 1 << 9,
-    eCanHoldShapeVector = 1 << 10,
-    eCanHoldDNNData = 1 << 11,
-    eCanHoldDNNRect = 1 << 12,
-    eCanHoldDNNRectVector = 1 << 13,
-    eCanHoldDataArray = 1 << 14,
-    eCanChangeName = 1 << 15,
-    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldFloat | eCanHoldFloatVector | eCanHoldString |
-                        eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector | eCanHoldPoint | eCanHoldShape |
-                        eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect | eCanHoldDNNRectVector |
-                        eCanHoldDataArray,
+    eCanHoldIntVector = 1 << 2,
+    eCanHoldFloat = 1 << 3,
+    eCanHoldFloatVector = 1 << 4,
+    eCanHoldString = 1 << 5,
+    eCanHoldStringVector = 1 << 6,
+    eCanHoldMatrix = 1 << 7,
+    eCanHoldMatrixVector = 1 << 8,
+    eCanHoldPoint = 1 << 9,
+    eCanHoldShape = 1 << 10,
+    eCanHoldShapeVector = 1 << 11,
+    eCanHoldDNNData = 1 << 12,
+    eCanHoldDNNRect = 1 << 13,
+    eCanHoldDNNRectVector = 1 << 14,
+    eCanHoldDataArray = 1 << 15,
+    eCanHoldDNNPath = 1 << 16,
+    eCanHoldDNNPathVector = 1 << 17,
+    eCanHoldDNNPathInfo = 1 << 18,
+    eCanHoldDNNPathInfoVector = 1 << 19,
+    eCanHoldCable = 1 << 20,
+    eCanChangeName = 1 << 21,
+    eCanHoldAllValues = eCanHoldBool | eCanHoldInt | eCanHoldIntVector | eCanHoldFloat | eCanHoldFloatVector |
+                        eCanHoldString | eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector | eCanHoldPoint |
+                        eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect |
+                        eCanHoldDNNRectVector | eCanHoldDataArray | eCanHoldDNNPath | eCanHoldDNNPathVector |
+                        eCanHoldDNNPathInfo | eCanHoldDNNPathInfoVector,
     eDefaultFlags = eCanHoldAllValues | eCanChangeName,
-    eProtectedValuesFlags = eCanHoldFloatVector | eCanHoldStringVector | eCanHoldMatrix | eCanHoldMatrixVector |
-                            eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData | eCanHoldDNNRect |
-                            eCanHoldDNNRectVector | eCanHoldDataArray,
+    eProtectedValuesFlags = eCanHoldIntVector | eCanHoldFloatVector | eCanHoldStringVector | eCanHoldMatrix |
+                            eCanHoldMatrixVector | eCanHoldShape | eCanHoldShapeVector | eCanHoldDNNData |
+                            eCanHoldDNNRect | eCanHoldDNNRectVector | eCanHoldDataArray | eCanHoldDNNPath |
+                            eCanHoldDNNPathVector | eCanHoldDNNPathInfo | eCanHoldDNNPathInfoVector | eCanHoldCable,
     eTimeStampedValues = eProtectedValuesFlags
   };
 };

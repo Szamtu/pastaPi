@@ -46,7 +46,6 @@
 #include <vector>
 
 #include <spaghetti/package.h>
-#include <spaghetti/registry.h>
 #include <spaghetti/version.h>
 #include <spaghettiui/colors.h>
 #include <spaghettiui/link_item.h>
@@ -197,19 +196,7 @@ void Editor::populateLibrary()
 
   auto const &PACKAGES = REGISTRY.packages();
   for (auto const &PACKAGE : PACKAGES) {
-    std::string const FILENAME{ PACKAGE.first };
-    std::string const PATH{ PACKAGE.second.path };
-    std::string const ICON{ PACKAGE.second.icon };
-    std::string category{ PATH };
-
-    if (!category.empty()) {
-      if (auto const it = PATH.find_first_of('/'); it != std::string::npos) category = PATH.substr(0, it);
-      category[0] = static_cast<char>(std::toupper(category[0]));
-    } else
-      category = "Invalid packages";
-
-    addPackage(QString::fromStdString(category), QString::fromStdString(FILENAME), QString::fromStdString(PATH),
-               QString::fromStdString(ICON));
+    addPackage(PACKAGE.second);
   }
 
   m_ui->packagesContainer->sortItems(0, Qt::AscendingOrder);
@@ -233,8 +220,8 @@ void Editor::addPackage(QString const &a_category, QString const &a_filename, QS
 {
   auto categoryItem = m_ui->packagesContainer->getCathegory(a_category);
 
-  const bool INVALID = a_path.isEmpty();
-  auto const NAME = INVALID ? a_filename.right(a_filename.length() - a_filename.lastIndexOf('/') - 1) : a_path;
+  auto const NAME =
+      a_filename.mid(a_filename.lastIndexOf('/') + 1, a_filename.lastIndexOf('.') - a_filename.lastIndexOf('/') - 1);
   auto const item = new QTreeWidgetItem{ categoryItem };
   item->setText(0, NAME);
   item->setData(0, ElementsTree::eMetaDataIsPackage, true);
@@ -243,6 +230,25 @@ void Editor::addPackage(QString const &a_category, QString const &a_filename, QS
   item->setData(0, ElementsTree::eMetaDataIcon, a_icon);
   item->setData(0, ElementsTree::eMetaDataFilename, a_filename);
   item->setIcon(0, QIcon(a_icon));
+}
+
+void Editor::addPackage(Registry::PackageInfo const &a_package)
+{
+  std::string const PATH{ a_package.path };
+  std::string const FILENAME{ a_package.filename };
+  std::string const ICON{ a_package.icon };
+
+  auto const PACKAGES_INDEX = PATH.find("packages/") + strlen("packages/");
+  auto const CATEGORY_LENG =
+      PATH.find_last_of('/') - PACKAGES_INDEX + 1 > 0 ? PATH.find_last_of('/') - PACKAGES_INDEX : 0;
+  std::string category{ PATH.substr(PACKAGES_INDEX, CATEGORY_LENG) };
+
+  if (category.empty()) {
+    category = "Root";
+  }
+
+  addPackage(QString::fromStdString(category), QString::fromStdString(FILENAME), QString::fromStdString(PATH),
+             QString::fromStdString(ICON));
 }
 
 void Editor::aboutToQuit() {}
@@ -398,6 +404,7 @@ void Editor::savePackageView(bool const a_saveAs)
   assert(m_packageViewIndex >= 0);
 
   auto const packageView = packageViewForIndex(m_packageViewIndex);
+  bool addToList{ false };
 
   if (a_saveAs || packageView->filename().isEmpty()) {
     foreach (PackageView *temp, this->findChildren<PackageView *>())
@@ -414,9 +421,19 @@ void Editor::savePackageView(bool const a_saveAs)
     packageView->setFilename(filename);
     QDir const packagesDir{ PACKAGES_DIR };
     m_ui->tabWidget->setTabText(m_packageViewIndex, packagesDir.relativeFilePath(filename));
+    addToList = true;
   }
 
   packageView->save();
+
+  if (addToList) {
+    auto &registry = Registry::get();
+    registry.loadPackages();
+
+    auto const &PACKAGE = registry.packages().at(packageView->filename().toStdString());
+    addPackage(PACKAGE);
+    m_ui->packagesContainer->sortItems(0, Qt::AscendingOrder);
+  }
 }
 
 void Editor::closePackageView(int const a_index)

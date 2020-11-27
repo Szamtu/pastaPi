@@ -116,6 +116,15 @@ class SPAGHETTI_API_UI Node : public QGraphicsItem {
   void removeSocket(SocketType const a_type);
   void setSocketType(IOSocketsType const a_socketType, uint64_t const a_socketId, ValueType const a_type);
 
+ public:
+  void addPropertyString(QString const a_propertyName, std::string *a_destMember);
+  void addPropertyInt(QString const a_propertyName, int *a_destMember);
+  void addPropertyBool(QString const a_propertyName, bool *a_destMember);
+  void addPropertyDouble(QString const a_propertyName, double *a_destMember);
+
+ private:
+  int addPropertyRow(QString const a_propertyName);
+
  protected:
   void setCentralWidget(QGraphicsItem *a_centralWidget);
   void propertiesInsertTitle(QString const &a_title);

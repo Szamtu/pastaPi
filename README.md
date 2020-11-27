@@ -18,22 +18,30 @@
 
 **Last changes:**  
 
-**Version 0.11.0**  
-Added YOLOv3 object detection.  
+**Version 0.12.0**  
+DNN and general purpose features.  
   
 **Changes:**
-*  Added DNNData data type
-*  New element: YOLOv3
-*  New element: Threshold element
-*  New element: Read classnames
-*  New element: Draw labels
-*  Added MatrixVector data type
-*  New element: Video bufer
-*  Bugfix: disconnecting package IO from elements
-*  New element: Find class
-*  New element: Extract rect
-*  New element: Unpack rect
-*  Added FloatVector data type
+*  New Data type: Dnn Path Info Vector
+*  New Data type: Dnn Path Info
+*  New Data type: Dnn Path Vector
+*  New Data type: Dnn Path
+*  New Data type: Int Vector
+*  New Element: DNN simple tracker
+*  New Element: DNN draw tracker labels
+*  New Element: Panel
+*  New Data type: Cable
+*  New Element: Cable Input
+*  New Element: Cable Output
+*  New Optional Plugin: tkDNN Yolo
+*  Changed: Element DNN threshold now takes image size instead of image
+*  Changed: Decreased ninimum scale level
+*  Changed: Copy protected value only when it changed
+*  Added optional support for TBB
+*  Bugfix: Displayed package name fix. Now it shows name instead of full path
+*  Bugfix: Package tree fix. Now package tree is generated "okay".
+*  Bugfix: Package update on save fix. Now the package list is updating when package is saved.
+*  Bugfix: Package in Package bugfix. Now packeges inside other packages recalculate properly.
   
 **For more please check changelog.txt file**  
   

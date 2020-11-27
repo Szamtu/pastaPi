@@ -137,6 +137,23 @@ class SPAGHETTI_API Element {
       return outValue;
     }
 
+    Value getRawValue()
+    {
+      Value outValue;
+      if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
+        writeLock->lock();
+        outValue = value;
+        writeLock->unlock();
+      } else {
+        outValue = value;
+      }
+
+      valueChanged = false;
+      return outValue;
+    }
+
+    unsigned getRawValueIndex() const { return value.index(); }
+
     template<typename T>
     T getValueWithoutNotify() const
     {
@@ -172,22 +189,22 @@ class SPAGHETTI_API Element {
     {
       if (isMonitored) {
         if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eTimeStampedValues)) {
-          if (timeStamp == a_from.timeStamp) {
-            valueChanged = false;
-          } else {
+          if (timeStamp != a_from.timeStamp) {
             timeStamp = a_from.timeStamp;
             valueChanged = true;
           }
-
-        } else {
-          valueChanged = !ValueDescription::compareValues(value, a_from.value, type);
+        } else if (!ValueDescription::compareValues(value, a_from.value, type)) {
+          valueChanged = true;
         }
       }
 
       if (ValueDescription::isTypeAlowed(type, IOSocketFlags::eProtectedValuesFlags)) {
-        writeLock->lock();
-        value = a_from.value;
-        writeLock->unlock();
+        if (valueChanged) {
+          writeLock->lock();
+          timeStamp = a_from.timeStamp;
+          value = a_from.value;
+          writeLock->unlock();
+        }
       } else {
         value = a_from.value;
       }
@@ -311,7 +328,7 @@ class SPAGHETTI_API Element {
   uint64_t m_defaultNewOutputFlags{};
   EventCallback m_handler{};
   void *m_node{};
-};
+}; // namespace spaghetti
 
 template<typename T>
 inline void to_json(Element::Json &a_json, Element::Vec2<T> const &a_value)

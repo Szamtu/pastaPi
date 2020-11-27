@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(PastaPi
-  VERSION 00.11.00
+  VERSION 00.12.00
   DESCRIPTION "Graphical openCV image processor"
   LANGUAGES C CXX
 )
@@ -18,6 +18,8 @@ include(VendorHeaders)
 option(PASTAPI_BUILD_EDITOR "Build editor" ON)
 option(PASTAPI_BUILD_PLUGINS "Build plugins" ON)
 option(PASTAPI_BUILD_EXAMPLE_PLUGIN "Build example plugin" ON)
+option(PASTAPI_BUILD_WITH_TBB "Build with TBB" ON)
+option(PASTAPI_INCLUDE_GPL_PLUGINS "Build with GPL licensed plugins" ON)
 option(SPAGHETTI_ENABLE_ALL_WARNINGS "Enable all warnings" OFF)
 option(SPAGHETTI_TREAT_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 option(SPAGHETTI_USE_OPENGL "Use OpenGL in QGraphicsView" OFF)
@@ -31,6 +33,7 @@ if (PASTAPI_BUILD_EDITOR)
   add_subdirectory(editor)
   add_subdirectory(libspaghettiui)
   set(BUILD_PLUGINS_GUI ON)
+  file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/packages)
 endif ()
 
 if (PASTAPI_BUILD_PLUGINS)

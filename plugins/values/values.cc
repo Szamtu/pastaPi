@@ -76,6 +76,10 @@
 #include "values_ui/seven_segment_display/seven_segment_display.h"
 #include "values_ui/toggle_button/toggle_button.h"
 
+#include "values_ui/cable_in/cable_in.h"
+#include "values_ui/cable_out/cable_out.h"
+#include "values_ui/panel/panel.h"
+
 using namespace spaghetti;
 
 extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
@@ -136,4 +140,8 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
   a_registry.registerElement<elements::Degree2Radian>("Rad2Deg", ":/unknown.png");
   a_registry.registerElement<elements::Radian2Degree>("Deg2Rad", ":/unknown.png");
   a_registry.registerElement<elements::ExtractString>("Extract String", ":/unknown.png");
+
+  a_registry.registerElement<elements::Panel>("Panel", ":/unknown.png");
+  a_registry.registerElement<elements::CableIn>("Cable input", ":/unknown.png");
+  a_registry.registerElement<elements::CableOut>("Cable output", ":/unknown.png");
 }
