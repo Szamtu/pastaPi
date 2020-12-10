@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QObject>
 #include <QStyleFactory>
 #include <iostream>
@@ -60,6 +61,19 @@ int main(int argc, char **argv)
   spaghetti::Editor editor{};
   QObject::connect(&app, &QApplication::aboutToQuit, &editor, &spaghetti::Editor::aboutToQuit);
   editor.show();
+
+  QCommandLineParser parser;
+  parser.addOptions({
+      { { "o", "open" }, "Starts editor with opened package", "aazz" },
+  });
+  parser.process(app);
+
+  QStringList const args = parser.positionalArguments();
+  QString packageDir = parser.value("o");
+
+  if (!packageDir.isEmpty()) {
+    editor.openPackageFile(packageDir);
+  }
 
   return app.exec();
 }
