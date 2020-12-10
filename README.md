@@ -18,6 +18,11 @@
 
 **Last changes:**  
 
+**Version 0.12.1**  
+Changes:  
+*  Added open command line option.  
+Now you can run PastaPi with -o myPackage.package to run app with package opened.  
+  
 **Version 0.12.0**  
 DNN and general purpose features.  
   
