@@ -15,6 +15,9 @@ set(SOURCES
 
     t_pulse/t_pulse.cc
     t_pulse/t_pulse.h
+    
+    sunrise/sunrise.cc
+    sunrise/sunrise.h
 
     timers.cc
 )
@@ -22,6 +25,9 @@ set(SOURCES
 set(GUI_SOURCES
     clock/clock_node.cc
     clock/clock_node.h
+    
+    sunrise/sunrise_node.cc
+    sunrise/sunrise_node.h
     )
 
 include(PluginBuild)

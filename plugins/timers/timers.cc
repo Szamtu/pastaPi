@@ -30,7 +30,9 @@
 #ifdef BUILD_PLUGIN_GUI
 #include <spaghettiui/node.h>
 
+
 #include "clock/clock_node.h"
+#include "sunrise/sunrise_node.h"
 #else
 #include <spaghetti/dummynode.h>
 #endif
@@ -40,6 +42,7 @@
 #include "t_off/t_off.h"
 #include "t_on/t_on.h"
 #include "t_pulse/t_pulse.h"
+#include "sunrise/sunrise.h"
 
 using namespace spaghetti;
 
@@ -49,8 +52,10 @@ extern "C" SPAGHETTI_API void register_plugin(spaghetti::Registry &a_registry)
 
 #ifdef BUILD_PLUGIN_GUI
   a_registry.registerElement<elements::Clock, nodes::Clock>("Clock", ":/unknown.png");
+  a_registry.registerElement<elements::Sunrise, nodes::Sunrise>("Sunrise", ":/unknown.png");
 #else
   a_registry.registerElement<elements::Clock>("Clock", ":/unknown.png");
+  a_registry.registerElement<elements::Sunrise>("Sunrise", ":/unknown.png");
 #endif
 
   a_registry.registerElement<elements::DeltaTime>("Delta time", ":/unknown.png");
