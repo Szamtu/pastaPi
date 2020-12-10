@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) piotr@escort.com.pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ Sunrise::Sunrise()
   setMinOutputs(4);
   setMaxOutputs(4);
 
-  addOutput(ValueType::eBool, "State", IOSocket::eCanHoldBool);
+  addOutput(ValueType::eBool, "state", IOSocket::eCanHoldBool);
   addOutput(ValueType::eBool, "isDay", IOSocket::eCanHoldBool);
   addOutput(ValueType::eString, "sunrise [str]", IOSocket::eCanHoldString);
   addOutput(ValueType::eString, "sun set [str]", IOSocket::eCanHoldString);
@@ -65,10 +65,6 @@ void Sunrise::deserialize(Json const &a_json)
   apply(m_lat,m_lon);
 }
 
-//void Sunrise::update(duration_t const &a_delta)
-//{
-//}
-
 void Sunrise::calculate()
 {
     int r = QDate::currentDate().year();
@@ -89,18 +85,17 @@ void Sunrise::calculate()
     float a = asin(sin(o)*sin(l+f));
     float c = (sin(0.017453293*req) - sin(0.017453293*lat)*sin(a))/(cos(0.017453293*lat)*cos(a));
 
-    float wsch = (3.1415 - (e+0.017453293*lon + 1*acos(c)))*57.29577951/15;
-//    float tran = (3.1415 - (e+0.017453293*lon + 0*acos(c)))*57.29577951/15;
-    float zach = (3.1415 - (e+0.017453293*lon + (-1*acos(c))))*57.29577951/15;
+    float sunrise = (3.1415 - (e+0.017453293*lon + 1*acos(c)))*57.29577951/15;
+    float sunset = (3.1415 - (e+0.017453293*lon + (-1*acos(c))))*57.29577951/15;
 
-    QString wschStr = QString::number(ceil(wsch))+":"+QString::number(ceil(60*(wsch-floor(wsch))));
-    QString zachStr = QString::number(ceil(zach))+":"+QString::number(ceil(60*(zach-floor(zach))));
+    QString sunriseStr = QString::number(ceil(sunrise))+":"+QString::number(ceil(60*(sunrise-floor(sunrise))));
+    QString sunsetStr = QString::number(ceil(sunset))+":"+QString::number(ceil(60*(sunset-floor(sunset))));
 
     QTime currentTime =  QTime::currentTime();
-    QTime wschTime =  QTime(ceil(wsch),ceil(60*(wsch-floor(wsch))));
-    QTime zachTime =  QTime(ceil(zach),ceil(60*(wsch-floor(zach))));
+    QTime sunriseTime =  QTime(ceil(sunrise),ceil(60*(sunrise-floor(sunrise))));
 
-    if(currentTime < wschTime)
+
+    if(currentTime < sunriseTime)
     {
         m_outputs[1].setValue(false);
     }else
@@ -108,8 +103,8 @@ void Sunrise::calculate()
         m_outputs[1].setValue(true);
     }
 
-    m_outputs[2].setValue(wschStr.toStdString());
-    m_outputs[3].setValue(zachStr.toStdString());
+    m_outputs[2].setValue(sunriseStr.toStdString());
+    m_outputs[3].setValue(sunsetStr.toStdString());
 }
 
 void Sunrise::apply(QString lat, QString lon)

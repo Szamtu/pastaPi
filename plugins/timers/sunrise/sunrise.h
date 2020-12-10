@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2018 Artur Wyszyński, aljen at hitomi dot pl
+// Copyright (c) piotr@escort.com.pl
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,17 +48,14 @@ class Sunrise final : public Element {
 
   void serialize(Json &a_json) override;
   void deserialize(Json const &a_json) override;
-//  void update(duration_t const &a_delta) override;
-
 
   void apply(QString m_lat,QString m_lon);
-
-
 
 private:
   float acos(float x);
   float asin(float x);
   float modd(float x, float y);
+
   QString m_lat{};
   QString m_lon{};
 };
