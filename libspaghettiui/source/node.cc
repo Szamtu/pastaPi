@@ -749,12 +749,13 @@ void Node::addPropertyString(QString const a_propertyName, std::string *a_destMe
                    [a_destMember](const QString &a_text) { *a_destMember = a_text.toStdString(); });
 }
 
-void Node::addPropertyInt(QString const a_propertyName, int *a_destMember)
+void Node::addPropertyInt(QString const a_propertyName, int *a_destMember, int const a_min, int const a_max)
 {
   auto const ROW = addPropertyRow(a_propertyName);
 
   QSpinBox *spinbox = new QSpinBox{};
   m_properties->setCellWidget(ROW, 1, spinbox);
+  spinbox->setRange(a_min, a_max);
   spinbox->setValue(*a_destMember);
   QObject::connect(spinbox, QOverload<int>::of(&QSpinBox::valueChanged),
                    [a_destMember](int a_value) { *a_destMember = a_value; });
@@ -770,12 +771,13 @@ void Node::addPropertyBool(QString const a_propertyName, bool *a_destMember)
   QObject::connect(checkbox, &QCheckBox::toggled, [a_destMember](bool a_value) { *a_destMember = a_value; });
 }
 
-void Node::addPropertyDouble(QString const a_propertyName, double *a_destMember)
+void Node::addPropertyDouble(QString const a_propertyName, double *a_destMember, double const a_min, double const a_max)
 {
   auto const ROW = addPropertyRow(a_propertyName);
 
   QDoubleSpinBox *spinbox = new QDoubleSpinBox{};
   m_properties->setCellWidget(ROW, 1, spinbox);
+  spinbox->setRange(a_min, a_max);
   spinbox->setValue(*a_destMember);
   QObject::connect(spinbox, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
                    [a_destMember](double a_value) { *a_destMember = a_value; });

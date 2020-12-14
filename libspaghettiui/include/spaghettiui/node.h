@@ -118,9 +118,10 @@ class SPAGHETTI_API_UI Node : public QGraphicsItem {
 
  public:
   void addPropertyString(QString const a_propertyName, std::string *a_destMember);
-  void addPropertyInt(QString const a_propertyName, int *a_destMember);
+  void addPropertyInt(QString const a_propertyName, int *a_destMember, int const a_min = 0, int const a_max = 99);
   void addPropertyBool(QString const a_propertyName, bool *a_destMember);
-  void addPropertyDouble(QString const a_propertyName, double *a_destMember);
+  void addPropertyDouble(QString const a_propertyName, double *a_destMember, double const a_min = 0.0,
+                         double const a_max = 99.0);
 
  private:
   int addPropertyRow(QString const a_propertyName);
